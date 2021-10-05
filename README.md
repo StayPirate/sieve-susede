@@ -1,6 +1,17 @@
 # Personal sieve scripts collection
 
-This repository is intended to store and organize my personal sieve scripts. Maintaining them is as much important as hard. Since their complexity grows every day, I decided to organize them in a better way, by splitting them into multiple files and by versioning them via git. Using the below-described snippets, at each git push they are automatically updated on the mail-server as well.
+This repository is intended to store and organize my personal sieve scripts. Maintaining them is as much important as hard. Since their complexity grows every day, I decided to organize them in a better way, by splitting them into multiple files and by versioning them via git. Using the below-described snippets, at each git commit they are automatically updated on the mail-server as well.
+
+## Requirement
+You need `sieveshell` installed. Good news for [secbox](https://github.com/StayPirate/secbox) users, in case you are running `secbox >= 1.10` and `secbox-image >= 2.7`, then you already have `sieveshell` available. You can double-check with the following commands:
+```bash
+> secbox -v
+script     :  secbox                                                       v.1.9
+image      :  non_public/maintenance/security/container/containers/secbox  v.2.7
+container  :  secbox                                                       running
+> which sieveshell
+sieveshell: aliased to secbox --no-tty sieveshell
+```
 
 ## How to use
 
@@ -23,10 +34,10 @@ alias suse-de_user='unlock_wallet && \
                     cut -d " " -f3'
 ```
 
-From the root of this repo, I run the following command to upload the .sieve scripts to the remote mail-server. This can be hooked into the git client in a way that it automatically updates the sieve scripts on the mail-server every time a new commit is pushed to the remote (see below).
+From within the repo work-tree, I run the following command to upload the .sieve scripts to the remote mail-server. This can be hooked into the git client in a way that it automatically updates the sieve scripts on the mail-server every time a new commit is created (see below).
 
 ```bash
-find . -type f -name "*.sieve" -printf "put %p\n" | sort -nr | \
+find $(git rev-parse --show-toplevel) -type f -name "*.sieve" -printf "put %p %f\n" | sort -nr | \
 sieveshell --user $(suse-de_user) \
            --passwd $(suse-de_pass) \
            --use-tls \
@@ -36,10 +47,14 @@ sieveshell --user $(suse-de_user) \
 
 ## Git hook
 
-TODO
+The [hook](.githooks/pre-commit) is already provided within this repository, I strongly suggest you leverage [conditional includes](https://git-scm.com/docs/git-config#_conditional_includes) (great tool) in your gitconfig. This will be as easier as appending the following lines to your `~/.gitconfig`:
 ```
-...placeholder...
+; Only include if the repository is sieve-susude
+[includeIf "gitdir:~/Workspace/sieve-susede/.git"]
+        path = ~/Workspace/sieve-susede/.githooks/sieveshell.gitconfig
 ```
+
+Do not forget to adjust the paths in the above snippet.
 
 # Inbox index
 
