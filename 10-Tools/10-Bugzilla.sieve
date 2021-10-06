@@ -1,4 +1,5 @@
-require [ "fileinto", "mailbox", "body" ];
+require [ "fileinto", "mailbox", "body", "variables", "include" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 ######################
 #####  Bugzilla  #####
@@ -64,7 +65,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            address :is "To" "security-team@suse.de",
            header  :is "X-Bugzilla-Type" "changed",
            header  :is "X-Bugzilla-Changed-Fields" "cc",
-           body    :contains "|${susecom_addr}" ) {
+           body    :contains "|${SUSECOM_ADDR}" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Direct";
     stop;
 }
@@ -83,7 +84,7 @@ if allof ( address  :is       "From" "bugzilla_noreply@suse.com",
 
 # rule:[direct notification]
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "${susecom_addr}" ) {
+           address :is "To" "${SUSECOM_ADDR}" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Direct";
     stop;
 }

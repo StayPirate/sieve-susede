@@ -1,9 +1,10 @@
 # Sieve: https://tools.ietf.org/html/rfc5228
 require [ "variables", "include" ];
 
-set "susede_addr" "ggabrielli@suse.de";
-set "susecom_addr" "gianluca.gabrielli@suse.com";
-set "bugzilla_username" "crazybyte";
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
+set "SUSEDE_ADDR" "ggse.SUSECOM_ADDR";
+set "SUSECOM_ADDR" "gianluca.gabrielli@suse.com";
+set "BZ_USERNAME" "crazybyte";
 
 include :personal "01-Spam.sieve";
 

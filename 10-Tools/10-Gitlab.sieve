@@ -1,4 +1,5 @@
-require [ "fileinto", "mailbox" ];
+require [ "fileinto", "mailbox", "variables", "include" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
 ##### G I T L A B #####

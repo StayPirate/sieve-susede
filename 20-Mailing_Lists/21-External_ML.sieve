@@ -1,4 +1,5 @@
-require [ "fileinto", "mailbox" ];
+require [ "fileinto", "mailbox", "variables", "include" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
 ##### External ML #####
@@ -140,7 +141,7 @@ if header :contains "List-Id" "<isn.lists.infosecnews.org>" { fileinto :create "
 
 # rule:[Seclist - CERT]
 # https://public.govdelivery.com/accounts/USDHSCISA/subscriber/edit?preferences=true#tab1
-if allof ( address :is "To" "${susede_addr}",
+if allof ( address :is "To" "${SUSEDE_ADDR}",
            anyof ( address :contains "From" "US-CERT@ncas.us-cert.gov",
                    address :contains "From" "CISA@public.govdelivery.com",
                    address :contains "From" "cisacommunity@ncas.us-cert.gov" )) {

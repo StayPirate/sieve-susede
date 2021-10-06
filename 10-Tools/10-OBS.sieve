@@ -1,4 +1,5 @@
-require [ "fileinto", "mailbox" ];
+require [ "fileinto", "mailbox", "variables", "include" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
 #####    O B S    #####
@@ -34,7 +35,7 @@ if allof ( header  :is "X-Mailer" "OBS Notification System",
 # A package I maintain failed to build
 if allof ( header  :is "X-Mailer" "OBS Notification System",
            header  :is "X-OBS-URL" "https://build.opensuse.org",
-           address :contains "To" "${susecom_addr}",
+           address :contains "To" "${SUSECOM_ADDR}",
            header  :contains "x-obs-event-type" "build_fail" ) {
     fileinto :create "INBOX/Tools/OBS/build";
     stop;

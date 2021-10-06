@@ -1,4 +1,5 @@
-require [ "fileinto", "mailbox", "envelope", "subaddress" ];
+require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
 ##### NEWS LETTER #####
@@ -10,7 +11,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress" ];
 # rule:[CyberSaiyan]
 # https://cybersaiyan.us17.list-manage.com
 if allof ( envelope :domain :is "From" "cybersaiyan.it",
-           address          :is "To" "${susede_addr}" ) {
+           address          :is "To" "${SUSEDE_ADDR}" ) {
     fileinto :create "INBOX/NL/CyberSaiyan";
     stop;
 }

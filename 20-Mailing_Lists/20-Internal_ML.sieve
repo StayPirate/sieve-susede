@@ -1,4 +1,5 @@
-require [ "fileinto", "mailbox", "body" ];
+require [ "fileinto", "mailbox", "body", "variables", "include" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
 ##### Internal ML #####
@@ -229,8 +230,8 @@ if allof ( header :contains "List-Id" "<security-team.suse.de>",
 # rule:[security-team - security-team and me in CC ]
 # When someone follows up on a thread where I'm also in CC, I want it in the same ML folder
 if allof (     address :contains "CC" "security-team@suse.de",
-               address :contains "CC" "${susede_addr}",
-           not address :contains "To" "${susede_addr}" ) {
+               address :contains "CC" "${SUSEDE_ADDR}",
+           not address :contains "To" "${SUSEDE_ADDR}" ) {
     fileinto :create "INBOX/ML/SUSE/security-team";
     stop;
 }
