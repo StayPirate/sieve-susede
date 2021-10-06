@@ -2,7 +2,7 @@
 require [ "variables", "include" ];
 
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
-set "SUSEDE_ADDR" "ggse.SUSECOM_ADDR";
+set "SUSEDE_ADDR" "ggabrielli@suse.de";
 set "SUSECOM_ADDR" "gianluca.gabrielli@suse.com";
 set "BZ_USERNAME" "crazybyte";
 
