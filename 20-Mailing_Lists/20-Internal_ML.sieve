@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "body", "variables", "include" ];
+require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
@@ -19,7 +19,8 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #     │   ├── Django
 #     │   ├── Ceph
 #     │   ├── Kubernetes
-#     │   └── Qemu
+#     │   ├── Qemu
+#     │   └── Cloud Foundry
 #     ├── maintsecteam
 #     │   ├── maintenance wr
 #     │   ├── workreport
@@ -170,9 +171,16 @@ if allof ( header  :contains "List-Id" "<security.suse.de>",
     fileinto :create "INBOX/ML/SUSE/security/Kubernetes";
     stop;
 }
+# rule:[security - Cloud Foundry]
+if allof ( header   :contains   "List-Id" "<security.suse.de>",
+           envelope :domain :is "From"    "cloudfoundry.org") {
+    fileinto :create "INBOX/ML/SUSE/security/Cloud Foundry";
+    stop;
+}
 # rule:[security - qemu security]
 # https://lists.nongnu.org/mailman/listinfo/qemu-security
 if header :contains "List-Id" "<qemu-security.nongnu.org>" { fileinto :create "INBOX/ML/SUSE/security/Qemu"; stop; }
+
 # rule:[security]
 # https://mailman.suse.de/mailman/listinfo/security
 if header :contains "List-Id" "<security.suse.de>" { fileinto :create "INBOX/ML/SUSE/security"; stop; }
