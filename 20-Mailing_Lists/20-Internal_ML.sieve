@@ -20,7 +20,10 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #     │   ├── Ceph
 #     │   ├── Kubernetes
 #     │   ├── Qemu
-#     │   └── Cloud Foundry
+#     │   ├── Cloud Foundry
+#     │   └── Mitre
+#     │       ├── SUSE CNA
+#     │       └── CVE-CNA
 #     ├── maintsecteam
 #     │   ├── maintenance wr
 #     │   ├── workreport
@@ -172,15 +175,28 @@ if allof ( header  :contains "List-Id" "<security.suse.de>",
     stop;
 }
 # rule:[security - Cloud Foundry]
-if allof ( header   :contains   "List-Id" "<security.suse.de>",
-           envelope :domain :is "From"    "cloudfoundry.org") {
+if allof ( header   :contains     "List-Id" "<security.suse.de>",
+           envelope :domain   :is "From"    "cloudfoundry.org") {
     fileinto :create "INBOX/ML/SUSE/security/Cloud Foundry";
+    stop;
+}
+# rule:[security - Mitre SUSE CNA report]
+if allof ( header   :contains "List-Id" "<security.suse.de>",
+           header   :is       "From"    "cna-coordinator@mitre.org",
+           header   :contains "Subject" "suse CNA Report") {
+    fileinto :create "INBOX/ML/SUSE/security/Mitre/SUSE CNA";
+    stop;
+}
+# rule:[security - Mitre CVE-CNA]
+if allof ( header   :contains   "List-Id" "<security.suse.de>",
+           anyof ( envelope :domain :is "From"          "mitre.org",
+                   header   :contains   "X-Envelope-To" "@mitre.org" )) {
+    fileinto :create "INBOX/ML/SUSE/security/Mitre/CVE-CNA";
     stop;
 }
 # rule:[security - qemu security]
 # https://lists.nongnu.org/mailman/listinfo/qemu-security
 if header :contains "List-Id" "<qemu-security.nongnu.org>" { fileinto :create "INBOX/ML/SUSE/security/Qemu"; stop; }
-
 # rule:[security]
 # https://mailman.suse.de/mailman/listinfo/security
 if header :contains "List-Id" "<security.suse.de>" { fileinto :create "INBOX/ML/SUSE/security"; stop; }
