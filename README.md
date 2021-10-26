@@ -58,7 +58,7 @@ sieveshell: aliased to secbox --no-tty sieveshell
     The [hook](.githooks/pre-commit) is already provided within this repository, I strongly suggest you leverage [conditional includes](https://git-scm.com/docs/git-config#_conditional_includes) (cool beans) in your gitconfig. This will be as easy as appending the following lines to your `~/.gitconfig` (e.g. [mine](https://github.com/StayPirate/dotfiles/blob/ebb1fdd4eba76b7a5bae77d512ec3ba7f0d16549/.gitconfig#L29-L31)):
 
     ```
-    ; Only include if the repository is sieve-susude
+    ; Only include if the repository is sieve-susede
     [includeIf "gitdir:~/Workspace/sieve-susede/.git"]
             path = ~/Workspace/sieve-susede/.githooks/sieveshell.gitconfig
     ```
