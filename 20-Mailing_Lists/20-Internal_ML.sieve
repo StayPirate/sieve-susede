@@ -175,8 +175,8 @@ if allof ( header  :contains "List-Id" "<security.suse.de>",
     stop;
 }
 # rule:[security - Cloud Foundry]
-if allof ( header   :contains   "List-Id" "<security.suse.de>",
-           envelope :domain :is "From"    "cloudfoundry.org") {
+if allof ( header   :contains "List-Id" "<security.suse.de>",
+           envelope :domain   "From"    "cloudfoundry.org") {
     fileinto :create "INBOX/ML/SUSE/security/Cloud Foundry";
     stop;
 }
@@ -189,8 +189,8 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
 }
 # rule:[security - Mitre CVE-CNA]
 if allof ( header   :contains   "List-Id" "<security.suse.de>",
-           anyof ( envelope :domain :is "From"          "mitre.org",
-                   header   :contains   "X-Envelope-To" "@mitre.org" )) {
+           anyof ( envelope :domain   "From"          "mitre.org",
+                   header   :contains "X-Envelope-To" "@mitre.org" )) {
     fileinto :create "INBOX/ML/SUSE/security/Mitre/CVE-CNA";
     stop;
 }
