@@ -86,9 +86,9 @@ if allof ( header :contains "List-Id" "<maintsecteam.suse.de>",
 }
 # rule:[maintsecteam - SMESH-SMELT_Releases]
 if allof ( header :contains "List-Id" "<maintsecteam.suse.de>",
-           # The subject contains ( released || (SMASH && SMELT) )
-           anyof ( header :contains "Subject" "released",
-                   allof ( header :contains "Subject" "smash",
+           # The subject contains ( release && (smash || smelt) )
+           allof ( header :contains "Subject" "release",
+                   anyof ( header :contains "Subject" "smash",
                            header :contains "Subject" "smelt" ))) {
     fileinto :create "INBOX/ML/SUSE/maintsecteam/smash-smelt";
     stop;
