@@ -37,6 +37,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #     ├── kernel
 #     ├── linux
 #     ├── maint-coord
+#     │   └── QA Failed
 #     ├── maintsec-reports
 #     │   └── channels changes
 #     ├── research
@@ -108,6 +109,16 @@ if allof ( header :contains "List-Id" "<maintsec-reports.suse.de>",
 # https://mailman.suse.de/mailman/listinfo/maintsec-reports
 if header :contains "List-Id" "<maintsec-reports.suse.de>" { fileinto :create "INBOX/ML/SUSE/maintsec-reports"; stop; }
 
+# rule:[maint-coord - only failed tests]
+# Discard all the successful QA test notifications and put the failed ones into a dedicated folder
+if allof ( header  :contains "List-Id" "<maint-coord.suse.de>",
+           address :is       "From"    "qa-maintenance@suse.de",
+           header  :contains "Subject" "SUSE:Maintenance:" ) {
+    if    body :contains "SUMMARY: PASSED" { discard; }
+    elsif body :contains "SUMMARY: FAILED" { fileinto :create "INBOX/ML/SUSE/maint-coord/QA Failed"; }
+    else                                   { fileinto :create "INBOX/ML/SUSE/maint-coord"; }
+    stop;
+}
 # rule:[maint-coord]
 # https://mailman.suse.de/mailman/listinfo/maint-coord
 if header :contains "List-Id" "<maint-coord.suse.de>" { fileinto :create "INBOX/ML/SUSE/maint-coord"; stop; }
