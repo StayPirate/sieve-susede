@@ -10,8 +10,8 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 # rule:[CyberSaiyan]
 # https://cybersaiyan.us17.list-manage.com
-if allof ( envelope :domain :is "From" "cybersaiyan.it",
-           address          :is "To" "${SUSEDE_ADDR}" ) {
+if allof ( envelope :domain :is       "From" "cybersaiyan.it",
+           address          :contains "To" "${SUSEDE_ADDR}" ) {
     fileinto :create "INBOX/NL/CyberSaiyan";
     stop;
 }
