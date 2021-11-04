@@ -37,7 +37,7 @@ INBOX
 │   │   │   ├── Cloud Foundry
 │   │   │   └── Mitre
 │   │   │       ├── SUSE CNA
-│   │   │       └── CVE-CNA
+│   │   │       └── Mitre
 │   │   ├── maintsecteam
 │   │   │   ├── maintenance wr
 │   │   │   ├── workreport
