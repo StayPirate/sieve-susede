@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "variables", "include" ];
+require [ "fileinto", "mailbox", "variables", "include", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
@@ -133,7 +133,13 @@ if header :is "X-List" "vs.openwall.org" { fileinto :create "INBOX/ML/SecList/li
 
 # rule:[Seclist - VINCE]
 # https://kb.cert.org/vince/comm/auth/login/
-if address :is "From" "cert+donotreply@cert.org" { fileinto :create "INBOX/ML/SecList/vince"; stop; }
+if address :is "From" "cert+donotreply@cert.org" {
+           if header :contains "Subject" [ "VU#132185", "VU#855201" ] {
+                     addflag "\\Seen";
+           }
+           fileinto :create "INBOX/ML/SecList/vince";
+           stop;
+}
 
 # rule:[Seclist - infosecnews]
 # http://lists.infosecnews.org/mailman/listinfo/isn_lists.infosecnews.org
