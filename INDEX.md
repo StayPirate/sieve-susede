@@ -36,8 +36,7 @@ INBOX
 │   │   │   ├── Qemu
 │   │   │   ├── Cloud Foundry
 │   │   │   └── Mitre
-│   │   │       ├── SUSE CNA
-│   │   │       └── Mitre
+│   │   │       └── SUSE CNA
 │   │   ├── maintsecteam
 │   │   │   ├── maintenance wr
 │   │   │   ├── workreport
