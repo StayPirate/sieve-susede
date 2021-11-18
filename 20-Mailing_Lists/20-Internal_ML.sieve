@@ -246,7 +246,8 @@ if header :contains "List-Id" "<security-review.suse.de>" { fileinto :create "IN
 # Discard newsletters coming US-CERT because these are duplicated for me as I'm already subscribed to that list
 # ML -> SecList -> CERT Advisories
 if allof ( header  :contains "List-Id" "<security-team.suse.de>",
-           address :is       "From"    "US-CERT@ncas.us-cert.gov" ) {
+           address :is       "From"  [ "US-CERT@ncas.us-cert.gov",
+                                       "CISA@public.govdelivery.com" ] ) {
     discard;
     stop;
 }
