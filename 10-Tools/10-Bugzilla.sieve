@@ -77,7 +77,7 @@ if allof ( address  :is       "From" "bugzilla_noreply@suse.com",
            header   :is       "X-Bugzilla-Type" "changed",
            anyof ( header   :contains "X-Bugzilla-Changed-Fields" "cc",
                    header   :contains "X-Bugzilla-Changed-Fields" "assigned_to"),
-           not body :contains "--- Comment #" ) {
+           not body :contains "Comment" ) {
     fileinto :create "INBOX/Trash";
     stop;
 }
