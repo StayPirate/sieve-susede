@@ -64,8 +64,8 @@ if allof ( address    :is "From" "bugzilla_noreply@suse.com",
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
            address :is "To" "security-team@suse.de",
            header  :is "X-Bugzilla-Type" "changed",
-           header  :is "X-Bugzilla-Changed-Fields" "cc",
-           body    :contains "|${SUSECOM_ADDR}" ) {
+           header  :contains "X-Bugzilla-Changed-Fields" "cc",
+           body    :contains "${SUSECOM_ADDR}" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Direct";
     stop;
 }
