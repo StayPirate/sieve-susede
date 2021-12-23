@@ -199,8 +199,8 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
 }
 # rule:[security - Mitre]
 if allof ( header :contains "List-Id" "<security.suse.de>",
-           anyof ( envelope :domain   :is "From"          "mitre.org",
-                   header   :contains     "X-Envelope-To" "@mitre.org" )) {
+           anyof ( header   :contains "From"          "cve-prog-secretariat@mitre.org",
+                   header   :contains "X-Envelope-To" "@mitre.org" )) {
     fileinto :create "INBOX/ML/SUSE/security/Mitre";
     stop;
 }
