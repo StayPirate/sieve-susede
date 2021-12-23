@@ -150,7 +150,8 @@ if header :contains "List-Id" "<isn.lists.infosecnews.org>" { fileinto :create "
 if allof ( address :is "To" "${SUSEDE_ADDR}",
            anyof ( address :contains "From" "US-CERT@ncas.us-cert.gov",
                    address :contains "From" "CISA@public.govdelivery.com",
-                   address :contains "From" "cisacommunity@ncas.us-cert.gov" )) {
+                   address :contains "From" "cisacommunity@ncas.us-cert.gov",
+                   address :contains "From" "US-CERT@messages.cisa.gov" )) {
     fileinto :create "INBOX/ML/SecList/CERT Advisories";
     stop;
 }
