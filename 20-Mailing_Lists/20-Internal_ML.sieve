@@ -113,10 +113,14 @@ if header :contains "List-Id" "<maintsec-reports.suse.de>" { fileinto :create "I
 if allof ( header  :contains "List-Id" "<maint-coord.suse.de>",
            address :is       "From"    "qa-maintenance@suse.de",
            header  :contains "Subject" "SUSE:Maintenance:" ) {
-    if    body :contains "SUMMARY: PASSED" { discard; }
-    elsif body :contains "SUMMARY: FAILED" { fileinto :create "INBOX/ML/SUSE/maint-coord/QA Failed"; }
-    else                                   { fileinto :create "INBOX/ML/SUSE/maint-coord"; }
-    stop;
+                   if anyof ( body :contains "SUMMARY: FAILED",
+                              body :contains "SUMMARY: PASSED/FAILED" ) {
+                       fileinto :create "INBOX/ML/SUSE/maint-coord/QA Failed"; }
+                   elsif      body :contains "SUMMARY: PASSED" {
+                       discard; }
+                   else {
+                       fileinto :create "INBOX/ML/SUSE/maint-coord"; }
+                   stop;
 }
 # rule:[maint-coord]
 # https://mailman.suse.de/mailman/listinfo/maint-coord
