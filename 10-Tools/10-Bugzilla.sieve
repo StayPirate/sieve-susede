@@ -93,6 +93,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # rule:[security - reassigned]
 # Issues re-assigned to security-team
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To"   "security-team@suse.de",
            header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
            header  :is "X-Bugzilla-Type" "changed",
            header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
