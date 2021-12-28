@@ -9,7 +9,9 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #     ├── Direct
 #     └── Security Team
 #         ├── Embargoed
-#         └── Reassigned back
+#         ├── Reassigned back
+#         ├── Critical
+#         └── High
 
 # rule:[mute bots]
 # Do not allow bots to make noise to specific Bugzilla's sub-folder,

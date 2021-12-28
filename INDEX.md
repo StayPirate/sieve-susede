@@ -9,7 +9,9 @@ INBOX
 │   │   ├── Direct
 │   │   └── Security Team
 │   │       ├── Embargoed
-│   │       └── Reassigned back
+│   │       ├── Reassigned back
+│   │       ├── Critical
+│   │       └── High
 │   ├── IBS
 │   │   ├── build
 │   │   └── requests
