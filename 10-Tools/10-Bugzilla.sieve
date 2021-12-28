@@ -70,26 +70,6 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
-# rule:[High priority issues]
-# Move high priority issues to a dedicated folder
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "security-team@suse.de",
-           header  :is "X-Bugzilla-Priority" "P2 - High" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/High";
-    stop;
-}
-
-# rule:[Critical priority issues]
-# Move critical priority issues to a dedicated folder
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "security-team@suse.de",
-           anyof( header  :is "X-Bugzilla-Priority" "P0 - Crit Sit",
-                  header  :is "X-Bugzilla-Priority" "P1 - Urgent",
-                  header  :is "X-Bugzilla-Severity" "Critical")) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Critical";
-    stop;
-}
-
 # rule:[security - reassigned]
 # Issues re-assigned to security-team
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
@@ -117,6 +97,26 @@ if allof ( address  :is       "From" "bugzilla_noreply@suse.com",
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
            address :is "To" "${SUSECOM_ADDR}" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Direct";
+    stop;
+}
+
+# rule:[High priority issues]
+# Move high priority issues to a dedicated folder
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To" "security-team@suse.de",
+           header  :is "X-Bugzilla-Priority" "P2 - High" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team/High";
+    stop;
+}
+
+# rule:[Critical priority issues]
+# Move critical priority issues to a dedicated folder
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To" "security-team@suse.de",
+           anyof( header  :is "X-Bugzilla-Priority" "P0 - Crit Sit",
+                  header  :is "X-Bugzilla-Priority" "P1 - Urgent",
+                  header  :is "X-Bugzilla-Severity" "Critical")) {
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Critical";
     stop;
 }
 
