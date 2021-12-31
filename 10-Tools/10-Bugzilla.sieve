@@ -60,18 +60,6 @@ if allof ( address    :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
-# rule:[CC me]
-# Added or removed from CC into a bugzilla security issue.
-# Put it into the Direct folder.
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "security-team@suse.de",
-           header  :is "X-Bugzilla-Type" "changed",
-           header  :contains "X-Bugzilla-Changed-Fields" "cc",
-           body    :contains "${SUSECOM_ADDR}" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Direct";
-    stop;
-}
-
 # rule:[security - reassigned]
 # Issues re-assigned to security-team
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
