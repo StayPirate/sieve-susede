@@ -21,6 +21,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #     │   ├── Kubernetes
 #     │   ├── Qemu
 #     │   ├── Cloud Foundry
+#     │   ├── strongSwan
 #     │   └── Mitre
 #     │       └── SUSE CNA
 #     ├── maintsecteam
@@ -206,6 +207,13 @@ if allof ( header :contains "List-Id" "<security.suse.de>",
            anyof ( header   :contains "From"          "cve-prog-secretariat@mitre.org",
                    header   :contains "X-Envelope-To" "@mitre.org" )) {
     fileinto :create "INBOX/ML/SUSE/security/Mitre";
+    stop;
+}
+# rule:[security - strongSwan]
+if allof ( header   :contains "List-Id" "<security.suse.de>",
+           envelope :domain   "From"    "strongswan.org",
+           header   :contains "Subject" "security advisory" ) {
+    fileinto :create "INBOX/ML/SUSE/security/strongSwan";
     stop;
 }
 # rule:[security]
