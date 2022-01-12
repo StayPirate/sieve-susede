@@ -40,6 +40,18 @@ if allof ( address  :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
+# rule:[mute new (not me) CC or assigned_to]
+# Ignore, if the only change is a new person added/removed to CC, or changed the assignee.
+# But allow notification with a new comment.
+if allof ( address  :is       "From" "bugzilla_noreply@suse.com",
+           header   :is       "X-Bugzilla-Type" "changed",
+           anyof ( header   :contains "X-Bugzilla-Changed-Fields" "cc",
+                   header   :contains "X-Bugzilla-Changed-Fields" "assigned_to"),
+           not body :contains "Comment" ) {
+    fileinto :create "INBOX/Trash";
+    stop;
+}
+
 # rule:[Embargoed notification]
 if allof ( address :is "From" "bugzilla_noreply@suse.com", 
            address :is "To" "security-team@suse.de",
@@ -68,18 +80,6 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header  :is "X-Bugzilla-Type" "changed",
            header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
-    stop;
-}
-
-# rule:[mute new (not me) CC or assigned_to]
-# Ignore, if the only change is a new person added/removed to CC, or changed the assignee.
-# But allow notification with a new comment.
-if allof ( address  :is       "From" "bugzilla_noreply@suse.com",
-           header   :is       "X-Bugzilla-Type" "changed",
-           anyof ( header   :contains "X-Bugzilla-Changed-Fields" "cc",
-                   header   :contains "X-Bugzilla-Changed-Fields" "assigned_to"),
-           not body :contains "Comment" ) {
-    fileinto :create "INBOX/Trash";
     stop;
 }
 
