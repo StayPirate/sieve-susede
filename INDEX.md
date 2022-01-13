@@ -7,11 +7,13 @@ INBOX
 ├── Tools
 │   ├── Bugzilla
 │   │   ├── Direct
+│   │   │   └── Needinfo
 │   │   └── Security Team
 │   │       ├── Embargoed
 │   │       ├── Reassigned back
 │   │       ├── Critical
-│   │       └── High
+│   │       ├── High
+│   │       └── Needinfo
 │   ├── IBS
 │   │   ├── build
 │   │   └── requests

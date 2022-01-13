@@ -7,11 +7,13 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # Tools
 # └── Bugzilla
 #     ├── Direct
+#     │   └── Needinfo
 #     └── Security Team
 #         ├── Embargoed
 #         ├── Reassigned back
 #         ├── Critical
-#         └── High
+#         ├── High
+#         └── Needinfo
 
 # rule:[mute bots]
 # Do not allow bots to make noise to specific Bugzilla's sub-folder,
@@ -52,6 +54,15 @@ if allof ( address  :is       "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
+# rule:[security - needinfo secteam]
+# Needinfo requested for security-team
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To"   "security-team@suse.de",
+           header  :contains "Subject" "needinfo requested:" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Needinfo";
+    stop;
+}
+
 # rule:[Embargoed notification]
 if allof ( address :is "From" "bugzilla_noreply@suse.com", 
            address :is "To" "security-team@suse.de",
@@ -80,6 +91,15 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header  :is "X-Bugzilla-Type" "changed",
            header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
+    stop;
+}
+
+# rule:[direct needinfo]
+# Needinfo requested for me
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To"   "${SUSECOM_ADDR}",
+           header  :contains "Subject" "needinfo requested:" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Direct/Needinfo";
     stop;
 }
 
