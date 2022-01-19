@@ -267,8 +267,11 @@ if header :contains "List-Id" "<security-review.suse.de>" { fileinto :create "IN
 # ML -> SecList -> CERT Advisories
 if allof ( header  :contains "List-Id" "<security-team.suse.de>",
            address :is       "From"  [ "US-CERT@ncas.us-cert.gov",
-                                       "CISA@public.govdelivery.com" ] ) {
-    discard;
+                                       "CISA@public.govdelivery.com",
+                                       "cisacommunity@ncas.us-cert.gov",
+                                       "US-CERT@messages.cisa.gov",
+                                       "CISA@messages.cisa.gov"          ] ) {
+    fileinto :create "INBOX/Trash";
     stop;
 }
 # rule:[security-team - xorg-security ML]
