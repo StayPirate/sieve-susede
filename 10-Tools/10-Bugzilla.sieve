@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "body", "variables", "include" ];
+require [ "fileinto", "mailbox", "body", "variables", "include", "regex" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 ######################
@@ -90,6 +90,23 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
            header  :is "X-Bugzilla-Type" "changed",
            header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
+    stop;
+}
+
+# rule:[security - reassigned issue is processed]
+# After an issue was assigned back to security-team, someone from that team
+# might re-assigne it to someone elese. In that case, I want that information
+# within the same folder of the previous reassigned notification.
+#
+# Example used to craft the regex:
+# Assignee|security-team@suse.de       |kernel-bugs@suse.de
+if allof (     address :is "From" "bugzilla_noreply@suse.com",
+               address :is "To"   "security-team@suse.de",
+           not header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
+               header  :is "X-Bugzilla-Type" "changed",
+               header  :contains "x-bugzilla-changed-fields" "assigned_to",
+               body    :regex "Assignee\|security-team@suse\.de[[:space:]]*\|[a-zA-Z0-9]+" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
     stop;
 }
