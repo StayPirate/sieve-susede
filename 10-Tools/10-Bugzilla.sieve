@@ -111,6 +111,23 @@ if allof (     address :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
+# rule:[security - issue is resolved]
+# As an agreement security related issues should not be closed by the assignee
+# after he solve the issue, instead the issue has to be assigned back to the
+# security team, who will then review it and close the issue if everything is ok.
+# The following rule put the closing notification right after the re-assigned to
+# security-team notification. This will help me to quickly see which are the BZ
+# issues which are reasigned back but not closed (reviewd by the security team).
+if allof ( address :is       "From"                      "bugzilla_noreply@suse.com",
+           address :is       "To"                        "security-team@suse.de",
+           header  :is       "x-bugzilla-assigned-to"    "security-team@suse.de",
+           header  :is       "X-Bugzilla-Type"           "changed",
+           header  :contains "x-bugzilla-changed-fields" "bug_status",
+           header  :is       "X-Bugzilla-Status"         "RESOLVED" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
+    stop;
+}
+
 # rule:[direct needinfo]
 # Needinfo requested for me
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
