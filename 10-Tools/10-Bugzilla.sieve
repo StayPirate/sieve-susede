@@ -106,7 +106,7 @@ if allof (     address :is "From" "bugzilla_noreply@suse.com",
            not header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
                header  :is "X-Bugzilla-Type" "changed",
                header  :contains "x-bugzilla-changed-fields" "assigned_to",
-               body    :regex "Assignee\|security-team@suse\.de[[:space:]]*\|[a-zA-Z0-9]+" ) {
+               body    :contains "Assignee|security-team@suse.de" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
     stop;
 }
