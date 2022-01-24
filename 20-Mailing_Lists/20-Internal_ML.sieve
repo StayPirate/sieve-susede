@@ -198,8 +198,10 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
 }
 # rule:[security - Mitre SUSE CNA report]
 if allof ( header   :contains "List-Id" "<security.suse.de>",
-           header   :is       "From"    "cna-coordinator@mitre.org",
-           header   :contains "Subject" "suse CNA Report") {
+           anyof ( allof ( header   :is       "From"    "cna-coordinator@mitre.org",
+                           header   :contains "Subject" "suse CNA Report" ),
+                   allof ( header   :is       "From"    "nvd@nist.gov",
+                           header   :contains "Subject" "audit has been completed SUSE" ))) {
     fileinto :create "INBOX/ML/SUSE/security/Mitre/SUSE CNA";
     stop;
 }
