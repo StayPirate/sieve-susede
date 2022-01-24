@@ -26,7 +26,8 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # │   │   └── mikrotik
 # │   ├── Open Source Security
 # │   │   └── WebKit SA
-# │   ├── linux-distro
+# │   ├── linux-distros
+# │   ├── distros
 # │   ├── vince
 # │   ├── Info Security News
 # │   ├── CERT Advisories
@@ -127,9 +128,13 @@ if allof ( header  :contains "List-Id" "<oss-security.lists.openwall.com>",
 # http://oss-security.openwall.org/wiki/mailing-lists/oss-security
 if header :contains "List-Id" "<oss-security.lists.openwall.com>" { fileinto :create "INBOX/ML/SecList/Open Source Security"; stop; }
 
-# rule:[Seclist - linux-distro]
+# rule:[Seclist - linux-distros and distros]
 # https://oss-security.openwall.org/wiki/mailing-lists/distros
-if header :is "X-List" "vs.openwall.org" { fileinto :create "INBOX/ML/SecList/linux-distro"; stop; }
+if header :is "X-List" "vs.openwall.org" { 
+   if address :is [ "cc", "to" ] "linux-distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/linux-distros"; }
+   elsif address :is [ "cc", "to" ] "distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/distros"; }
+   stop;
+}
 
 # rule:[Seclist - VINCE]
 # https://kb.cert.org/vince/comm/auth/login/

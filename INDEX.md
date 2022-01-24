@@ -86,7 +86,8 @@ INBOX
 │   │   │   └── mikrotik
 │   │   ├── Open Source Security
 │   │   │   └── WebKit SA
-│   │   ├── linux-distro
+│   │   ├── linux-distros
+│   │   ├── distros
 │   │   ├── vince
 │   │   ├── Info Security News
 │   │   ├── CERT Advisories
