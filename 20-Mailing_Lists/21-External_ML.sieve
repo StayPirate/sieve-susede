@@ -131,9 +131,8 @@ if header :contains "List-Id" "<oss-security.lists.openwall.com>" { fileinto :cr
 # rule:[Seclist - linux-distros and distros]
 # https://oss-security.openwall.org/wiki/mailing-lists/distros
 if header :is "X-List" "vs.openwall.org" { 
-   if address :is [ "cc", "to" ] "linux-distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/linux-distros"; }
-   elsif address :is [ "cc", "to" ] "distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/distros"; }
-   stop;
+   if address :is [ "cc", "to" ] "linux-distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/linux-distros"; stop; }
+   elsif address :is [ "cc", "to" ] "distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/distros"; stop; }
 }
 
 # rule:[Seclist - VINCE]
