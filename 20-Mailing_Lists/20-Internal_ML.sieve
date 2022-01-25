@@ -223,6 +223,12 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
     fileinto :create "INBOX/ML/SUSE/security/Adobe";
     stop;
 }
+# rule:[security - no VINCE]
+# discard VINCE notification from this ML since I already got them directly
+if allof ( header   :contains "List-Id" "<security.suse.de>",
+           address  :is       "From"    "cert+donotreply@cert.org" ) {
+    discard;
+}
 # rule:[security]
 # https://mailman.suse.de/mailman/listinfo/security
 if header :contains "List-Id" "<security.suse.de>" { fileinto :create "INBOX/ML/SUSE/security"; stop; }
