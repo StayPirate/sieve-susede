@@ -185,7 +185,6 @@ if header :contains "List-Id" "<openssf-wg-best-practices.lists.openssf.org>" { 
 if allof ( header :contains "List-Id" "<debian-security-tracker.lists.debian.org>",
            address :contains "From" "sectracker@soriano.debian.org") {
     discard;
-    stop;
 }
 # rule:[Debian - security tracker]
 # https://lists.debian.org/debian-security-tracker/

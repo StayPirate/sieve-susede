@@ -20,7 +20,6 @@ if allof ( header :is "x-mailer" "OBS Notification System",
                    header :is "x-obs-request-commenter" "openqa-maintenance",
                    header :is "x-obs-request-commenter" "abichecker" )) {
     discard;
-    stop;
 }
 
 # rule:[security tools]
