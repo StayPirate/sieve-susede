@@ -8,6 +8,9 @@ set "BZ_USERNAME" "crazybyte";
 
 include :personal "01-Spam.sieve";
 
+# GPG encrypted emails
+include :personal "02-E2E_Encrypted.sieve";
+
 # Internal tools notification
 include :personal "10-Bugzilla.sieve";
 include :personal "10-IBS.sieve";
