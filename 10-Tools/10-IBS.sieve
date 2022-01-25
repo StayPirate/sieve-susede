@@ -23,6 +23,7 @@ if allof ( header :is "X-Mailer" "OBS Notification System",
                    header :is "x-obs-request-commenter" "abichecker",
                    header :is "x-obs-request-commenter" "cloud_bot" )) {
     discard;
+    stop;
 }
 
 # rule:[ignore maintenance-team review requested]
