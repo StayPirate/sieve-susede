@@ -22,7 +22,8 @@ INBOX
 │   ├── OBS
 │   │   ├── build
 │   │   └── Security Tools
-│   ├── Jira
+│   ├── Jira SUSE
+│   ├── Jira SD
 │   ├── Confluence
 │   └── Gitlab
 ├── ML
