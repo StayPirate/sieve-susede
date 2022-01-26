@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "body", "variables", "include", "regex" ];
+require [ "fileinto", "mailbox", "body", "variables", "include", "regex", "editheader" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 ######################
@@ -118,14 +118,19 @@ if allof (     address :is "From" "bugzilla_noreply@suse.com",
 # The following rule put the closing notification right after the re-assigned to
 # security-team notification. This will help me to quickly see which are the BZ
 # issues which are reasigned back but not closed (reviewd by the security team).
+# Prepend the tag [RESOLVED] in the email's subject.
 if allof ( address :is       "From"                      "bugzilla_noreply@suse.com",
            address :is       "To"                        "security-team@suse.de",
            header  :is       "x-bugzilla-assigned-to"    "security-team@suse.de",
            header  :is       "X-Bugzilla-Type"           "changed",
            header  :contains "x-bugzilla-changed-fields" "bug_status",
            header  :is       "X-Bugzilla-Status"         "RESOLVED" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
-    stop;
+           # Store the original subject in a variable that later rules can use
+           if header :matches "Subject" "*" { set "subject" "${1}"; }    # Match the entire subject
+           deleteheader "Subject";                                       # Delete the orginal subject
+           addheader :last "Subject" "[RESOLVED] ${subject}";
+           fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
+           stop;
 }
 
 # rule:[direct needinfo]
