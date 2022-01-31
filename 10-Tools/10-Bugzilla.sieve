@@ -149,15 +149,6 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
-# rule:[High priority issues]
-# Move high priority issues to a dedicated folder
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "security-team@suse.de",
-           header  :is "X-Bugzilla-Priority" "P2 - High" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/High";
-    stop;
-}
-
 # rule:[Critical priority issues]
 # Move critical priority issues to a dedicated folder
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
@@ -166,6 +157,15 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
                   header  :is "X-Bugzilla-Priority" "P1 - Urgent",
                   header  :is "X-Bugzilla-Severity" "Critical")) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Critical";
+    stop;
+}
+
+# rule:[High priority issues]
+# Move high priority issues to a dedicated folder
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To" "security-team@suse.de",
+           header  :is "X-Bugzilla-Priority" "P2 - High" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team/High";
     stop;
 }
 
