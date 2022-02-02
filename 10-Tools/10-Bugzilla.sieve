@@ -90,6 +90,10 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header  :is "X-Bugzilla-Type" "changed",
            header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
                 if address :is "To" "security-team@suse.de" {
+                    # Store the original subject in a variable that later rules can use
+                    if header :matches "Subject" "*" { set "subject" "${1}"; }    # Match the entire subject
+                    deleteheader "Subject";                                       # Delete the orginal subject
+                    addheader :last "Subject" "[REASSIGNED] ${subject}";
                     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
                     stop; }
                 elsif address :is "To" "${SUSECOM_ADDR}" {
