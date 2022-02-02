@@ -86,12 +86,16 @@ if allof ( address    :is "From" "bugzilla_noreply@suse.com",
 # rule:[security - reassigned]
 # Issues re-assigned to security-team
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To"   "security-team@suse.de",
            header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
            header  :is "X-Bugzilla-Type" "changed",
            header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
-    stop;
+                if address :is "To" "security-team@suse.de" {
+                    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
+                    stop; }
+                elsif address :is "To" "${SUSECOM_ADDR}" {
+                    # I don't want to store a duplicated notification in Tools/Bugzilla/Direct
+                    fileinto :create "INBOX/Trash";
+                    stop; }
 }
 
 # rule:[security - reassigned issue is processed]
@@ -102,13 +106,17 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # Example used to craft the regex:
 # Assignee|security-team@suse.de       |kernel-bugs@suse.de
 if allof (     address :is "From" "bugzilla_noreply@suse.com",
-               address :is "To"   "security-team@suse.de",
            not header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
                header  :is "X-Bugzilla-Type" "changed",
                header  :contains "x-bugzilla-changed-fields" "assigned_to",
                body    :contains "Assignee|security-team@suse.de" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
-    stop;
+                   if address :is "To" "security-team@suse.de" {
+                       fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
+                       stop; }
+                   elsif address :is "To" "${SUSECOM_ADDR}" {
+                       # I don't want to store a duplicated notification in Tools/Bugzilla/Direct
+                       fileinto :create "INBOX/Trash";
+                       stop; }
 }
 
 # rule:[security - issue is resolved]
@@ -120,33 +128,21 @@ if allof (     address :is "From" "bugzilla_noreply@suse.com",
 # issues which are reasigned back but not closed (reviewd by the security team).
 # Prepend the tag [RESOLVED] in the email's subject.
 if allof ( address :is       "From"                      "bugzilla_noreply@suse.com",
-           address :is       "To"                        "security-team@suse.de",
            header  :is       "x-bugzilla-assigned-to"    "security-team@suse.de",
            header  :is       "X-Bugzilla-Type"           "changed",
            header  :contains "x-bugzilla-changed-fields" "bug_status",
            header  :is       "X-Bugzilla-Status"         "RESOLVED" ) {
-           # Store the original subject in a variable that later rules can use
-           if header :matches "Subject" "*" { set "subject" "${1}"; }    # Match the entire subject
-           deleteheader "Subject";                                       # Delete the orginal subject
-           addheader :last "Subject" "[RESOLVED] ${subject}";
-           fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
-           stop;
-}
-
-# rule:[direct needinfo]
-# Needinfo requested for me
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To"   "${SUSECOM_ADDR}",
-           header  :contains "Subject" "needinfo requested:" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Direct/Needinfo";
-    stop;
-}
-
-# rule:[direct notification]
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "${SUSECOM_ADDR}" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Direct";
-    stop;
+               if address :is "To" "security-team@suse.de" {
+                    # Store the original subject in a variable that later rules can use
+                    if header :matches "Subject" "*" { set "subject" "${1}"; }    # Match the entire subject
+                    deleteheader "Subject";                                       # Delete the orginal subject
+                    addheader :last "Subject" "[RESOLVED] ${subject}";
+                    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
+                    stop; }
+               elsif address :is "To" "${SUSECOM_ADDR}" {
+                   # I don't want to store a duplicated notification in Tools/Bugzilla/Direct
+                   fileinto :create "INBOX/Trash";
+                   stop; }
 }
 
 # rule:[Critical priority issues]
@@ -166,6 +162,22 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            address :is "To" "security-team@suse.de",
            header  :is "X-Bugzilla-Priority" "P2 - High" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/High";
+    stop;
+}
+
+# rule:[direct needinfo]
+# Needinfo requested for me
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To"   "${SUSECOM_ADDR}",
+           header  :contains "Subject" "needinfo requested:" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Direct/Needinfo";
+    stop;
+}
+
+# rule:[direct notification]
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To" "${SUSECOM_ADDR}" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Direct";
     stop;
 }
 
