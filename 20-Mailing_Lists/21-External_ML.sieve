@@ -36,7 +36,10 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # │       ├── Security Threats
 # │       ├── Security Tooling
 # │       ├── Vul Disclosure
-# │       └── Code Best Practices
+# │       ├── Code Best Practices
+# │       ├── Alpha-Omega Announcements
+# │       ├── Supply Chain Integrity
+# │       └── Securing Critical Projects
 # ├── Debian
 # │   ├── Security Announce
 # │   └── Security Tracker
@@ -180,6 +183,18 @@ if header :contains "List-Id" "<openssf-wg-vul-disclosures.lists.openssf.org>" {
 # rule:[openSSF - Secure code best practices]
 # https://lists.openssf.org/g/openssf-wg-best-practices
 if header :contains "List-Id" "<openssf-wg-best-practices.lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Code Best Practices"; stop; }
+
+# rule:[openSSF - Alpha-Omega Announcements]
+# https://lists.openssf.org/g/alpha-omega-announcements
+if header :contains "List-Id" "<alpha-omega-announcements@lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Alpha-Omega Announcements"; stop; }
+
+# rule:[openSSF - Supply Chain Integrity]
+# https://lists.openssf.org/g/openssf-supply-chain-integrity
+if header :contains "List-Id" "<openssf-supply-chain-integrity@lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Supply Chain Integrity"; stop; }
+
+# rule:[openSSF - Securing Critical Projects]
+# https://lists.openssf.org/g/openssf-wg-securing-crit-prjs
+if header :contains "List-Id" "<openssf-wg-securing-crit-prjs@lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Securing Critical Projects"; stop; }
 
 # rule:[Debian - security tracker mute bot]
 if allof ( header :contains "List-Id" "<debian-security-tracker.lists.debian.org>",
