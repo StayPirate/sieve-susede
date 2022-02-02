@@ -54,6 +54,16 @@ if allof ( address  :is       "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
+# rule:[proactive security audit bugs]
+# Notifications about AUDIT bugs are not part of the reactive security scope,
+# so they will be moved into the generic folder Tools/Bugzilla/Security Team.
+if allof ( address :is    "From"    "bugzilla_noreply@suse.com", 
+           address :is    "To"      "security-team@suse.de",
+           header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER):.*$" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team";
+    stop;
+}
+
 # rule:[security - needinfo secteam]
 # Needinfo requested for security-team
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
