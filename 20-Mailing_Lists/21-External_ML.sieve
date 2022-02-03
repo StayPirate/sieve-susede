@@ -186,15 +186,15 @@ if header :contains "List-Id" "<openssf-wg-best-practices.lists.openssf.org>" { 
 
 # rule:[openSSF - Alpha-Omega Announcements]
 # https://lists.openssf.org/g/alpha-omega-announcements
-if header :contains "List-Id" "<alpha-omega-announcements@lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Alpha-Omega Announcements"; stop; }
+if header :contains "List-Id" "<alpha-omega-announcements.lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Alpha-Omega Announcements"; stop; }
 
 # rule:[openSSF - Supply Chain Integrity]
 # https://lists.openssf.org/g/openssf-supply-chain-integrity
-if header :contains "List-Id" "<openssf-supply-chain-integrity@lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Supply Chain Integrity"; stop; }
+if header :contains "List-Id" "<openssf-supply-chain-integrity.lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Supply Chain Integrity"; stop; }
 
 # rule:[openSSF - Securing Critical Projects]
 # https://lists.openssf.org/g/openssf-wg-securing-crit-prjs
-if header :contains "List-Id" "<openssf-wg-securing-crit-prjs@lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Securing Critical Projects"; stop; }
+if header :contains "List-Id" "<openssf-wg-securing-crit-prjs.lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Securing Critical Projects"; stop; }
 
 # rule:[Debian - security tracker mute bot]
 if allof ( header :contains "List-Id" "<debian-security-tracker.lists.debian.org>",
