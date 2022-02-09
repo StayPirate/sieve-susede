@@ -219,7 +219,7 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
 }
 # rule:[security - Adobe]
 if allof ( header   :contains "List-Id" "<security.suse.de>",
-           envelope :domain   "From"    "mail.adobe.com",
+           address  :domain   "From"    "mail.adobe.com",
            header   :contains "Subject" "Adobe Security Bulletin") {
     fileinto :create "INBOX/ML/SUSE/security/Adobe";
     stop;
