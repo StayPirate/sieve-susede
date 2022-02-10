@@ -102,6 +102,9 @@ if allof ( address    :is "From" "bugzilla_noreply@suse.com",
            header     :contains "X-Bugzilla-Changed-Fields" "short_desc",
            not header :contains "Subject" "EMBARGOED",
            body       :contains "EMBARGOED" ) {
+    if header :matches "Subject" "*" { set "subject" "${1}"; }    # Match the entire subject
+    deleteheader "Subject";                                       # Delete the orginal subject
+    addheader :last "Subject" "[PUBLISHED] ${subject}";
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Embargoed";
     stop;
 }
