@@ -18,10 +18,8 @@ if allof ( address :is "From" "lwn@lwn.net",
 
 # rule:[Linux Foundation]
 # https://linuxfoundation.org
-if allof ( address :is "From" [ "no-reply@linuxfoundation.org",
-                                "training@linuxfoundation.org",
-                                "marketing@linuxfoundation.org" ],
-           address :is "To" "${SUSEDE_ADDR}" ) {
+if allof ( address :domain "From" "linuxfoundation.org",
+           address :is     "To"   "${SUSEDE_ADDR}" ) {
     fileinto :create "INBOX/NL/Linux Foundation";
     stop;
 }
