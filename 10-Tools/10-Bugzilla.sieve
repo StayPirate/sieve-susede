@@ -42,14 +42,26 @@ if allof ( address  :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
-# rule:[mute new (not me) CC or assigned_to]
-# Ignore, if the only change is a new person added/removed to CC, or changed the assignee.
+# rule:[mute new (not me) CC]
+# Ignore, if the only change is a new person added/removed to CC.
 # But allow notification with a new comment.
-if allof ( address  :is       "From" "bugzilla_noreply@suse.com",
-           header   :is       "X-Bugzilla-Type" "changed",
-           anyof ( header   :contains "X-Bugzilla-Changed-Fields" "cc",
-                   header   :contains "X-Bugzilla-Changed-Fields" "assigned_to"),
-           not body :contains "Comment" ) {
+if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
+           header     :is       "X-Bugzilla-Type"           "changed",
+           header     :contains "X-Bugzilla-Changed-Fields" "cc",
+           not header :is       "X-Bugzilla-Who"          [ "${SUSEDE_ADDR}", "security-team@suse.de" ],
+           not body   :contains "Comment" ) {
+    fileinto :create "INBOX/Trash";
+    stop;
+}
+
+# rule:[mute new (not me) assigned_to]
+# Ignore, if the only change is the assignee.
+# But allow notification with a new comment.
+if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
+           header     :is       "X-Bugzilla-Type"           "changed",
+           header     :contains "X-Bugzilla-Changed-Fields" "assigned_to",
+           not header :is       "X-Bugzilla-Assigned-To"  [ "${SUSEDE_ADDR}", "security-team@suse.de" ],
+           not body   :contains "Comment" ) {
     fileinto :create "INBOX/Trash";
     stop;
 }
