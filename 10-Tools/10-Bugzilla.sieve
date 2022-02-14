@@ -203,7 +203,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # Discard all the issues assigned to maint-coord
 if allof ( address :is "From" "bugzilla_noreply@suse.com", 
            address :is "To" "maint-coord@suse.de" ) {
-    fileinto :create "INBOX/Trash";
+    discard;
     stop;
 }
 
