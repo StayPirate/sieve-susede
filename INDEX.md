@@ -13,7 +13,8 @@ INBOX
 │   │       ├── Reassigned back
 │   │       ├── Critical
 │   │       ├── High
-│   │       └── Needinfo
+│   │       ├── Needinfo
+│   │       └── Proactive
 │   ├── IBS
 │   │   ├── build
 │   │   └── requests

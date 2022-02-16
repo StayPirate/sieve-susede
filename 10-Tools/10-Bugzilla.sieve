@@ -13,7 +13,8 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #         ├── Reassigned back
 #         ├── Critical
 #         ├── High
-#         └── Needinfo
+#         ├── Needinfo
+#         └── Proactive
 
 # rule:[mute bots]
 # Do not allow bots to make noise to specific Bugzilla's sub-folder,
@@ -28,9 +29,46 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
+# rule:[mute security-team notification]
+# This rule discards all the notification sent to security-team@suse.de.
+# As a member of the SUSE security team I receive BZ notifications for both
+# my personal account ${SUSEDE_ADDR} and security-team@suse.de via that ML.
+# This, of course, makes me receive duplicated notifications when I'm
+# personal involved in an issue where security-team@suse.de also is.
+# === SOLUTION ===
+# Fortunatelly BZ allows users to "watch" other users [0][1], and now that
+# I started to watch security-team@suse.de I get all the notifications that
+# it gets, but those are sent directly to ${SUSEDE_ADDR}.
+# This is a much convinient way, beacuse if I'm also personally involved in
+# the same BZ issue, then I get the notification only once.
+# Watch a specific component would also have been a good solution, but this
+# feature won't be available before Bugzilla v6.0 [1].
+#
+# With this in mind, I can sefely discard all the email notifications sent
+# to security-team@suse.de. :)
+#
+# [0] https://www.bugzilla.org/docs/3.0/html/userpreferences.html
+# [1] https://bugzilla.suse.com/userprefs.cgi
+# [2] https://bugzilla.mozilla.org/show_bug.cgi?id=76794
+if allof ( address :is       "From"           "bugzilla_noreply@suse.com",
+           address :is       "To"             "security-team@suse.de",
+           header  :contains "List-Id"        "<security-team.suse.de>",
+           header  :contains "X-Bugzilla-URL" "http://bugzilla.suse.com" ) {
+	discard;
+    stop;
+}
+
+# rule:[mute all maint-coord notifications]
+# Discard all the notifications sent to maint-coord
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           address :is "To" "maint-coord@suse.de" ) {
+    discard;
+    stop;
+}
+
 # rule:[mute n2p status]
 # Ignore notification when the only change is the status from new to in progress
-# But allow notification with a new comment.
+# But allow notifications with comments.
 if allof ( address  :is "From" "bugzilla_noreply@suse.com",
            header   :is "X-Bugzilla-Type" "changed",
            header   :is "X-Bugzilla-Changed-Fields" "bug_status",
@@ -43,11 +81,10 @@ if allof ( address  :is "From" "bugzilla_noreply@suse.com",
 }
 
 # rule:[mute new (not me) CC]
-# Ignore, if the only change is a new person added/removed to CC.
-# But allow notification with a new comment.
+# Trash if the only change is a new person added/removed to CC, but allow notification with a new comment.
 if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
            header     :is       "X-Bugzilla-Type"           "changed",
-           header     :contains "X-Bugzilla-Changed-Fields" "cc",
+           header     :is       "X-Bugzilla-Changed-Fields" "cc",
            not header :is       "X-Bugzilla-Who"          [ "${SUSEDE_ADDR}", "security-team@suse.de" ],
            not body   :contains "Comment" ) {
     fileinto :create "INBOX/Trash";
@@ -55,8 +92,7 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
 }
 
 # rule:[mute new (not me) assigned_to]
-# Ignore, if the only change is the assignee.
-# But allow notification with a new comment.
+# Trash if the only change is the assignee, but allow notifications with new comments.
 if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
            header     :is       "X-Bugzilla-Type"           "changed",
            header     :contains "X-Bugzilla-Changed-Fields" "assigned_to",
@@ -66,50 +102,43 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
     stop;
 }
 
-# rule:[mute duplicated notifications]
-# Since I'm collecting emails both as ${SUSECOM_ADDR} and security-team@suse.de, I often
-# get notified twice. With this rule I want to stop all the duplicated notifications that
-# would end into the Tools/Bugzilla/Direct folder.
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To"   "${SUSECOM_ADDR}",
-           anyof ( header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
-                   header  :is "x-bugzilla-qa-contact"  "security-team@suse.de" )) {
-                       # I will get the same notification as security-team@suse.de user, hence I can discard this.
-                       fileinto :create "INBOX/Trash";
-                       stop;
-}
-
 # rule:[proactive security audit bugs]
-# Notifications about AUDIT bugs are not part of the reactive security scope,
-# so they will be moved into the generic folder Tools/Bugzilla/Security Team.
+# Notifications about AUDIT bugs are not part of the reactive security scope, so they
+# will be moved into the a dedicated folder Tools/Bugzilla/Security Team/Proactive.
 if allof ( address :is    "From"    "bugzilla_noreply@suse.com", 
-           address :is    "To"      "security-team@suse.de",
            header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER):.*$" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team";
     stop;
 }
 
-# rule:[security - needinfo secteam]
+# rule:[needinfo for security-team]
 # Needinfo requested for security-team
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To"   "security-team@suse.de",
-           header  :contains "Subject" "needinfo requested:" ) {
+           header  :contains "Subject" "needinfo requested:",
+           body    :contains "<security-team@suse.de> for needinfo:" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Needinfo";
     stop;
 }
 
-# rule:[Embargoed notification]
+# rule:[needinfo for me]
+# Needinfo requested for me
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           header  :contains "Subject" "needinfo requested:",
+           body    :contains "<${SUSEDE_ADDR}> for needinfo:" ) {
+    fileinto :create "INBOX/Tools/Bugzilla/Direct/Needinfo";
+    stop;
+}
+
+# rule:[embargoed notifications]
 if allof ( address :is "From" "bugzilla_noreply@suse.com", 
-           address :is "To" "security-team@suse.de",
            header  :contains "Subject" "EMBARGOED" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Embargoed";
     stop;
 }
 
-# rule:[No Longer Embargoed]
-# Embargoed issues when become public
+# rule:[embargoed issue get public]
+# Embargoed issues become public notifications
 if allof ( address    :is "From" "bugzilla_noreply@suse.com", 
-           address    :is "To" "security-team@suse.de",
            header     :is "X-Bugzilla-Type" "changed",
            header     :contains "X-Bugzilla-Changed-Fields" "short_desc",
            not header :contains "Subject" "EMBARGOED",
@@ -121,10 +150,9 @@ if allof ( address    :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
-# rule:[security - reassigned]
-# Issues re-assigned to security-team
+# rule:[reassigned to security-team]
+# Issues re-assigned to the security-team
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "security-team@suse.de",
            header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
            header  :is "X-Bugzilla-Type" "changed",
            header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
@@ -136,15 +164,15 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
                 stop;
 }
 
-# rule:[security - reassigned issue is processed]
-# After an issue was assigned back to security-team, someone from that team
-# might re-assigne it to someone elese. In that case, I want that information
-# within the same folder of the previous reassigned notification.
+# rule:[reassigned issue requires more work]
+# After that an issue is assigned back to security-team, it can happen that it will be
+# re-assigned to another team/person since more work is needed. In that case it want to
+# get such informaion in the same folder where the re-assign to the security-team was.
 #
 # Example used to craft the regex:
 # Assignee|security-team@suse.de       |kernel-bugs@suse.de
+#
 if allof (     address :is "From" "bugzilla_noreply@suse.com",
-               address :is "To"   "security-team@suse.de",
            not header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
                header  :is "X-Bugzilla-Type" "changed",
                header  :contains "x-bugzilla-changed-fields" "assigned_to",
@@ -153,16 +181,14 @@ if allof (     address :is "From" "bugzilla_noreply@suse.com",
                   stop;
 }
 
-# rule:[security - issue is resolved]
-# As an agreement security related issues should not be closed by the assignee
-# after he solve the issue, instead the issue has to be assigned back to the
-# security team, who will then review it and close the issue if everything is ok.
-# The following rule put the closing notification right after the re-assigned to
-# security-team notification. This will help me to quickly see which are the BZ
-# issues which are reasigned back but not closed (reviewd by the security team).
-# Prepend the tag [RESOLVED] in the email's subject.
+# rule:[issue is resolved]
+# As an agreement, all the security related issues should not be closed by the
+# assignee once he did his work, instead the issue should to be assigned back to
+# the security team, who will then review and close the issue if everything is fine.
+# The rule put the closing notification in the same folder of the re-assigned one.
+# This helps me to quickly check which BZ issues are still open and which not.
+# Also prepend the tag [RESOLVED] in the email's subject.
 if allof ( address :is       "From"                      "bugzilla_noreply@suse.com",
-           address :is       "To"                        "security-team@suse.de",
            header  :is       "x-bugzilla-assigned-to"    "security-team@suse.de",
            header  :is       "X-Bugzilla-Type"           "changed",
            header  :contains "x-bugzilla-changed-fields" "bug_status",
@@ -175,10 +201,9 @@ if allof ( address :is       "From"                      "bugzilla_noreply@suse.
                stop;
 }
 
-# rule:[Critical priority issues]
+# rule:[critical priority issues]
 # Move critical priority issues to a dedicated folder
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "security-team@suse.de",
            anyof( header  :is "X-Bugzilla-Priority" "P0 - Crit Sit",
                   header  :is "X-Bugzilla-Priority" "P1 - Urgent",
                   header  :is "X-Bugzilla-Severity" "Critical")) {
@@ -186,43 +211,24 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
-# rule:[High priority issues]
+# rule:[high priority issues]
 # Move high priority issues to a dedicated folder
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "security-team@suse.de",
            header  :is "X-Bugzilla-Priority" "P2 - High" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/High";
     stop;
 }
 
-# rule:[direct needinfo]
-# Needinfo requested for me
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To"   "${SUSECOM_ADDR}",
-           header  :contains "Subject" "needinfo requested:" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Direct/Needinfo";
-    stop;
-}
-
-# rule:[direct notification]
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           address :is "To" "${SUSECOM_ADDR}" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Direct";
-    stop;
-}
-
-# rule:[maint-coord - catch all]
-# Discard all the issues assigned to maint-coord
-if allof ( address :is "From" "bugzilla_noreply@suse.com", 
-           address :is "To" "maint-coord@suse.de" ) {
-    discard;
-    stop;
-}
-
-# rule:[BZ - security]
+# rule:[generic notification for security-team]
 # Notifications sent to security-team, no bot's messages end up here.
-if allof ( address :is "From" "bugzilla_noreply@suse.com", 
-           address :is "To" "security-team@suse.de" ) {
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           header  :contains "x-bugzilla-watch-reason" "security-team@suse.de" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team";
+    stop;
+}
+
+# rule:[generic notification for me]
+if address :is "From" "bugzilla_noreply@suse.com" {
+    fileinto :create "INBOX/Tools/Bugzilla/Direct";
     stop;
 }
