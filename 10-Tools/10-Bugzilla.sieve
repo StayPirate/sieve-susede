@@ -107,7 +107,7 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
 # will be moved into the a dedicated folder Tools/Bugzilla/Security Team/Proactive.
 if allof ( address :is    "From"    "bugzilla_noreply@suse.com", 
            header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER):.*$" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team";
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive";
     stop;
 }
 
