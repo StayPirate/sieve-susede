@@ -53,7 +53,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 if allof ( address :is       "From"           "bugzilla_noreply@suse.com",
            address :is       "To"             "security-team@suse.de",
            header  :contains "List-Id"        "<security-team.suse.de>",
-           header  :contains "X-Bugzilla-URL" "http://bugzilla.suse.com" ) {
+           header  :contains "X-Bugzilla-URL" [ "://bugzilla.suse.com", "://bugzilla.opensuse.org" ]) {
 	discard;
     stop;
 }
