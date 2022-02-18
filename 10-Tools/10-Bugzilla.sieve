@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "body", "variables", "include", "regex", "editheader" ];
+require [ "fileinto", "mailbox", "body", "variables", "include", "regex", "editheader", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 ######################
@@ -106,7 +106,8 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
 # Notifications about AUDIT bugs are not part of the reactive security scope, so they
 # will be moved into the a dedicated folder Tools/Bugzilla/Security Team/Proactive.
 if allof ( address :is    "From"    "bugzilla_noreply@suse.com", 
-           header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER):.*$" ) {
+           header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER|STALE):.*$" ) {
+    addflag "\\Seen";
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive";
     stop;
 }
