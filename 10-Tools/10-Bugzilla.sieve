@@ -35,13 +35,13 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # rule:[mute security-team notification]
 # This rule discards all the notification sent to security-team@suse.de.
 # As a member of the SUSE security team I receive BZ notifications for both
-# my personal account ${SUSEDE_ADDR} and security-team@suse.de via that ML.
+# my personal account ${SUSECOM_ADDR} and security-team@suse.de via that ML.
 # This, of course, makes me receive duplicated notifications when I'm
 # personal involved in an issue where security-team@suse.de also is.
 # === SOLUTION ===
 # Fortunatelly BZ allows users to "watch" other users [0][1], and now that
 # I started to watch security-team@suse.de I get all the notifications that
-# it gets, but those are sent directly to ${SUSEDE_ADDR}.
+# it gets, but those are sent directly to ${SUSECOM_ADDR}.
 # This is a much convinient way, beacuse if I'm also personally involved in
 # the same BZ issue, then I get the notification only once.
 # Watch a specific component would also have been a good solution, but this
@@ -88,7 +88,7 @@ if allof ( address  :is "From" "bugzilla_noreply@suse.com",
 if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
            header     :is       "X-Bugzilla-Type"           "changed",
            header     :is       "X-Bugzilla-Changed-Fields" "cc",
-           not header :is       "X-Bugzilla-Who"          [ "${SUSEDE_ADDR}", "security-team@suse.de" ],
+           not header :is       "X-Bugzilla-Who"          [ "${SUSECOM_ADDR}", "security-team@suse.de" ],
            not body   :contains "Comment" ) {
     fileinto :create "INBOX/Trash";
     stop;
@@ -99,7 +99,7 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
 if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
            header     :is       "X-Bugzilla-Type"           "changed",
            header     :contains "X-Bugzilla-Changed-Fields" "assigned_to",
-           not header :is       "X-Bugzilla-Assigned-To"  [ "${SUSEDE_ADDR}", "security-team@suse.de" ],
+           not header :is       "X-Bugzilla-Assigned-To"  [ "${SUSECOM_ADDR}", "security-team@suse.de" ],
            not body   :contains "Comment" ) {
     fileinto :create "INBOX/Trash";
     stop;
@@ -131,7 +131,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # Needinfo requested for me
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header  :contains "Subject" "needinfo requested:",
-           body    :contains "<${SUSEDE_ADDR}> for needinfo:" ) {
+           body    :contains "<${SUSECOM_ADDR}> for needinfo:" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Direct/Needinfo";
     stop;
 }
