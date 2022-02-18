@@ -98,7 +98,7 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
 # Trash if the only change is the assignee, but allow notifications with new comments.
 if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
            header     :is       "X-Bugzilla-Type"           "changed",
-           header     :contains "X-Bugzilla-Changed-Fields" "assigned_to",
+           header     :is       "X-Bugzilla-Changed-Fields" "assigned_to",
            not header :is       "X-Bugzilla-Assigned-To"  [ "${SUSECOM_ADDR}", "security-team@suse.de" ],
            not body   :contains "Comment" ) {
     fileinto :create "INBOX/Trash";
