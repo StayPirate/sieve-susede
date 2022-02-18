@@ -156,7 +156,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # rule:[opensuse issues]
 # openSUSE only bugs
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           not header :contains "X-Bugzilla-Product" "openSUSE" ){
+           header :contains "X-Bugzilla-Product" "openSUSE" ){
               fileinto :create "INBOX/Tools/Bugzilla/Security Team/openSUSE";
               stop;
 }
