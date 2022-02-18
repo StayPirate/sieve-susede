@@ -15,6 +15,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #         ├── High
 #         ├── Needinfo
 #         ├── Proactive
+#         ├── openSUSE
 #         └── Others
 #             └──security-team
 
@@ -137,6 +138,14 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header  :contains "Subject" "EMBARGOED" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Embargoed";
     stop;
+}
+
+# rule:[opensuse issues]
+# openSUSE only bugs
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           not header :contains "X-Bugzilla-Product" "openSUSE" ){
+              fileinto :create "INBOX/Tools/Bugzilla/Security Team/openSUSE";
+              stop;
 }
 
 # rule:[not security reactive issues]
