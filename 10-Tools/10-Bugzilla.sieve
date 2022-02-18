@@ -251,7 +251,8 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # rule:[generic notification for security-team]
 # Notifications sent to security-team, no bot's messages end up here.
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           header  :contains "x-bugzilla-watch-reason" "security-team@suse.de" ) {
+           header  :contains "x-bugzilla-watch-reason" "security-team@suse.de",
+           header  :is "x-bugzilla-reason" "None" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team";
     stop;
 }
