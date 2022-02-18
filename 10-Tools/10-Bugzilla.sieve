@@ -105,6 +105,16 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
     stop;
 }
 
+# rule:[mute only subject is changed]
+# Trash if the only change is a change to the issue's subject, but allow notifications with new comments.
+if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
+           header     :is       "X-Bugzilla-Type"           "changed",
+           header     :is "X-Bugzilla-Changed-Fields" "short_desc",
+           not body   :contains "Comment" ) {
+    fileinto :create "INBOX/Trash";
+    stop;
+}
+
 # rule:[proactive security audit bugs]
 # Notifications about AUDIT bugs are not part of the reactive security scope, so they
 # will be moved into the a dedicated folder Tools/Bugzilla/Security Team/Proactive.
