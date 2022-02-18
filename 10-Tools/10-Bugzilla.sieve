@@ -108,6 +108,9 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
 # rule:[proactive security audit bugs]
 # Notifications about AUDIT bugs are not part of the reactive security scope, so they
 # will be moved into the a dedicated folder Tools/Bugzilla/Security Team/Proactive.
+#
+# Note: keep this rule before the "not security reactive issues" rule, since AUDIT bugs are
+# sometimes created in different BZ products/components!
 if allof ( address :is    "From"    "bugzilla_noreply@suse.com", 
            header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER|STALE):.*$" ) {
     addflag "\\Seen";
@@ -152,7 +155,9 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # Security related issues that are not the usual reactive/proactive tasks.
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
            not header :is "X-Bugzilla-Product" "SUSE Security Incidents",
-           not header :is "X-Bugzilla-Component" "Incidents" ){
+           not header :is "X-Bugzilla-Component" "Incidents",
+           # "Live Patches" is a component of the "SUSE Linux Enterprise Live Patching", but they are part of the daily reactive tasks.
+           not header :is "X-Bugzilla-Component" "Live Patches" ){
               if header :contains "x-bugzilla-watch-reason" "security-team@suse.de" {
                  fileinto :create "INBOX/Tools/Bugzilla/Security Team/Others/security-team"; }
               else {
