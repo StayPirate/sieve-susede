@@ -14,7 +14,9 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #         ├── Critical
 #         ├── High
 #         ├── Needinfo
-#         └── Proactive
+#         ├── Proactive
+#         └── Others
+#             └──security-team
 
 # rule:[mute bots]
 # Do not allow bots to make noise to specific Bugzilla's sub-folder,
@@ -135,6 +137,18 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header  :contains "Subject" "EMBARGOED" ) {
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Embargoed";
     stop;
+}
+
+# rule:[not security reactive issues]
+# Security related issues that are not the usual reactive/proactive tasks.
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           not header :is "X-Bugzilla-Product" "SUSE Security Incidents",
+           not header :is "X-Bugzilla-Component" "Incidents" ){
+              if header :contains "x-bugzilla-watch-reason" "security-team@suse.de" {
+                 fileinto :create "INBOX/Tools/Bugzilla/Security Team/Others/security-team"; }
+              else {
+                 fileinto :create "INBOX/Tools/Bugzilla/Security Team/Others"; }
+              stop;
 }
 
 # rule:[embargoed issue get public]

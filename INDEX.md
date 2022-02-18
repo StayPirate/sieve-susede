@@ -14,7 +14,9 @@ INBOX
 │   │       ├── Critical
 │   │       ├── High
 │   │       ├── Needinfo
-│   │       └── Proactive
+│   │       ├── Proactive
+│   │       └── Others
+│   │           └──security-team
 │   ├── IBS
 │   │   ├── build
 │   │   └── requests
