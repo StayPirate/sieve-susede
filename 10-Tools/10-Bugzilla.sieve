@@ -167,7 +167,8 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            not header :is "X-Bugzilla-Product" "SUSE Security Incidents",
            not header :is "X-Bugzilla-Component" "Incidents",
            # "Live Patches" is a component of the "SUSE Linux Enterprise Live Patching", but they are part of the daily reactive tasks.
-           not header :is "X-Bugzilla-Component" "Live Patches" ){
+           not header :is "X-Bugzilla-Component" "Live Patches",
+           not header :contains "Subject" "needinfo canceled:" ){
               if header :contains "x-bugzilla-watch-reason" "security-team@suse.de" {
                  fileinto :create "INBOX/Tools/Bugzilla/Security Team/Others/security-team"; }
               else {
