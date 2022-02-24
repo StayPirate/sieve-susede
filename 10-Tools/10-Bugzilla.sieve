@@ -115,6 +115,18 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
     stop;
 }
 
+# rule:[fix MS Exchange broken threads]
+# MS Exchange mangles email headers without any respect for the standards,
+# this leads to a different bad behavior from non-Outlook MUA.
+# This rule is intended to re-create the correct Message-ID header in order
+# to fix the broken threads in Thunderbird.
+if allof ( header :regex "Message-ID" ".*\.outlook\.com>$",
+           header :matches "x-ms-exchange-parent-message-id" "*" ) {
+             # Replace Message-ID with x-ms-exchange-parent-message-id
+             deleteheader "Message-ID";
+             addheader :last "Message-ID" "${1}";
+}
+
 # rule:[proactive security audit bugs]
 # Notifications about AUDIT bugs are not part of the reactive security scope, so they
 # will be moved into the a dedicated folder Tools/Bugzilla/Security Team/Proactive.
