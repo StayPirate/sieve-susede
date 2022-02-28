@@ -50,6 +50,11 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # │   ├── Hardened
 # │   ├── Security Announce
 # │   └── Security Patch
+# ├── Archlinux
+# │   ├── arch-announce
+# │   ├── arch-events
+# │   ├── arch-general
+# │   └── arch-security
 # ├── Italian
 # │   └── GNU Translation
 # └── Security Advisory
@@ -237,3 +242,19 @@ if header :contains "List-Id" "<www-it-traduzioni.gnu.org>" { fileinto :create "
 # rule:[SA - weechat]
 # https://lists.nongnu.org/mailman/listinfo/weechat-security
 if header :contains "List-Id" "<weechat-security.nongnu.org>" { fileinto :create "INBOX/ML/Security Advisory/Weechat"; stop; }
+
+# rule:[Archlinux - arch-announce]
+# https://lists.archlinux.org/listinfo/arch-announce
+if header :contains "List-Id" "<arch-announce.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-announce"; stop; }
+
+# rule:[Archlinux - arch-events]
+# https://lists.archlinux.org/listinfo/arch-events
+if header :contains "List-Id" "<arch-events.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-events"; stop; }
+
+# rule:[Archlinux - arch-general]
+# https://lists.archlinux.org/listinfo/arch-general
+if header :contains "List-Id" "<arch-general.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-general"; stop; }
+
+# rule:[Archlinux - arch-security]
+# https://lists.archlinux.org/listinfo/arch-security
+if header :contains "List-Id" "<arch-security.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-security"; stop; }

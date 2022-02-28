@@ -115,6 +115,11 @@ INBOX
 │   │   ├── Hardened
 │   │   ├── Security Announce
 │   │   └── Security Patch
+│   ├── Archlinux
+│   │   ├── arch-announce
+│   │   ├── arch-events
+│   │   ├── arch-general
+│   │   └── arch-security
 │   ├── Italian
 │   │   └── GNU Translation
 │   └── Security Advisory
