@@ -15,9 +15,10 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #         ├── High
 #         ├── Needinfo
 #         ├── Proactive
+#         │   └── Reports
 #         ├── openSUSE
 #         └── Others
-#             └──security-team
+#             └── security-team
 
 # rule:[mute bots]
 # Do not allow bots to make noise to specific Bugzilla's sub-folder,

@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress" ];
+require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
@@ -298,6 +298,16 @@ if allof (     address :contains "CC" "security-team@suse.de",
                address :contains "CC" "${SUSEDE_ADDR}",
            not address :contains "To" "${SUSEDE_ADDR}" ) {
     fileinto :create "INBOX/ML/SUSE/security-team";
+    stop;
+}
+# rule:[security-team - proactive audit report ]
+# Weekly audit report for the proactive team to the proactive BZ folder
+if allof ( address :is "From" "jenkins@suse.de",
+           address :is "To" "security-team@suse.de",
+           header  :contains "List-Id" "<security-team.suse.de>",
+           header  :contains "Subject" "Audit Bug Report for" ) {
+    addflag "\\Seen";
+    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive/Reports";
     stop;
 }
 # rule:[security-team]

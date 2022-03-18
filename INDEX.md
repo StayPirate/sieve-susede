@@ -15,6 +15,7 @@ INBOX
 │   │       ├── High
 │   │       ├── Needinfo
 │   │       ├── Proactive
+│   │       │   └── Reports
 │   │       ├── openSUSE
 │   │       └── Others
 │   │           └──security-team
