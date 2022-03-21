@@ -79,7 +79,7 @@ if allof ( address  :is "From" "bugzilla_noreply@suse.com",
            header   :is "X-Bugzilla-Status" "IN_PROGRESS",
            anyof ( body     :contains "Status|NEW",
                    body     :contains "Status  NEW     IN_PROGRESS"),
-           not body :contains "--- Comment #" ) {
+           not body :contains "Comment" ) {
     fileinto :create "INBOX/Trash";
     stop;
 }
