@@ -231,6 +231,17 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
     discard;
     stop;
 }
+# rule:[security - no security@suse.com duplicates]
+# security@suse.com redirects everything to security@suse.de, then if an email is sent
+# to both security@suse.de and security@suse.com I get it twice in my inbox
+if allof ( header  :contains "List-Id" "<security.suse.de>",
+           address :contains [ "To", "CC" ] "security@suse.com",
+           address :contains [ "To", "CC" ] "security@suse.de",
+           header  :contains "Resent-From" "security@suse.com" ) {
+    addflag "${FLAG_DUPLICATED}";
+    fileinto :create "INBOX/Trash";
+    stop;
+}
 # rule:[security]
 # https://mailman.suse.de/mailman/listinfo/security
 if header :contains "List-Id" "<security.suse.de>" { fileinto :create "INBOX/ML/SUSE/security"; stop; }
