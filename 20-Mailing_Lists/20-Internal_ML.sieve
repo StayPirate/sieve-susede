@@ -1,5 +1,8 @@
 require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress", "imap4flags" ];
-global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
+# Flags
+global [ "SYSTEM_FLAG_SEEN" ];
+global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED" ];
 
 #######################
 ##### Internal ML #####
@@ -306,7 +309,7 @@ if allof ( header :contains "List-Id" "<security-team.suse.de>",
 }
 # rule:[security-team - security-team and me in CC ]
 # When someone follows up on a thread where I'm also in CC, I want it in the same ML folder
-if allof (     address :contains "CC" "security-team@suse.de",
+if allof (     address :contains "CC" "${SECURITY_TEAM_ADDR}",
                address :contains "CC" "${SUSEDE_ADDR}",
            not address :contains "To" "${SUSEDE_ADDR}" ) {
     fileinto :create "INBOX/ML/SUSE/security-team";
@@ -315,10 +318,10 @@ if allof (     address :contains "CC" "security-team@suse.de",
 # rule:[security-team - proactive audit report ]
 # Weekly audit report for the proactive team to the proactive BZ folder
 if allof ( address :is "From" "jenkins@suse.de",
-           address :is "To" "security-team@suse.de",
+           address :is "To" "${SECURITY_TEAM_ADDR}",
            header  :contains "List-Id" "<security-team.suse.de>",
            header  :contains "Subject" "Audit Bug Report for" ) {
-    addflag "\\Seen";
+    addflag "${SYSTEM_FLAG_SEEN}";
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive/Reports";
     stop;
 }
