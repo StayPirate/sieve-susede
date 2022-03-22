@@ -9,51 +9,57 @@ global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED" ];
 #######################
 ### SUSEDE: https://mailman.suse.de/mailman/listinfo
 ### SUSECOM: http://lists.suse.com/mailman/listinfo
-#
-# ML
-# └── SUSE
-#     ├── security-team
-#     │   ├── Xorg
-#     │   └── Samba
-#     ├── security
-#     │   ├── Xen
-#     │   │   └── Security Advisory
-#     │   ├── MariaDB
-#     │   ├── Django
-#     │   ├── Ceph
-#     │   ├── Kubernetes
-#     │   ├── Qemu
-#     │   ├── Cloud Foundry
-#     │   ├── strongSwan
-#     │   ├── Adobe
-#     │   └── Mitre
-#     │       └── SUSE CNA
-#     ├── maintsecteam
-#     │   ├── maintenance wr
-#     │   ├── workreport
-#     │   └── smash-smelt
-#     ├── security-reports
-#     │   ├── Embargo Alerts
-#     │   └── Chromium
-#     ├── devel
-#     ├── high-impact-vul
-#     ├── high-impact-vul-info
-#     ├── kernel
-#     ├── linux
-#     ├── maint-coord
-#     │   └── QA Failed
-#     ├── maintsec-reports
-#     │   └── channels changes
-#     ├── research
-#     ├── results
-#     ├── secure-boot
-#     ├── secure-devel
-#     ├── security-intern
-#     ├── security-review
-#     ├── sle-security-updates
-#     │   ├── container
-#     │   └── image
-#     └── users
+
+# INBOX
+# ├── Tools
+# │  └── Bugzilla
+# │      └── Security Team
+# │          └── Proactive
+# │              └── Reports
+# └── ML
+#     └── SUSE
+#         ├── security-team
+#         │   ├── Xorg
+#         │   └── Samba
+#         ├── security
+#         │   ├── Xen
+#         │   │   └── Security Advisory
+#         │   ├── MariaDB
+#         │   ├── Django
+#         │   ├── Ceph
+#         │   ├── Kubernetes
+#         │   ├── Qemu
+#         │   ├── Cloud Foundry
+#         │   ├── strongSwan
+#         │   ├── Adobe
+#         │   └── Mitre
+#         │       └── SUSE CNA
+#         ├── maintsecteam
+#         │   ├── maintenance wr
+#         │   ├── workreport
+#         │   └── smash-smelt
+#         ├── security-reports
+#         │   ├── Embargo Alerts
+#         │   └── Chromium
+#         ├── devel
+#         ├── high-impact-vul
+#         ├── high-impact-vul-info
+#         ├── kernel
+#         ├── linux
+#         ├── maint-coord
+#         │   └── QA Failed
+#         ├── maintsec-reports
+#         │   └── channels changes
+#         ├── research
+#         ├── results
+#         ├── secure-boot
+#         ├── secure-devel
+#         ├── security-intern
+#         ├── security-review
+#         ├── sle-security-updates
+#         │   ├── container
+#         │   └── image
+#         └── users
 
 # rule:[devel]
 # https://mailman.suse.de/mailman/listinfo/devel
