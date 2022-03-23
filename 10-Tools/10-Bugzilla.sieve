@@ -1,5 +1,8 @@
 require [ "fileinto", "mailbox", "body", "variables", "include", "regex", "editheader", "imap4flags" ];
-global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
+# Flags
+global [ "SYSTEM_FLAG_SEEN" ];
+global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBARGOED", "FLAG_PUBLISHED" ];
 
 ######################
 #####  Bugzilla  #####
@@ -162,6 +165,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # rule:[embargoed notifications]
 if allof ( address :is "From" "bugzilla_noreply@suse.com", 
            header  :contains "Subject" "EMBARGOED" ) {
+    addflag "${FLAG_EMBARGOED}";
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Embargoed";
     stop;
 }
@@ -196,9 +200,7 @@ if allof ( address    :is "From" "bugzilla_noreply@suse.com",
            header     :contains "X-Bugzilla-Changed-Fields" "short_desc",
            not header :contains "Subject" "EMBARGOED",
            body       :contains "EMBARGOED" ) {
-    if header :matches "Subject" "*" { set "subject" "${1}"; }    # Match the entire subject
-    deleteheader "Subject";                                       # Delete the orginal subject
-    addheader :last "Subject" "[PUBLISHED] ${subject}";
+    addflag "${FLAG_PUBLISHED}";
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Embargoed";
     stop;
 }
@@ -209,10 +211,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
            header  :is "X-Bugzilla-Type" "changed",
            header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
-                # Store the original subject in a variable that later rules can use
-                if header :matches "Subject" "*" { set "subject" "${1}"; }    # Match the entire subject
-                deleteheader "Subject";                                       # Delete the orginal subject
-                addheader :last "Subject" "[REASSIGNED] ${subject}";
+                addflag "${FLAG_BZ_REASSIGNED}";
                 fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
                 stop;
 }
@@ -246,10 +245,7 @@ if allof ( address :is       "From"                      "bugzilla_noreply@suse.
            header  :is       "X-Bugzilla-Type"           "changed",
            header  :contains "x-bugzilla-changed-fields" "bug_status",
            header  :is       "X-Bugzilla-Status"         "RESOLVED" ) {
-               # Store the original subject in a variable that later rules can use
-               if header :matches "Subject" "*" { set "subject" "${1}"; }    # Match the entire subject
-               deleteheader "Subject";                                       # Delete the orginal subject
-               addheader :last "Subject" "[RESOLVED] ${subject}";
+               addflag "${FLAG_BZ_RESOLVED}";
                fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
                stop;
 }

@@ -27,10 +27,13 @@ set "SYSTEM_FLAG_SEEN" "\\Seen";
 # use the openssl cmdline utility for that:
 #     > openssl s_client -connect imap-int.suse.de:993
 #
-global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED" ];
+global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED",
+         "FLAG_EMBARGOED", "FLAG_PUBLISHED" ];
 set "FLAG_DUPLICATED"    "duplicated";
 set "FLAG_BZ_REASSIGNED" "bz_reassigned";
 set "FLAG_BZ_RESOLVED"   "bz_resolved";
+set "FLAG_EMBARGOED"     "embargoed";
+set "FLAG_PUBLISHED"     "published";
 
 include :personal "01-Spam.sieve";
 
