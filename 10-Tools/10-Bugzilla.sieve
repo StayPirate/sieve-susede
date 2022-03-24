@@ -1,7 +1,6 @@
 require [ "fileinto", "mailbox", "body", "variables", "include", "regex", "editheader", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
 # Flags
-global [ "SYSTEM_FLAG_SEEN" ];
 global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBARGOED", "FLAG_PUBLISHED" ];
 
 ######################

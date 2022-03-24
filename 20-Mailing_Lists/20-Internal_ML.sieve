@@ -1,8 +1,7 @@
 require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
 # Flags
-global [ "SYSTEM_FLAG_SEEN" ];
-global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED" ];
+global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBARGOED", "FLAG_PUBLISHED" ];
 
 #######################
 ##### Internal ML #####
@@ -327,7 +326,7 @@ if allof ( address :is "From" "jenkins@suse.de",
            address :is "To" "${SECURITY_TEAM_ADDR}",
            header  :contains "List-Id" "<security-team.suse.de>",
            header  :contains "Subject" "Audit Bug Report for" ) {
-    addflag "${SYSTEM_FLAG_SEEN}";
+    addflag "\\Seen";
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive/Reports";
     stop;
 }

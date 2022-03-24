@@ -9,15 +9,11 @@ set "SUSECOM_ADDR" "gianluca.gabrielli@suse.com";
 set "BZ_USERNAME" "crazybyte";
 SET "SECURITY_TEAM_ADDR" "security-team@suse.de";
 
-### System Flags ###
+### IMAP System Flags (Tags) ###
 # IMAP system flags are specified at
 # https://datatracker.ietf.org/doc/html/rfc3501#section-2.3.2
 # Usually: \Answered \Flagged \Draft \Deleted \Seen \Recent
-#
-global [ "SYSTEM_FLAG_SEEN" ];
-set "SYSTEM_FLAG_SEEN" "\\Seen";
-#
-### Custom Flags ###
+### IMAP Custom Flags (Tags) ###
 # Custom flags are available if the IMAP server enable them.
 # In order to check if your server allows you to use them, you can check if
 # \* is present in the PERMANENTFLAGS setting.
