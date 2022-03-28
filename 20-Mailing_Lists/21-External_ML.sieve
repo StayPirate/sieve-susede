@@ -146,7 +146,8 @@ if header :is "X-List" "vs.openwall.org" {
 # rule:[Seclist - VINCE]
 # https://kb.cert.org/vince/comm/auth/login/
 if address :is "From" "cert+donotreply@cert.org" {
-           if header :contains "Subject" [ "VU#132185", "VU#855201",  "VU#930724", "VU#119678" ] {
+           if header :contains "Subject" [ "VU#132185", "VU#855201",  "VU#930724", "VU#119678", "VU#709991",
+                                           "VU#730793" ] {
                      addflag "\\Seen";
            }
            fileinto :create "INBOX/ML/SecList/vince";
