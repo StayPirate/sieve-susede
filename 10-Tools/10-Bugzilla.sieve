@@ -159,7 +159,7 @@ if header :regex "Message-ID" "(.*bug-[0-9]+-[0-9]+)(.*)@http\.bugzilla\.opensus
 # Note: keep this rule before the "not security reactive issues" rule, since AUDIT bugs are
 # sometimes created in different BZ products/components!
 if allof ( address :is    "From"    "bugzilla_noreply@suse.com", 
-           header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER|STALE):.*$" ) {
+           header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER|STALE|WHITELIST):.*$" ) {
     addflag "\\Seen";
     fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive";
     stop;
