@@ -130,6 +130,26 @@ if allof ( header :regex "Message-ID" ".*\.outlook\.com>$",
              addheader :last "Message-ID" "${1}";
 }
 
+# rule:[fix opensuse.org and suse.com broken threads]
+# SUSE has two separated bugzilla instances that write to the same
+# database: bugzilla.suse.com and bugzilla.opensuse.org.
+# Hence, people could comment on the same issue from both of them. This is
+# a problem for email threads because two threads are created in MUAs, one
+# with all the emails sent from bugzilla.suse.com and another with emails
+# sent from bugzilla.opensuse.org, even if these are about the same issue.
+# This rule is intended to fix this by overwriting relevant headers by
+# setting them to bugzilla.suse.com.
+if allof ( header :regex "Message-ID" "(.*bug-[0-9]+-[0-9]+)(.*)@http\.bugzilla\.opensuse\.org/>$",
+           header :contains "In-Reply-To" "@http.bugzilla.opensuse.org/>",
+           header :contains "References" "@http.bugzilla.opensuse.org/>" ) {
+             deleteheader "Message-ID";
+             addheader :last "Message-ID" "${1}${2}@http.bugzilla.suse.com/>";
+             deleteheader "In-Reply-To";
+             addheader :last "In-Reply-To" "${1}@http.bugzilla.suse.com/>";
+             deleteheader "References";
+             addheader :last "References" "${1}@http.bugzilla.suse.com/>";
+}
+
 # rule:[proactive security audit bugs]
 # Notifications about AUDIT bugs are not part of the reactive security scope, so they
 # will be moved into the a dedicated folder Tools/Bugzilla/Security Team/Proactive.
