@@ -31,6 +31,7 @@ global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBA
 #         │   ├── Cloud Foundry
 #         │   ├── strongSwan
 #         │   ├── Adobe
+#         │   ├── Subversion
 #         │   └── Mitre
 #         │       └── SUSE CNA
 #         ├── maintsecteam
@@ -248,6 +249,14 @@ if allof ( header  :contains "List-Id" "<security.suse.de>",
            header  :contains "Resent-From" "security@suse.com" ) {
     addflag "${FLAG_DUPLICATED}";
     fileinto :create "INBOX/Trash";
+    stop;
+}
+# rule:[security - subversion]
+# Subversion pre-disclosure notifications
+if allof ( header   :contains "List-Id" "<security.suse.de>",
+           header   :contains "Subject" "Subversion",
+           envelope :domain   "From"    "apache.org" ) {
+    fileinto :create "INBOX/ML/SUSE/security/Subversion";
     stop;
 }
 # rule:[security]
