@@ -24,12 +24,18 @@ SET "SECURITY_TEAM_ADDR" "security-team@suse.de";
 #     > openssl s_client -connect imap-int.suse.de:993
 #
 global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED",
-         "FLAG_EMBARGOED", "FLAG_PUBLISHED" ];
+         "FLAG_EMBARGOED", "FLAG_PUBLISHED", "FLAG_MUTED", "FLAG_NEEDINFO",
+         "FLAG_BZ_CRITICAL", "FLAG_BZ_HIGH", "FLAG_BZ_DIRECT" ];
 set "FLAG_DUPLICATED"    "duplicated";
 set "FLAG_BZ_REASSIGNED" "bz_reassigned";
 set "FLAG_BZ_RESOLVED"   "bz_resolved";
 set "FLAG_EMBARGOED"     "embargoed";
 set "FLAG_PUBLISHED"     "published";
+set "FLAG_MUTED"         "muted";
+set "FLAG_NEEDINFO"      "needinfo";
+set "FLAG_BZ_CRITICAL"   "critical";
+set "FLAG_BZ_HIGH"       "high";
+set "FLAG_BZ_DIRECT"     "direct";
 
 include :personal "01-Spam.sieve";
 

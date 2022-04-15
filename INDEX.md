@@ -6,6 +6,7 @@ INBOX
 ├── Trash
 ├── Tools
 │   ├── Bugzilla
+│   │   ├── openSUSE
 │   │   ├── Direct
 │   │   │   └── Needinfo
 │   │   └── Security Team
@@ -16,7 +17,6 @@ INBOX
 │   │       ├── Needinfo
 │   │       ├── Proactive
 │   │       │   └── Reports
-│   │       ├── openSUSE
 │   │       └── Others
 │   │           └──security-team
 │   ├── IBS

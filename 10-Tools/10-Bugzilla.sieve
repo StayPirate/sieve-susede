@@ -1,13 +1,15 @@
 require [ "fileinto", "mailbox", "body", "variables", "include", "regex", "editheader", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
 # Flags
-global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBARGOED", "FLAG_PUBLISHED" ];
+global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBARGOED", "FLAG_PUBLISHED",
+         "FLAG_MUTED", "FLAG_NEEDINFO", "FLAG_BZ_CRITICAL", "FLAG_BZ_HIGH", "FLAG_BZ_DIRECT" ];
 
 ######################
 #####  Bugzilla  #####
 ######################
 # Tools
 # └── Bugzilla
+#     ├── openSUSE
 #     ├── Direct
 #     │   └── Needinfo
 #     └── Security Team
@@ -18,9 +20,19 @@ global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBA
 #         ├── Needinfo
 #         ├── Proactive
 #         │   └── Reports
-#         ├── openSUSE
 #         └── Others
 #             └── security-team
+
+#    /$$      /$$             /$$
+#   | $$$    /$$$            | $$
+#   | $$$$  /$$$$ /$$   /$$ /$$$$$$    /$$$$$$
+#   | $$ $$/$$ $$| $$  | $$|_  $$_/   /$$__  $$
+#   | $$  $$$| $$| $$  | $$  | $$    | $$$$$$$$
+#   | $$\  $ | $$| $$  | $$  | $$ /$$| $$_____/
+#   | $$ \/  | $$|  $$$$$$/  |  $$$$/|  $$$$$$$
+#   |__/     |__/ \______/    \___/   \_______/
+#
+###############################################
 
 # rule:[mute bots]
 # Do not allow bots to make noise to specific Bugzilla's sub-folder,
@@ -57,7 +69,7 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # [1] https://bugzilla.suse.com/userprefs.cgi
 # [2] https://bugzilla.mozilla.org/show_bug.cgi?id=76794
 if allof ( address :is       "From"           "bugzilla_noreply@suse.com",
-           address :is       "To"             "security-team@suse.de",
+           address :is       "To"             "${SECURITY_TEAM_ADDR}",
            header  :contains "List-Id"        "<security-team.suse.de>",
            header  :contains "X-Bugzilla-URL" [ "://bugzilla.suse.com", "://bugzilla.opensuse.org" ]) {
 	discard;
@@ -82,41 +94,56 @@ if allof ( address  :is "From" "bugzilla_noreply@suse.com",
            anyof ( body     :contains "Status|NEW",
                    body     :contains "Status  NEW     IN_PROGRESS"),
            not body :contains "Comment" ) {
+    addflag "${FLAG_MUTED}";
     fileinto :create "INBOX/Trash";
     stop;
 }
 
-# rule:[mute new (not me) CC]
+# rule:[mute CC (if not me or security-team)]
 # Trash if the only change is a new person added/removed to CC, but allow notification with a new comment.
 if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
            header     :is       "X-Bugzilla-Type"           "changed",
            header     :is       "X-Bugzilla-Changed-Fields" "cc",
-           not header :is       "X-Bugzilla-Who"          [ "${SUSECOM_ADDR}", "security-team@suse.de" ],
+           not header :is       "X-Bugzilla-Who"          [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ],
            not body   :contains "Comment" ) {
+    addflag "${FLAG_MUTED}";
     fileinto :create "INBOX/Trash";
     stop;
 }
 
-# rule:[mute new (not me) assigned_to]
+# rule:[mute assigned_to changed (if not me or security-team)]
 # Trash if the only change is the assignee, but allow notifications with new comments.
 if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
            header     :is       "X-Bugzilla-Type"           "changed",
            header     :is       "X-Bugzilla-Changed-Fields" "assigned_to",
-           not header :is       "X-Bugzilla-Assigned-To"  [ "${SUSECOM_ADDR}", "security-team@suse.de" ],
+           not header :is       "X-Bugzilla-Assigned-To"  [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ],
            not body   :contains "Comment" ) {
+    addflag "${FLAG_MUTED}";
     fileinto :create "INBOX/Trash";
     stop;
 }
 
-# rule:[mute only subject is changed]
+# rule:[mute changed subject]
 # Trash if the only change is a change to the issue's subject, but allow notifications with new comments.
-if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
-           header     :is       "X-Bugzilla-Type"           "changed",
+if allof ( address    :is "From"                      "bugzilla_noreply@suse.com",
+           header     :is "X-Bugzilla-Type"           "changed",
            header     :is "X-Bugzilla-Changed-Fields" "short_desc",
            not body   :contains "Comment" ) {
+    addflag "${FLAG_MUTED}";
     fileinto :create "INBOX/Trash";
     stop;
 }
+
+#    /$$$$$$$$ /$$                 /$$                                 /$$
+#   | $$_____/|__/                | $$                                | $$
+#   | $$       /$$ /$$   /$$      | $$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$$
+#   | $$$$$   | $$|  $$ /$$/      | $$__  $$ /$$__  $$ |____  $$ /$$__  $$ /$$__  $$ /$$__  $$ /$$_____/
+#   | $$__/   | $$ \  $$$$/       | $$  \ $$| $$$$$$$$  /$$$$$$$| $$  | $$| $$$$$$$$| $$  \__/|  $$$$$$
+#   | $$      | $$  >$$  $$       | $$  | $$| $$_____/ /$$__  $$| $$  | $$| $$_____/| $$       \____  $$
+#   | $$      | $$ /$$/\  $$      | $$  | $$|  $$$$$$$|  $$$$$$$|  $$$$$$$|  $$$$$$$| $$       /$$$$$$$/
+#   |__/      |__/|__/  \__/      |__/  |__/ \_______/ \_______/ \_______/ \_______/|__/      |_______/
+#
+########################################################################################################
 
 # rule:[fix MS Exchange broken threads]
 # MS Exchange mangles email headers without any respect for the standards,
@@ -152,7 +179,114 @@ if header :regex "Message-ID" "(.*bug-[0-9]+-[0-9]+)(.*)@http\.bugzilla\.opensus
     }
 }
 
-# rule:[proactive security audit bugs]
+#    /$$$$$$$$ /$$
+#   | $$_____/| $$
+#   | $$      | $$  /$$$$$$   /$$$$$$   /$$$$$$$
+#   | $$$$$   | $$ |____  $$ /$$__  $$ /$$_____/
+#   | $$__/   | $$  /$$$$$$$| $$  \ $$|  $$$$$$
+#   | $$      | $$ /$$__  $$| $$  | $$ \____  $$
+#   | $$      | $$|  $$$$$$$|  $$$$$$$ /$$$$$$$/
+#   |__/      |__/ \_______/ \____  $$|_______/
+#                            /$$  \ $$
+#                           |  $$$$$$/
+#                            \______/
+#
+################################################
+
+# rule:[flags - needinfo for security-team]
+# Needinfo requested for security-team
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           header  :contains "Subject" "needinfo requested:",
+           body    :contains "<${SECURITY_TEAM_ADDR}> for needinfo:" ) {
+    addflag "${FLAG_NEEDINFO}";
+}
+
+# rule:[flags - needinfo for me]
+# Needinfo requested for me
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           header  :contains "Subject" "needinfo requested:",
+           body    :contains "<${SUSECOM_ADDR}> for needinfo:" ) {
+    addflag "${FLAG_NEEDINFO}";
+}
+
+# rule:[flags - embargoed notifications]
+# notification about an embargoed issue
+if allof ( address :is "From" "bugzilla_noreply@suse.com", 
+           header  :contains "Subject" "EMBARGOED" ) {
+    addflag "${FLAG_EMBARGOED}";
+}
+
+# rule:[flags - embargoed issue get public]
+# Embargoed issues become public
+if allof ( address    :is "From" "bugzilla_noreply@suse.com", 
+           header     :is "X-Bugzilla-Type" "changed",
+           header     :contains "X-Bugzilla-Changed-Fields" "short_desc",
+           not header :contains "Subject" "EMBARGOED",
+           body       :contains "EMBARGOED" ) {
+    addflag "${FLAG_PUBLISHED}";
+}
+
+# rule:[flags - issue is resolved]
+# As an agreement, all the security related issues should not be closed by the
+# assignee once he did his work, instead the issue should to be assigned back to
+# the security team, who will then review and close the issue if everything is fine.
+# The rule put the closing notification in the same folder of the re-assigned one.
+# This helps me to quickly check which BZ issues are still open and which not.
+# Also prepend the tag [RESOLVED] in the email's subject.
+if allof ( address :is       "From"                      "bugzilla_noreply@suse.com",
+           header  :is       "x-bugzilla-assigned-to"    "${SECURITY_TEAM_ADDR}",
+           header  :is       "X-Bugzilla-Type"           "changed",
+           header  :contains "x-bugzilla-changed-fields" "bug_status",
+           header  :is       "X-Bugzilla-Status"         "RESOLVED" ) {
+               addflag "${FLAG_BZ_RESOLVED}";
+           # TODO: I can also add here the flag \\Seen in case the issue was
+           #       closed by a security team member.
+}
+
+# rule:[flags - reassigned to security-team]
+# Issues re-assigned to the security-team
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           header  :is "x-bugzilla-assigned-to" "${SECURITY_TEAM_ADDR}",
+           header  :is "X-Bugzilla-Type" "changed",
+           header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
+                addflag "${FLAG_BZ_REASSIGNED}";
+}
+
+# rule:[flags - critical priority issues]
+# Move critical priority issues to a dedicated folder
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           anyof( header  :is "X-Bugzilla-Priority" "P0 - Crit Sit",
+                  header  :is "X-Bugzilla-Priority" "P1 - Urgent",
+                  header  :is "X-Bugzilla-Severity" "Critical")) {
+    addflag "${FLAG_BZ_CRITICAL}";
+}
+
+# rule:[flags - high priority issues]
+# Move high priority issues to a dedicated folder
+if allof ( address :is "From" "bugzilla_noreply@suse.com",
+           header  :is "X-Bugzilla-Priority" "P2 - High" ) {
+    addflag "${FLAG_BZ_HIGH}";
+}
+
+# rule:[flags - notification directed to me]
+# Notifications sent directly to me, the reason could be I'm the reporter or CC or assignee etc..
+if allof (     address :is "From" "bugzilla_noreply@suse.com",
+           not header  :is "x-bugzilla-reason" "None" ) {
+    addflag "${FLAG_BZ_DIRECT}";
+}
+
+#    /$$$$$$$$        /$$       /$$
+#   | $$_____/       | $$      | $$
+#   | $$     /$$$$$$ | $$  /$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$$
+#   | $$$$$ /$$__  $$| $$ /$$__  $$ /$$__  $$ /$$__  $$ /$$_____/
+#   | $$__/| $$  \ $$| $$| $$  | $$| $$$$$$$$| $$  \__/|  $$$$$$
+#   | $$   | $$  | $$| $$| $$  | $$| $$_____/| $$       \____  $$
+#   | $$   |  $$$$$$/| $$|  $$$$$$$|  $$$$$$$| $$       /$$$$$$$/
+#   |__/    \______/ |__/ \_______/ \_______/|__/      |_______/
+#
+#################################################################   
+
+# rule:[folders - proactive security audit bugs]
 # Notifications about AUDIT bugs are not part of the reactive security scope, so they
 # will be moved into the a dedicated folder Tools/Bugzilla/Security Team/Proactive.
 #
@@ -165,41 +299,15 @@ if allof ( address :is    "From"    "bugzilla_noreply@suse.com",
     stop;
 }
 
-# rule:[needinfo for security-team]
-# Needinfo requested for security-team
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           header  :contains "Subject" "needinfo requested:",
-           body    :contains "<security-team@suse.de> for needinfo:" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Needinfo";
-    stop;
-}
-
-# rule:[needinfo for me]
-# Needinfo requested for me
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           header  :contains "Subject" "needinfo requested:",
-           body    :contains "<${SUSECOM_ADDR}> for needinfo:" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Direct/Needinfo";
-    stop;
-}
-
-# rule:[embargoed notifications]
-if allof ( address :is "From" "bugzilla_noreply@suse.com", 
-           header  :contains "Subject" "EMBARGOED" ) {
-    addflag "${FLAG_EMBARGOED}";
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Embargoed";
-    stop;
-}
-
-# rule:[opensuse issues]
+# rule:[folders - opensuse issues]
 # openSUSE only bugs
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
            header :contains "X-Bugzilla-Product" "openSUSE" ){
-              fileinto :create "INBOX/Tools/Bugzilla/Security Team/openSUSE";
+              fileinto :create "INBOX/Tools/Bugzilla/openSUSE";
               stop;
 }
 
-# rule:[not security reactive issues]
+# rule:[folders - not security reactive issues]
 # Security related issues that are not the usual reactive/proactive tasks.
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
            not header :is "X-Bugzilla-Product" "SUSE Security Incidents",
@@ -207,99 +315,16 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
            # "Live Patches" is a component of the "SUSE Linux Enterprise Live Patching", but they are part of the daily reactive tasks.
            not header :is "X-Bugzilla-Component" "Live Patches",
            not header :contains "Subject" "needinfo canceled:" ){
-              if header :contains "x-bugzilla-watch-reason" "security-team@suse.de" {
+              if header :contains "x-bugzilla-watch-reason" "${SECURITY_TEAM_ADDR}" {
                  fileinto :create "INBOX/Tools/Bugzilla/Security Team/Others/security-team"; }
               else {
                  fileinto :create "INBOX/Tools/Bugzilla/Security Team/Others"; }
               stop;
 }
 
-# rule:[embargoed issue get public]
-# Embargoed issues become public notifications
-if allof ( address    :is "From" "bugzilla_noreply@suse.com", 
-           header     :is "X-Bugzilla-Type" "changed",
-           header     :contains "X-Bugzilla-Changed-Fields" "short_desc",
-           not header :contains "Subject" "EMBARGOED",
-           body       :contains "EMBARGOED" ) {
-    addflag "${FLAG_PUBLISHED}";
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Embargoed";
-    stop;
-}
-
-# rule:[reassigned to security-team]
-# Issues re-assigned to the security-team
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
-           header  :is "X-Bugzilla-Type" "changed",
-           header  :contains "x-bugzilla-changed-fields" "assigned_to" ) {
-                addflag "${FLAG_BZ_REASSIGNED}";
-                fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
-                stop;
-}
-
-# rule:[reassigned issue requires more work]
-# After that an issue is assigned back to security-team, it can happen that it will be
-# re-assigned to another team/person since more work is needed. In that case it want to
-# get such informaion in the same folder where the re-assign to the security-team was.
-#
-# Example used to craft the regex:
-# Assignee|security-team@suse.de       |kernel-bugs@suse.de
-#
-if allof (     address :is "From" "bugzilla_noreply@suse.com",
-           not header  :is "x-bugzilla-assigned-to" "security-team@suse.de",
-               header  :is "X-Bugzilla-Type" "changed",
-               header  :contains "x-bugzilla-changed-fields" "assigned_to",
-               body    :contains "Assignee|security-team@suse.de" ) {
-                  fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
-                  stop;
-}
-
-# rule:[issue is resolved]
-# As an agreement, all the security related issues should not be closed by the
-# assignee once he did his work, instead the issue should to be assigned back to
-# the security team, who will then review and close the issue if everything is fine.
-# The rule put the closing notification in the same folder of the re-assigned one.
-# This helps me to quickly check which BZ issues are still open and which not.
-# Also prepend the tag [RESOLVED] in the email's subject.
-if allof ( address :is       "From"                      "bugzilla_noreply@suse.com",
-           header  :is       "x-bugzilla-assigned-to"    "security-team@suse.de",
-           header  :is       "X-Bugzilla-Type"           "changed",
-           header  :contains "x-bugzilla-changed-fields" "bug_status",
-           header  :is       "X-Bugzilla-Status"         "RESOLVED" ) {
-               addflag "${FLAG_BZ_RESOLVED}";
-               fileinto :create "INBOX/Tools/Bugzilla/Security Team/Reassigned back";
-               stop;
-}
-
-# rule:[critical priority issues]
-# Move critical priority issues to a dedicated folder
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           anyof( header  :is "X-Bugzilla-Priority" "P0 - Crit Sit",
-                  header  :is "X-Bugzilla-Priority" "P1 - Urgent",
-                  header  :is "X-Bugzilla-Severity" "Critical")) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Critical";
-    stop;
-}
-
-# rule:[high priority issues]
-# Move high priority issues to a dedicated folder
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           header  :is "X-Bugzilla-Priority" "P2 - High" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/High";
-    stop;
-}
-
-# rule:[generic notification for security-team]
+# rule:[folders - generic notification for security-team]
 # Notifications sent to security-team, no bot's messages end up here.
-if allof ( address :is "From" "bugzilla_noreply@suse.com",
-           header  :contains "x-bugzilla-watch-reason" "security-team@suse.de",
-           header  :is "x-bugzilla-reason" "None" ) {
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team";
-    stop;
-}
-
-# rule:[generic notification for me]
 if address :is "From" "bugzilla_noreply@suse.com" {
-    fileinto :create "INBOX/Tools/Bugzilla/Direct";
+    fileinto :create "INBOX/Tools/Bugzilla";
     stop;
 }
