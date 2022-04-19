@@ -71,7 +71,6 @@ if allof ( address    :is "From"            "bugzilla_noreply@suse.com",
                           header :is "X-Bugzilla-Changed-Fields" "dependson"
                 ) {
                     #addflag "${FLAG_MUTED}";
-                    #fileinto :create "INBOX/Trash";
                     addflag "${FLAG_BETA}";
                 }
 }
@@ -138,8 +137,6 @@ if allof ( address  :is "From" "bugzilla_noreply@suse.com",
                    body     :contains "Status  NEW     IN_PROGRESS"),
            not body :contains "Comment" ) {
     addflag "${FLAG_MUTED}";
-    fileinto :create "INBOX/Trash";
-    stop;
 }
 
 # rule:[mute CC (if not me or security-team)]
@@ -150,8 +147,6 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
            not header :is       "X-Bugzilla-Who"          [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ],
            not body   :contains "Comment" ) {
     addflag "${FLAG_MUTED}";
-    fileinto :create "INBOX/Trash";
-    stop;
 }
 
 # rule:[mute assigned_to changed (if not me or security-team)]
@@ -162,8 +157,6 @@ if allof ( address    :is       "From"                      "bugzilla_noreply@su
            not header :is       "X-Bugzilla-Assigned-To"  [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ],
            not body   :contains "Comment" ) {
     addflag "${FLAG_MUTED}";
-    fileinto :create "INBOX/Trash";
-    stop;
 }
 
 # rule:[mute changed subject]
@@ -173,6 +166,9 @@ if allof ( address    :is "From"                      "bugzilla_noreply@suse.com
            header     :is "X-Bugzilla-Changed-Fields" "short_desc",
            not body   :contains "Comment" ) {
     addflag "${FLAG_MUTED}";
+}
+
+if hasflag :contains "${FLAG_MUTED}" {
     fileinto :create "INBOX/Trash";
     stop;
 }
