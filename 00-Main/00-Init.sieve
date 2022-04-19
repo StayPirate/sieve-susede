@@ -7,7 +7,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
 set "SUSEDE_ADDR" "ggabrielli@suse.de";
 set "SUSECOM_ADDR" "gianluca.gabrielli@suse.com";
 set "BZ_USERNAME" "crazybyte";
-SET "SECURITY_TEAM_ADDR" "security-team@suse.de";
+set "SECURITY_TEAM_ADDR" "security-team@suse.de";
 
 ### IMAP System Flags (Tags) ###
 # IMAP system flags are specified at
