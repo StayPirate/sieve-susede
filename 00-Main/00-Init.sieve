@@ -25,7 +25,8 @@ set "SECURITY_TEAM_ADDR" "security-team@suse.de";
 #
 global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED",
          "FLAG_EMBARGOED", "FLAG_PUBLISHED", "FLAG_MUTED", "FLAG_NEEDINFO",
-         "FLAG_BZ_CRITICAL", "FLAG_BZ_HIGH", "FLAG_BZ_DIRECT", "FLAG_BZ_BAD_HANDLED" ];
+         "FLAG_BZ_CRITICAL", "FLAG_BZ_HIGH", "FLAG_BZ_DIRECT", "FLAG_BZ_BAD_HANDLED",
+         "FLAG_BETA" ];
 set "FLAG_DUPLICATED"     "duplicated";
 set "FLAG_BZ_REASSIGNED"  "bz_reassigned";
 set "FLAG_BZ_RESOLVED"    "bz_resolved";
@@ -36,7 +37,8 @@ set "FLAG_NEEDINFO"       "needinfo";
 set "FLAG_BZ_CRITICAL"    "critical";
 set "FLAG_BZ_HIGH"        "high";
 set "FLAG_BZ_DIRECT"      "direct";
-SET "FLAG_BZ_BAD_HANDLED" "bz_bad_handled";
+set "FLAG_BZ_BAD_HANDLED" "bz_bad_handled";
+set "FLAG_BETA"           "BETA_RULE";
 
 include :personal "01-Spam.sieve";
 
