@@ -2,7 +2,7 @@ require [ "fileinto", "mailbox", "body", "variables", "include", "regex", "edith
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
 # Flags
 global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBARGOED", "FLAG_PUBLISHED",
-         "FLAG_MUTED", "FLAG_NEEDINFO", "FLAG_BZ_CRITICAL", "FLAG_BZ_HIGH", "FLAG_BZ_DIRECT" ];
+         "FLAG_MUTED", "FLAG_NEEDINFO", "FLAG_BZ_CRITICAL", "FLAG_BZ_HIGH", "FLAG_BZ_DIRECT", "FLAG_BZ_BAD_HANDLED" ];
 
 ######################
 #####  Bugzilla  #####
@@ -234,13 +234,16 @@ if allof ( address    :is "From" "bugzilla_noreply@suse.com",
 # This helps me to quickly check which BZ issues are still open and which not.
 # Also prepend the tag [RESOLVED] in the email's subject.
 if allof ( address :is       "From"                      "bugzilla_noreply@suse.com",
-           header  :is       "x-bugzilla-assigned-to"    "${SECURITY_TEAM_ADDR}",
            header  :is       "X-Bugzilla-Type"           "changed",
            header  :contains "x-bugzilla-changed-fields" "bug_status",
            header  :is       "X-Bugzilla-Status"         "RESOLVED" ) {
-               addflag "${FLAG_BZ_RESOLVED}";
-           # TODO: I can also add here the flag \\Seen in case the issue was
-           #       closed by a security team member.
+               if header :is "x-bugzilla-assigned-to"    "${SECURITY_TEAM_ADDR}" {
+                   addflag "${FLAG_BZ_RESOLVED}";
+                   # TODO: I can also add here the flag \\Seen in case the issue was
+                   #       closed by a security team member.
+               } else {
+                   addflag "${FLAG_BZ_BAD_HANDLED}";
+               }
 }
 
 # rule:[flags - reassigned to security-team]
