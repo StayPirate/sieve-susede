@@ -8,7 +8,7 @@ if allof ( header :contains "X-Spam-Flag" "YES",
            #▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔#
            # Important emails I don't want that fall into the SPAM folder
            not anyof ( header  :is "X-List" "vs.openwall.org",
-                       address :is "From" "cert+donotreply@cert.org" )) {
+                       address :is "From" [ "cert+donotreply@cert.org", "US-CERT@messages.cisa.gov" ] )) {
            #▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔#
     fileinto :create "INBOX/Spam";
     stop;
