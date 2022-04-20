@@ -99,6 +99,7 @@ INBOX
 │   │   ├── vince
 │   │   ├── Info Security News
 │   │   ├── CERT Advisories
+│   │       └── Week Summary
 │   │   └── OpenSSF
 │   │       ├── Announcements
 │   │       ├── Security Threats
