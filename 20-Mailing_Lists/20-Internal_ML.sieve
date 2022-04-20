@@ -34,6 +34,7 @@ global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBA
 #         │   ├── Subversion
 #         │   └── Mitre
 #         │       └── SUSE CNA
+#         ├── kernel-security
 #         ├── maintsecteam
 #         │   ├── maintenance wr
 #         │   ├── workreport
@@ -366,3 +367,7 @@ if allof ( header :contains "List-Id" "<sle-security-updates.lists.suse.com>",
 # rule:[sle-security-updates]
 # https://lists.suse.com/mailman/listinfo/sle-security-updates
 if header :contains "List-Id" "<sle-security-updates.lists.suse.com>" { fileinto :create "INBOX/ML/SUSE/sle-security-updates"; stop; }
+
+# rule:[kernel-security-sentinel]
+# https://lists.suse.com/mailman/listinfo/kernel-security-sentinel
+if header :contains "List-Id" "<kernel-security-sentinel.lists.suse.com>" { fileinto :create "INBOX/ML/SUSE/kernel-security"; stop; }
