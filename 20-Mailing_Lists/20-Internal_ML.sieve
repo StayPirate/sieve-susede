@@ -194,7 +194,8 @@ if allof ( header :contains "List-Id" "<security.suse.de>",
 }
 # rule:[security - Kubernetes]
 if allof ( header  :contains "List-Id"     "<security.suse.de>",
-           header  :is       "X-BeenThere" "distributors-announce@kubernetes.io") {
+           anyof ( address :is "From" "distributors-announce@kubernetes.io",
+                   address :is "From" "kubernetes-security-announce@googlegroups.com" )) {
     fileinto :create "INBOX/ML/SUSE/security/Kubernetes";
     stop;
 }
