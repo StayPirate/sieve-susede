@@ -60,3 +60,6 @@ include :personal "21-External_ML.sieve";
 # News Letters
 include :personal "30-Linux.sieve";
 include :personal "30-security.sieve";
+
+# Feeds
+include :personal "40-crazybyte-security-feed.sieve";

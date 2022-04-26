@@ -128,9 +128,40 @@ INBOX
 │   │   └── GNU Translation
 │   └── Security Advisory
 │       └── Weechat
-└── NL
-    ├── LWN
-    ├── CyberSaiyan
-    ├── Linux Foundation
-    └── Grapl Security
+├── NL
+│   ├── LWN
+│   ├── CyberSaiyan
+│   ├── Linux Foundation
+│   └── Grapl Security
+└── Feed
+    ├── Weekly update
+    │   ├── Ubuntu sec podcast
+    │   ├── SSD
+    │   └── AT&T
+    ├── Blog
+    │   ├── TOR
+    │   ├── Darknet Diaries
+    │   ├── Mozilla
+    │   ├── Github
+    │   ├── Microsoft
+    │   ├── Chromium
+    │   ├── Chrome
+    │   ├── Good Reads
+    │   └── Guerredirete
+    ├── Ezine
+    │   ├── AppSec
+    │   └── POCorGTFO
+    ├── SA
+    │   ├── Github
+    │   ├── PowerDNS
+    │   ├── RustSec
+    │   ├── Debian
+    │   └── Drupal
+    └── Release
+        ├── Podman
+        ├── ClamAV
+        ├── Chrome
+        └── SUSE
+            ├── Secbox
+            └── Userscripts
 ```
