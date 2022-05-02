@@ -221,6 +221,14 @@ if header :contains "List-Id" "<debian-security-tracker.lists.debian.org>" { fil
 # https://lists.debian.org/debian-security-announce/
 if header :contains "List-Id" "<debian-security-announce.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/Security Announce"; stop; }
 
+# rule:[Debian - security]
+# https://lists.debian.org/debian-security/
+if header :contains "List-Id" "<debian-security.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/Security"; stop; }
+
+# rule:[Debian - security tools]
+# https://lists.debian.org/debian-security-tools/
+if header :contains "List-Id" "<debian-security-tools.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/Security Tools"; stop; }
+
 # rule:[RedHat - security announce]
 # https://listman.redhat.com/mailman/listinfo/rhsa-announce
 if header :contains "List-Id" "<rhsa-announce.redhat.com>" { fileinto :create "INBOX/ML/RedHat/Security Announce"; stop; }
