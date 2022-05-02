@@ -57,9 +57,6 @@ global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBA
 #         ├── secure-devel
 #         ├── security-intern
 #         ├── security-review
-#         ├── sle-security-updates
-#         │   ├── container
-#         │   └── image
 #         └── users
 
 # rule:[devel]
@@ -356,18 +353,18 @@ if header :contains "List-Id" "<linux.lists.suse.com>" { fileinto :create "INBOX
 # rule:[sle-security-updates - containers]
 if allof ( header :contains "List-Id" "<sle-security-updates.lists.suse.com>",
            body   :contains           "SUSE Container Update Advisory" ) {
-    fileinto :create "INBOX/ML/SUSE/sle-security-updates/container"; 
+    fileinto :create "INBOX/Feed/SA/Distro/SUSE/container"; 
     stop;
 }
 # rule:[sle-security-updates - images]
 if allof ( header :contains "List-Id" "<sle-security-updates.lists.suse.com>",
            body   :contains           "SUSE Image Update Advisory" ) {
-    fileinto :create "INBOX/ML/SUSE/sle-security-updates/image"; 
+    fileinto :create "INBOX/Feed/SA/Distro/SUSE/image"; 
     stop;
 }
 # rule:[sle-security-updates]
 # https://lists.suse.com/mailman/listinfo/sle-security-updates
-if header :contains "List-Id" "<sle-security-updates.lists.suse.com>" { fileinto :create "INBOX/ML/SUSE/sle-security-updates"; stop; }
+if header :contains "List-Id" "<sle-security-updates.lists.suse.com>" { fileinto :create "INBOX/Feed/SA/Distro/SUSE"; stop; }
 
 # rule:[kernel-security-sentinel]
 # https://lists.suse.com/mailman/listinfo/kernel-security-sentinel

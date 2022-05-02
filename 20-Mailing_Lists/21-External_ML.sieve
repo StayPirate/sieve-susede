@@ -12,7 +12,6 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # ├── OpenSUSE
 # │   ├── factory
 # │   ├── users
-# │   └── security announce
 # ├── SecList
 # │   ├── Nmap Announce
 # │   ├── Breach Exchange
@@ -31,7 +30,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # │   ├── vince
 # │   ├── Info Security News
 # │   ├── CERT Advisories
-# │       └── Week Summary
+# │   │   └── Week Summary
 # │   └── OpenSSF
 # │       ├── Announcements
 # │       ├── Security Threats
@@ -42,20 +41,18 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # │       ├── Supply Chain Integrity
 # │       └── Securing Critical Projects
 # ├── Debian
-# │   ├── Security Announce
+# │   ├── Security
+# │   ├── Security Tools
 # │   └── Security Tracker
 # ├── RedHat
-# │   ├── Security Announce
 # │   └── IBM Virt Security
 # ├── Ubuntu
 # │   ├── Hardened
-# │   ├── Security Announce
 # │   └── Security Patch
 # ├── Archlinux
 # │   ├── arch-announce
 # │   ├── arch-events
-# │   ├── arch-general
-# │   └── arch-security
+# │   └── arch-general
 # ├── Italian
 # │   └── GNU Translation
 # └── Security Advisory
@@ -71,7 +68,7 @@ if header :contains "List-Id" "<users.lists.opensuse.org>" { fileinto :create "I
 
 # rule:[OpenSUSE - security-announce]
 # https://lists.opensuse.org/archives/list/security-announce@lists.opensuse.org/
-if header :contains "List-Id" "<security-announce.lists.opensuse.org>" { fileinto :create "INBOX/ML/OpenSUSE/security announce"; stop; }
+if header :contains "List-Id" "<security-announce.lists.opensuse.org>" { fileinto :create "INBOX/Feed/SA/Distro/openSUSE"; stop; }
 
 # rule:[Seclist - nmap announce]
 # https://nmap.org/mailman/listinfo/announce
@@ -219,7 +216,7 @@ if header :contains "List-Id" "<debian-security-tracker.lists.debian.org>" { fil
 
 # rule:[Debian - security announce]
 # https://lists.debian.org/debian-security-announce/
-if header :contains "List-Id" "<debian-security-announce.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/Security Announce"; stop; }
+if header :contains "List-Id" "<debian-security-announce.lists.debian.org>" { fileinto :create "INBOX/Feed/SA/Distro/Debian"; stop; }
 
 # rule:[Debian - security]
 # https://lists.debian.org/debian-security/
@@ -231,7 +228,7 @@ if header :contains "List-Id" "<debian-security-tools.lists.debian.org>" { filei
 
 # rule:[RedHat - security announce]
 # https://listman.redhat.com/mailman/listinfo/rhsa-announce
-if header :contains "List-Id" "<rhsa-announce.redhat.com>" { fileinto :create "INBOX/ML/RedHat/Security Announce"; stop; }
+if header :contains "List-Id" "<rhsa-announce.redhat.com>" { fileinto :create "INBOX/Feed/SA/Distro/RedHat"; stop; }
 
 # rule:[RedHat - security announce]
 # https://listman.redhat.com/mailman/listinfo/ibm-virt-security
@@ -239,7 +236,7 @@ if header :contains "List-Id" "<ibm-virt-security.lists.debian.org>" { fileinto 
 
 # rule:[Ubuntu - security announce]
 # https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce
-if header :contains "List-Id" "<ubuntu-security-announce.lists.ubuntu.com>" { fileinto :create "INBOX/ML/Ubuntu/Security Announce"; stop; }
+if header :contains "List-Id" "<ubuntu-security-announce.lists.ubuntu.com>" { fileinto :create "INBOX/Feed/SA/Distro/Ubuntu"; stop; }
 
 # rule:[Ubuntu - security patch]
 # https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-patch
@@ -271,4 +268,8 @@ if header :contains "List-Id" "<arch-general.lists.archlinux.org>" { fileinto :c
 
 # rule:[Archlinux - arch-security]
 # https://lists.archlinux.org/listinfo/arch-security
-if header :contains "List-Id" "<arch-security.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-security"; stop; }
+if header :contains "List-Id" "<arch-security.lists.archlinux.org>" { fileinto :create "INBOX/Feed/SA/Distro/Archlinux"; stop; }
+
+# rule:[Gentoo Linux Security Advisories - gentoo-announce]
+# https://www.gentoo.org/support/security/
+if header :contains "List-Id" "<gentoo-announce.gentoo.org>" { fileinto :create "INBOX/Feed/SA/Distro/Gentoo"; stop; }

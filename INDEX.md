@@ -73,14 +73,10 @@ INBOX
 │   │   ├── secure-devel
 │   │   ├── security-intern
 │   │   ├── security-review
-│   │   ├── sle-security-updates
-│   │   │   ├── container
-│   │   │   └── image
 │   │   └── users
 │   ├── OpenSUSE
 │   │   ├── factory
 │   │   ├── users
-│   │   └── security announce
 │   ├── SecList
 │   │   ├── Nmap Announce
 │   │   ├── Breach Exchange
@@ -99,7 +95,7 @@ INBOX
 │   │   ├── vince
 │   │   ├── Info Security News
 │   │   ├── CERT Advisories
-│   │       └── Week Summary
+│   │   │   └── Week Summary
 │   │   └── OpenSSF
 │   │       ├── Announcements
 │   │       ├── Security Threats
@@ -110,20 +106,18 @@ INBOX
 │   │       ├── Supply Chain Integrity
 │   │       └── Securing Critical Projects
 │   ├── Debian
-│   │   ├── Security Announce
+│   │   ├── Security
+│   │   ├── Security Tools
 │   │   └── Security Tracker
 │   ├── RedHat
-│   │   ├── Security Announce
 │   │   └── IBM Virt Security
 │   ├── Ubuntu
 │   │   ├── Hardened
-│   │   ├── Security Announce
 │   │   └── Security Patch
 │   ├── Archlinux
 │   │   ├── arch-announce
 │   │   ├── arch-events
-│   │   ├── arch-general
-│   │   └── arch-security
+│   │   └── arch-general
 │   ├── Italian
 │   │   └── GNU Translation
 │   └── Security Advisory
@@ -152,10 +146,19 @@ INBOX
     │   ├── AppSec
     │   └── POCorGTFO
     ├── SA
+    │   ├── Distro
+    │   │   ├── Debian
+    │   │   ├── Ubuntu
+    │   │   ├── RedHat
+    │   │   ├── SUSE
+    │   │   │   ├── container
+    │   │   │   └── image
+    │   │   ├── openSUSE
+    │   │   ├── Gentoo
+    │   │   └── Archlinux
     │   ├── Github
     │   ├── PowerDNS
     │   ├── RustSec
-    │   ├── Debian
     │   └── Drupal
     └── Release
         ├── Podman

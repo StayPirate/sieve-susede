@@ -25,10 +25,19 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── AppSec
 # │   └── POCorGTFO
 # ├── SA
+# │   ├── Distro
+# │   │   ├── Debian
+# │   │   ├── Ubuntu
+# │   │   ├── RedHat
+# │   │   ├── SUSE
+# │   │   │   ├── container
+# │   │   │   └── image
+# │   │   ├── openSUSE
+# │   │   ├── Gentoo
+# │   │   └── Archlinux
 # │   ├── Github
 # │   ├── PowerDNS
 # │   ├── RustSec
-# │   ├── Debian
 # │   └── Drupal
 # └── Release
 #     ├── Podman
@@ -222,10 +231,31 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         stop;
     }
 
-    # Debian Security Advisories (DSA) are gotten by the debian-security-announce ML, since
+    # Debian Security Advisories (DSA) are fetched from the debian-security-announce ML, since
     # it provides much more detailed information compared to the DSA RSS-feed.
     # DSA ML:       https://lists.debian.org/debian-security-announce/
     # DSA RSS-feed: https://www.debian.org/security/dsa
+
+    # Ubuntu Security Notice (USN) are fetched from the ubuntu-security-announce ML.
+    # USN:          https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce
+
+    # RedHat Security Advisories (RHSA) are gotten by the rhsa-announce ML.
+    # RHSA:         https://listman.redhat.com/mailman/listinfo/rhsa-announce
+
+    # openSUSE Security Update (openSUSE-SU/SUSE-SU) are fetched from the security-announce ML.
+    # If the update is shipped to both openSUSE and SUSE, then the name is SUSE-SU, while if
+    # it's exclusive for openSUSE it is named openSUSE-SU.
+    # openSUSE-SU:  https://lists.opensuse.org/archives/list/security-announce@lists.opensuse.org
+
+    # SUSE Security Update (SUSE-SU) are fetched from the sle-security-updates ML.
+    # It also notify about "SUSE Container Update Advisory" and "SUSE Image Update Advisory" as well. 
+    # SUSE-SU:      https://lists.suse.com/mailman/listinfo/sle-security-updates
+
+    # Arch Linux Security Advisory (ASA) are fetched from the arch-security ML.
+    # ASA:          https://lists.archlinux.org/listinfo/arch-security
+
+    # Gentoo Linux Security Advisories (GLSA) are fetched from the gentoo-announce ML.
+    # GLSA:         https://security.gentoo.org/glsa
 
 #   ██████╗ ███████╗██╗     ███████╗ █████╗ ███████╗███████╗
 #   ██╔══██╗██╔════╝██║     ██╔════╝██╔══██╗██╔════╝██╔════╝
