@@ -53,6 +53,10 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # │   ├── arch-announce
 # │   ├── arch-events
 # │   └── arch-general
+# ├── Fedora
+# │   ├── security
+# │   ├── selinux
+# │   └── users
 # ├── Italian
 # │   └── GNU Translation
 # └── Security Advisory
@@ -273,3 +277,15 @@ if header :contains "List-Id" "<arch-security.lists.archlinux.org>" { fileinto :
 # rule:[Gentoo Linux Security Advisories - gentoo-announce]
 # https://www.gentoo.org/support/security/
 if header :contains "List-Id" "<gentoo-announce.gentoo.org>" { fileinto :create "INBOX/Feed/SA/Distro/Gentoo"; stop; }
+
+# rule:[Fedora - users]
+# https://lists.fedoraproject.org/admin/lists/security@lists.fedoraproject.org/
+if header :contains "List-Id" "<users.lists.fedoraproject.org>" { fileinto :create "INBOX/ML/Fedora/users"; stop; }
+
+# rule:[Fedora - security]
+# https://lists.fedoraproject.org/admin/lists/users.lists.fedoraproject.org/
+if header :contains "List-Id" "<security.lists.fedoraproject.org>" { fileinto :create "INBOX/ML/Fedora/security"; stop; }
+
+# rule:[Fedora - selinux]
+# https://lists.fedoraproject.org/archives/list/selinux@lists.fedoraproject.org/
+if header :contains "List-Id" "<selinux.lists.fedoraproject.org>" { fileinto :create "INBOX/ML/Fedora/selinux"; stop; }

@@ -34,6 +34,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   │   │   └── image
 # │   │   ├── openSUSE
 # │   │   ├── Gentoo
+# │   │   ├── Fedora
 # │   │   └── Archlinux
 # │   ├── Github
 # │   ├── PowerDNS
@@ -256,6 +257,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # Gentoo Linux Security Advisories (GLSA) are fetched from the gentoo-announce ML.
     # GLSA:         https://security.gentoo.org/glsa
+
+    # rule:[Fedora]
+    # https://bodhi.fedoraproject.org/updates/?search=&type=security
+    if header :is "X-RSS-Feed" "https://bodhi.fedoraproject.org/rss/updates/?search=&status=stable&type=security" {
+        fileinto :create "INBOX/Feed/SA/Distro/Fedora";
+        stop;
+    }
 
 #   ██████╗ ███████╗██╗     ███████╗ █████╗ ███████╗███████╗
 #   ██╔══██╗██╔════╝██║     ██╔════╝██╔══██╗██╔════╝██╔════╝
