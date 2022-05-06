@@ -23,7 +23,8 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   └── Guerredirete
 # ├── Ezine
 # │   ├── AppSec
-# │   └── POCorGTFO
+# │   ├── POCorGTFO
+# │   └── Uninformed
 # ├── SA
 # │   ├── Distro
 # │   │   ├── Debian
@@ -195,6 +196,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     if allof ( header :is       "X-RSS-Feed" "https://www.sultanik.com/",
                header :contains "X-RSS-Link" "https://www.sultanik.com/pocorgtfo" ) {
         fileinto :create "INBOX/Feed/Ezine/POCorGTFO";
+        stop;
+    }
+
+    # rule:[uninformed]
+    # http://uninformed.org/
+    if header :is "X-RSS-Feed" "http://uninformed.org/" {
+        fileinto :create "INBOX/Feed/Ezine/Uninformed";
         stop;
     }
 
