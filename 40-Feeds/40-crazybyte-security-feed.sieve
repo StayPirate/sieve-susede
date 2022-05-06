@@ -35,6 +35,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   │   ├── openSUSE
 # │   │   ├── Gentoo
 # │   │   ├── Fedora
+# │   │   ├── Slackware
 # │   │   └── Archlinux
 # │   ├── Github
 # │   ├── PowerDNS
@@ -258,6 +259,9 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # Gentoo Linux Security Advisories (GLSA) are fetched from the gentoo-announce ML.
     # GLSA:         https://security.gentoo.org/glsa
+
+    # Slackware Security Advisories (SSA) are fetched from the slackware-security ML.
+    # SSA:          http://www.slackware.com/lists/archive/
 
     # rule:[Fedora]
     # https://bodhi.fedoraproject.org/updates/?search=&type=security

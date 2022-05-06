@@ -160,6 +160,7 @@ INBOX
     │   │   ├── openSUSE
     │   │   ├── Gentoo
     │   │   ├── Fedora
+    │   │   ├── Slackware
     │   │   └── Archlinux
     │   ├── Github
     │   ├── PowerDNS

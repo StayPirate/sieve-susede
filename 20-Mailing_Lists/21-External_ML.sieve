@@ -289,3 +289,7 @@ if header :contains "List-Id" "<security.lists.fedoraproject.org>" { fileinto :c
 # rule:[Fedora - selinux]
 # https://lists.fedoraproject.org/archives/list/selinux@lists.fedoraproject.org/
 if header :contains "List-Id" "<selinux.lists.fedoraproject.org>" { fileinto :create "INBOX/ML/Fedora/selinux"; stop; }
+
+# rule:[Slackware - slackware-security]
+# http://www.slackware.com/lists/archive/
+if address :is "To" "slackware-security@slackware.com" { fileinto :create "INBOX/Feed/SA/Distro/Slackware"; stop; }
