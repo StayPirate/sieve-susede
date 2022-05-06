@@ -39,7 +39,8 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Github
 # │   ├── PowerDNS
 # │   ├── RustSec
-# │   └── Drupal
+# │   ├── Drupal
+# │   └── GCP
 # └── Release
 #     ├── Podman
 #     ├── ClamAV
@@ -262,6 +263,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://bodhi.fedoraproject.org/updates/?search=&type=security
     if header :is "X-RSS-Feed" "https://bodhi.fedoraproject.org/rss/updates/?search=&status=stable&type=security" {
         fileinto :create "INBOX/Feed/SA/Distro/Fedora";
+        stop;
+    }
+
+    # rule:[GCP]
+    # https://cloud.google.com/support/bulletins
+    if header :contains "X-RSS-Link" "https://cloud.google.com/support/bulletins/index#" {
+        fileinto :create "INBOX/Feed/SA/GCP";
         stop;
     }
 
