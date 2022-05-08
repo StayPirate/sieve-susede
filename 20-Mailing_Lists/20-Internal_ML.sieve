@@ -296,51 +296,46 @@ if header :contains "List-Id" "<security-reports.suse.de>" { fileinto :create "I
 # https://mailman.suse.de/mailman/listinfo/security-review
 if header :contains "List-Id" "<security-review.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-review"; stop; }
 
-# rule:[security-team - no US-CERT]
-# Discard newsletters coming US-CERT because these are duplicated for me as I'm already subscribed to that list
-# ML -> SecList -> CERT Advisories
-if allof ( header  :contains "List-Id" "<security-team.suse.de>",
-           address :is       "From"  [ "US-CERT@ncas.us-cert.gov",
-                                       "CISA@public.govdelivery.com",
-                                       "cisacommunity@ncas.us-cert.gov",
-                                       "US-CERT@messages.cisa.gov",
-                                       "CISA@messages.cisa.gov"          ] ) {
-    fileinto :create "INBOX/Trash";
-    stop;
-}
-# rule:[security-team - xorg-security ML]
-if allof ( header :contains "List-Id"     "<security-team.suse.de>",
-           header :contains "X-BeenThere" "xorg-security@lists.x.org" ) {
-    fileinto :create "INBOX/ML/SUSE/security-team/Xorg";
-    stop;
-}
-# rule:[security-team - Samba ML]
-if allof ( header :contains "List-Id" "<security-team.suse.de>",
-           header :contains "From"    "samba-bugs@samba.org" ) {
-    fileinto :create "INBOX/ML/SUSE/security-team/Samba";
-    stop;
-}
-# rule:[security-team - security-team and me in CC ]
-# When someone follows up on a thread where I'm also in CC, I want it in the same ML folder
-if allof (     address :contains "CC" "${SECURITY_TEAM_ADDR}",
-               address :contains "CC" "${SUSEDE_ADDR}",
-           not address :contains "To" "${SUSEDE_ADDR}" ) {
-    fileinto :create "INBOX/ML/SUSE/security-team";
-    stop;
-}
-# rule:[security-team - proactive audit report ]
-# Weekly audit report for the proactive team to the proactive BZ folder
-if allof ( address :is "From" "jenkins@suse.de",
-           address :is "To" "${SECURITY_TEAM_ADDR}",
-           header  :contains "List-Id" "<security-team.suse.de>",
-           header  :contains "Subject" "Audit Bug Report for" ) {
-    addflag "\\Seen";
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive/Reports";
-    stop;
-}
 # rule:[security-team]
 # https://mailman.suse.de/mailman/listinfo/security-team
-if header :contains "List-Id" "<security-team.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-team"; stop; }
+if header  :contains "List-Id" "<security-team.suse.de>" {
+
+    # Discard newsletters coming US-CERT, these are duplicated for me as I'm already personally subscribed to that list.
+    # Those can be found at: ML -> SecList -> CERT Advisories
+    if address :is "From" [ "US-CERT@ncas.us-cert.gov",
+                            "CISA@public.govdelivery.com",
+                            "cisacommunity@ncas.us-cert.gov",
+                            "US-CERT@messages.cisa.gov",
+                            "CISA@messages.cisa.gov" ] {
+        fileinto :create "INBOX/Trash";
+        stop;
+    }
+
+    # Xorg-security ML
+    if header :contains "X-BeenThere" "xorg-security@lists.x.org" {
+        fileinto :create "INBOX/ML/SUSE/security-team/Xorg";
+        stop;
+    }
+
+    # Samba ML
+    if header :contains "From" "samba-bugs@samba.org" {
+        fileinto :create "INBOX/ML/SUSE/security-team/Samba";
+        stop;
+    }
+
+    # Weekly audit report for the proactive team to the proactive BZ folder
+    if allof ( address :is "From" "jenkins@suse.de",
+               address :is "To" "${SECURITY_TEAM_ADDR}",
+               header  :contains "Subject" "Audit Bug Report for" ) {
+        addflag "\\Seen";
+        fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive/Reports";
+        stop;
+    }
+
+    # If none of the above rules matched, then put to the main security-team folder
+    if header :contains "List-Id" "<security-team.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-team"; stop; }
+
+}
 
 # rule:[users]
 # https://mailman.suse.de/mailman/listinfo/users
