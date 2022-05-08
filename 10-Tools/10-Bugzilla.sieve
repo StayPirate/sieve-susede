@@ -35,47 +35,6 @@ global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBA
 #
 ###############################################
 
-########## -----> BETA <----- ##########
-# rule:[mute unmeaningful bz notification]
-# Trash all the unwanted BZ notifications, but keep them if they contain a non-bot comment 
-if allof ( address    :is "From"            "bugzilla_noreply@suse.com",
-           header     :is "X-Bugzilla-Type" "changed",
-           not body   :contains "Comment" ) {
-                if anyof( # the only change is the subject
-                          header :is "X-Bugzilla-Changed-Fields" "short_desc",
-                          # the only change is the assigne
-                          allof (     header :is "X-Bugzilla-Changed-Fields" "assigned_to",
-                                  not header :is "X-Bugzilla-Assigned-To" [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ]),
-                          # someone was CCed, but me
-                          allof (     header :is "X-Bugzilla-Changed-Fields" "cc",
-                                  not header :is "X-Bugzilla-Who" [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ]),
-                          # the status change from NEW to IN_PROGRESS
-                          allof ( header :is "X-Bugzilla-Changed-Fields" "bug_status",
-                                  header :is "X-Bugzilla-Status" "IN_PROGRESS",
-                                  body   :contains [ "Status|NEW", "Status  NEW     IN_PROGRESS" ]),
-                          # comments are toggled between private and public state
-                          header :is "X-Bugzilla-Changed-Fields" "longdescs.isprivate",
-                          # issue blocks another issue
-                          header :is "X-Bugzilla-Changed-Fields" "blocked",
-                          # only the url field is changed
-                          header :is "X-Bugzilla-Changed-Fields" "bug_file_loc",
-                          # notification reffers to a related bz issue
-                          body :regex "Bug [0-9]{6,}<.*> depends on[= \n]+bug [0-9]{6,}<.*>,",
-                          # only the group field is changed
-                          header :is "X-Bugzilla-Changed-Fields" "bug_group",
-                          # security-team post the common embargoed instruction
-                          allof ( header :contains "Subject" "EMBARGOED",
-                                  body   :contains "This is an embargoed bug. This means that this information is not public.",
-                                  body   :contains "THIS IS A PRIVATE COMMENT" ),
-                          # only change is a "depends on" another bug
-                          header :is "X-Bugzilla-Changed-Fields" "dependson"
-                ) {
-                    #addflag "${FLAG_MUTED}";
-                    addflag "${FLAG_BETA}";
-                }
-}
-########## -----> BETA <----- ##########
-
 # rule:[mute bots]
 # Do not allow bots to make noise to specific Bugzilla's sub-folder,
 # put them into the generic Bugzilla folder instead.
@@ -126,46 +85,42 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
     stop;
 }
 
-# rule:[mute n2p status]
-# Ignore notification when the only change is the status from new to in progress
-# But allow notifications with comments.
-if allof ( address  :is "From" "bugzilla_noreply@suse.com",
-           header   :is "X-Bugzilla-Type" "changed",
-           header   :is "X-Bugzilla-Changed-Fields" "bug_status",
-           header   :is "X-Bugzilla-Status" "IN_PROGRESS",
-           anyof ( body     :contains "Status|NEW",
-                   body     :contains "Status  NEW     IN_PROGRESS"),
-           not body :contains "Comment" ) {
-    addflag "${FLAG_MUTED}";
-}
-
-# rule:[mute CC (if not me or security-team)]
-# Trash if the only change is a new person added/removed to CC, but allow notification with a new comment.
-if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
-           header     :is       "X-Bugzilla-Type"           "changed",
-           header     :is       "X-Bugzilla-Changed-Fields" "cc",
-           not header :is       "X-Bugzilla-Who"          [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ],
+# rule:[mute unmeaningful bz notification]
+# Trash all the unwanted BZ notifications, but keep them if they contain a non-bot comment
+if allof ( address    :is "From"            "bugzilla_noreply@suse.com",
+           header     :is "X-Bugzilla-Type" "changed",
            not body   :contains "Comment" ) {
-    addflag "${FLAG_MUTED}";
-}
-
-# rule:[mute assigned_to changed (if not me or security-team)]
-# Trash if the only change is the assignee, but allow notifications with new comments.
-if allof ( address    :is       "From"                      "bugzilla_noreply@suse.com",
-           header     :is       "X-Bugzilla-Type"           "changed",
-           header     :is       "X-Bugzilla-Changed-Fields" "assigned_to",
-           not header :is       "X-Bugzilla-Assigned-To"  [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ],
-           not body   :contains "Comment" ) {
-    addflag "${FLAG_MUTED}";
-}
-
-# rule:[mute changed subject]
-# Trash if the only change is a change to the issue's subject, but allow notifications with new comments.
-if allof ( address    :is "From"                      "bugzilla_noreply@suse.com",
-           header     :is "X-Bugzilla-Type"           "changed",
-           header     :is "X-Bugzilla-Changed-Fields" "short_desc",
-           not body   :contains "Comment" ) {
-    addflag "${FLAG_MUTED}";
+                if anyof( # the only change is the subject
+                          header :is "X-Bugzilla-Changed-Fields" "short_desc",
+                          # the only change is the assigne
+                          allof (     header :is "X-Bugzilla-Changed-Fields" "assigned_to",
+                                  not header :is "X-Bugzilla-Assigned-To" [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ]),
+                          # someone was CCed, but me
+                          allof (     header :is "X-Bugzilla-Changed-Fields" "cc",
+                                  not header :is "X-Bugzilla-Who" [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ]),
+                          # the status change from NEW to IN_PROGRESS
+                          allof ( header :is "X-Bugzilla-Changed-Fields" "bug_status",
+                                  header :is "X-Bugzilla-Status" "IN_PROGRESS",
+                                  body   :contains [ "Status|NEW", "Status  NEW     IN_PROGRESS" ]),
+                          # comments are toggled between private and public state
+                          header :is "X-Bugzilla-Changed-Fields" "longdescs.isprivate",
+                          # issue blocks another issue
+                          header :is "X-Bugzilla-Changed-Fields" "blocked",
+                          # only the url field is changed
+                          header :is "X-Bugzilla-Changed-Fields" "bug_file_loc",
+                          # notification reffers to a related bz issue
+                          body :regex "Bug [0-9]{6,}<.*> depends on[= \n]+bug [0-9]{6,}<.*>,",
+                          # only the group field is changed
+                          header :is "X-Bugzilla-Changed-Fields" "bug_group",
+                          # security-team post the common embargoed instruction
+                          allof ( header :contains "Subject" "EMBARGOED",
+                                  body   :contains "This is an embargoed bug. This means that this information is not public.",
+                                  body   :contains "THIS IS A PRIVATE COMMENT" ),
+                          # only change is a "depends on" another bug
+                          header :is "X-Bugzilla-Changed-Fields" "dependson"
+                ) {
+                    addflag "${FLAG_MUTED}";
+                }
 }
 
 if hasflag :contains "${FLAG_MUTED}" {
