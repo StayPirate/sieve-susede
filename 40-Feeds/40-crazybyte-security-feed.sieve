@@ -161,6 +161,16 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         stop;
     }
 
+    # rule:[Stackoverflow]
+    # Essays, opinions, and advice on the act of computer programming from Stack Overflow.
+    # https://stackoverflow.blog
+    if header :is "X-RSS-Feed" "https://stackoverflow.blog" {
+        if header :contains "Keywords" "security" {
+            fileinto :create "INBOX/Feed/Blog/Stackoverflow";
+            stop;
+        }
+    }
+
     # rule:[Justin Steven SA]
     # https://github.com/justinsteven/advisories
     if header :is "X-RSS-Feed" "https://github.com/justinsteven/advisories/commits/main" {
