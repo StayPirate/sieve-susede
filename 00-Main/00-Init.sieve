@@ -1,4 +1,5 @@
 # Sieve: https://tools.ietf.org/html/rfc5228
+# Sieve Extensions: https://www.iana.org/assignments/sieve-extensions/sieve-extensions.xhtml
 require [ "variables", "include" ];
 
 ### Variables ###
