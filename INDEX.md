@@ -72,7 +72,7 @@ INBOX
 │   │   └── users
 │   ├── OpenSUSE
 │   │   ├── factory
-│   │   ├── users
+│   │   └── users
 │   ├── SecList
 │   │   ├── Nmap Announce
 │   │   ├── Breach Exchange

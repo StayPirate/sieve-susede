@@ -11,7 +11,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 # ML
 # ├── OpenSUSE
 # │   ├── factory
-# │   ├── users
+# │   └── users
 # ├── SecList
 # │   ├── Nmap Announce
 # │   ├── Breach Exchange
