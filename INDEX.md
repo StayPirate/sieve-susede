@@ -7,18 +7,9 @@ INBOX
 ├── Tools
 │   ├── Bugzilla
 │   │   ├── openSUSE
-│   │   ├── Direct
-│   │   │   └── Needinfo
-│   │   └── Security Team
-│   │       ├── Embargoed
-│   │       ├── Reassigned back
-│   │       ├── Critical
-│   │       ├── High
-│   │       ├── Needinfo
-│   │       ├── Proactive
-│   │       │   └── Reports
-│   │       └── Others
-│   │           └──security-team
+│   │   ├── Proactive
+│   │   │   └── Reports
+│   │   └── Other
 │   ├── IBS
 │   │   ├── build
 │   │   └── requests

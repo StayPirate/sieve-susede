@@ -328,7 +328,7 @@ if header  :contains "List-Id" "<security-team.suse.de>" {
                address :is "To" "${SECURITY_TEAM_ADDR}",
                header  :contains "Subject" "Audit Bug Report for" ) {
         addflag "\\Seen";
-        fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive/Reports";
+        fileinto :create "INBOX/Tools/Bugzilla/Proactive/Reports";
         stop;
     }
 

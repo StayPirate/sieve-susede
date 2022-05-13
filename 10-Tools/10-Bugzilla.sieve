@@ -11,18 +11,9 @@ global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBA
 # Tools
 # └── Bugzilla
 #     ├── openSUSE
-#     ├── Direct
-#     │   └── Needinfo
-#     └── Security Team
-#         ├── Embargoed
-#         ├── Reassigned back
-#         ├── Critical
-#         ├── High
-#         ├── Needinfo
-#         ├── Proactive
-#         │   └── Reports
-#         └── Others
-#             └── security-team
+#     ├── Proactive
+#     │   └── Reports
+#     └── Other
 
 #    /$$      /$$             /$$
 #   | $$$    /$$$            | $$
@@ -292,7 +283,7 @@ if allof (     address :is "From" "bugzilla_noreply@suse.com",
 if allof ( address :is    "From"    "bugzilla_noreply@suse.com", 
            header  :regex "subject" "^\[Bug [0-9]{7,}] (New: )?AUDIT-(0|1|TASK|FIND|TRACKER|STALE|WHITELIST):.*$" ) {
     addflag "\\Seen";
-    fileinto :create "INBOX/Tools/Bugzilla/Security Team/Proactive";
+    fileinto :create "INBOX/Tools/Bugzilla/Proactive";
     stop;
 }
 
@@ -308,14 +299,8 @@ if allof ( address :is "From" "bugzilla_noreply@suse.com",
 # Security related issues that are not the usual reactive/proactive tasks.
 if allof ( address :is "From" "bugzilla_noreply@suse.com",
            not header :is "X-Bugzilla-Product" "SUSE Security Incidents",
-           not header :is "X-Bugzilla-Component" "Incidents",
-           # "Live Patches" is a component of the "SUSE Linux Enterprise Live Patching", but they are part of the daily reactive tasks.
-           not header :is "X-Bugzilla-Component" "Live Patches",
-           not header :contains "Subject" "needinfo canceled:" ){
-              if header :contains "x-bugzilla-watch-reason" "${SECURITY_TEAM_ADDR}" {
-                 fileinto :create "INBOX/Tools/Bugzilla/Security Team/Others/security-team"; }
-              else {
-                 fileinto :create "INBOX/Tools/Bugzilla/Security Team/Others"; }
+           not header :is "X-Bugzilla-Component" [ "Incidents", "Live Patches" ] ){
+              fileinto :create "INBOX/Tools/Bugzilla/Other";
               stop;
 }
 
