@@ -121,15 +121,11 @@ INBOX
 │   │   └── GNU Translation
 │   └── Security Advisory
 │       └── Weechat
-├── NL
-│   ├── LWN
-│   ├── CyberSaiyan
-│   ├── Linux Foundation
-│   └── Grapl Security
 └── Feed
     ├── Weekly update
     │   ├── Ubuntu sec podcast
     │   ├── SSD
+    │   ├── LWN
     │   └── AT&T
     ├── Blog
     │   ├── TOR
@@ -164,11 +160,14 @@ INBOX
     │   ├── RustSec
     │   ├── Drupal
     │   └── GCP
-    └── Release
-        ├── Podman
-        ├── ClamAV
-        ├── Chrome
-        └── SUSE
-            ├── Secbox
-            └── Userscripts
+    ├── Release
+    │   ├── Podman
+    │   ├── ClamAV
+    │   ├── Chrome
+    │   └── SUSE
+    │       ├── Secbox
+    │       └── Userscripts
+    └── News Letter
+        ├── CyberSaiyan
+        └── Linux Foundation
 ```

@@ -4,15 +4,17 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #######################
 ##### NEWS LETTER #####
 #######################
-# NL
-# ├── LWN
-# └── Linux Foundation
+# Feed
+# ├── Weekly update
+# │   └── LWN
+# └── News Letter
+#     └── Linux Foundation
 
 # rule:[LWN]
 # https://lwn.net
 if allof ( address :is "From" "lwn@lwn.net",
            address :is "To" "${SUSEDE_ADDR}" ) {
-    fileinto :create "INBOX/NL/LWN";
+    fileinto :create "INBOX/Feed/Weekly update/LWN";
     stop;
 }
 
@@ -20,6 +22,6 @@ if allof ( address :is "From" "lwn@lwn.net",
 # https://linuxfoundation.org
 if allof ( address :domain "From" "linuxfoundation.org",
            address :is     "To"   "${SUSEDE_ADDR}" ) {
-    fileinto :create "INBOX/NL/Linux Foundation";
+    fileinto :create "INBOX/Feed/News Letter/Linux Foundation";
     stop;
 }

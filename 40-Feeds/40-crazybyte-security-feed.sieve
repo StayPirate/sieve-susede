@@ -10,6 +10,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # ├── Weekly update
 # │   ├── Ubuntu sec podcast
 # │   ├── SSD
+# │   ├── LWN
 # │   └── AT&T
 # ├── Blog
 # │   ├── TOR
@@ -44,13 +45,16 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── RustSec
 # │   ├── Drupal
 # │   └── GCP
-# └── Release
-#     ├── Podman
-#     ├── ClamAV
-#     ├── Chrome
-#     └── SUSE
-#         ├── Secbox
-#         └── Userscripts
+# ├── Release
+# │   ├── Podman
+# │   ├── ClamAV
+# │   ├── Chrome
+# │   └── SUSE
+# │       ├── Secbox
+# │       └── Userscripts
+# └── News Letter
+#     ├── CyberSaiyan
+#     └── Linux Foundation
 
 if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
@@ -97,6 +101,9 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         fileinto :create "INBOX/Feed/Weekly update/Dayzerosec";
         stop;
     }
+
+    #### TODO # In order to only get security-related article from LWN I could use
+    #### TODO # this page: https://lwn.net/headlines/text, but I need to use urlwatch.
 
 #   ██████╗ ██╗      ██████╗  ██████╗ 
 #   ██╔══██╗██║     ██╔═══██╗██╔════╝ 
@@ -186,6 +193,10 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         fileinto :create "INBOX/Feed/Blog/Good Reads";
         stop;
     }
+
+    # Grapl Security
+    # https://www.graplsecurity.com/subscribe
+
 
 #   ███████╗███████╗██╗███╗   ██╗███████╗
 #   ██╔════╝╚══███╔╝██║████╗  ██║██╔════╝
@@ -342,6 +353,20 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         fileinto :create "INBOX/Feed/Release/SUSE/Secbox";
         stop;
     }
+
+#   ███╗   ██╗███████╗██╗    ██╗███████╗    ██╗     ███████╗████████╗████████╗███████╗██████╗ 
+#   ████╗  ██║██╔════╝██║    ██║██╔════╝    ██║     ██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
+#   ██╔██╗ ██║█████╗  ██║ █╗ ██║███████╗    ██║     █████╗     ██║      ██║   █████╗  ██████╔╝
+#   ██║╚██╗██║██╔══╝  ██║███╗██║╚════██║    ██║     ██╔══╝     ██║      ██║   ██╔══╝  ██╔══██╗
+#   ██║ ╚████║███████╗╚███╔███╔╝███████║    ███████╗███████╗   ██║      ██║   ███████╗██║  ██║
+#   ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝    ╚══════╝╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝
+
+    # Linux Foundation
+    # https://linuxfoundation.org
+
+    # CyberSaiyan (ITA)
+    # https://cybersaiyan.us17.list-manage.com
+
 
     #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#
     #                                                       #
