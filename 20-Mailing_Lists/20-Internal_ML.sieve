@@ -57,6 +57,7 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 #         ├── secure-devel
 #         ├── security-intern
 #         ├── security-review
+#         ├── smash-devel
 #         └── users
 
 # rule:[devel]
@@ -364,3 +365,7 @@ if header :contains "List-Id" "<sle-security-updates.lists.suse.com>" { fileinto
 # rule:[kernel-security-sentinel]
 # https://lists.suse.com/mailman/listinfo/kernel-security-sentinel
 if header :contains "List-Id" "<kernel-security-sentinel.lists.suse.com>" { fileinto :create "INBOX/ML/SUSE/kernel-security"; stop; }
+
+# rule:[smash-devel]
+# https://mailman.suse.de/mailman/listinfo/smash-devel
+if header :contains "List-Id" "<smash-devel.suse.de>" { fileinto :create "INBOX/ML/SUSE/smash-devel"; stop; }

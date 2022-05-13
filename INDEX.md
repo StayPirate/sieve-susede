@@ -68,6 +68,7 @@ INBOX
 │   │   ├── secure-devel
 │   │   ├── security-intern
 │   │   ├── security-review
+│   │   ├── smash-devel
 │   │   └── users
 │   ├── OpenSUSE
 │   │   ├── factory
