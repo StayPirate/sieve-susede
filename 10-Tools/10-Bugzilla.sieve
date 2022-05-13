@@ -1,9 +1,18 @@
 require [ "fileinto", "mailbox", "body", "variables", "include", "regex", "editheader", "imap4flags" ];
+
+# Global vars
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
-# Flags
-global [ "FLAG_DUPLICATED", "FLAG_BZ_REASSIGNED", "FLAG_BZ_RESOLVED", "FLAG_EMBARGOED", "FLAG_PUBLISHED",
-         "FLAG_MUTED", "FLAG_NEEDINFO", "FLAG_BZ_CRITICAL", "FLAG_BZ_HIGH", "FLAG_BZ_DIRECT", "FLAG_BZ_BAD_HANDLED",
-         "FLAG_BETA" ];
+global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
+# Local vars
+set "FLAG_BZ_REASSIGNED"  "bz_reassigned";
+set "FLAG_BZ_RESOLVED"    "bz_resolved";
+set "FLAG_EMBARGOED"      "embargoed";
+set "FLAG_PUBLISHED"      "published";
+set "FLAG_NEEDINFO"       "needinfo";
+set "FLAG_BZ_CRITICAL"    "critical";
+set "FLAG_BZ_HIGH"        "high";
+set "FLAG_BZ_DIRECT"      "direct";
+set "FLAG_BZ_BAD_HANDLED" "bz_bad_handled";
 
 ######################
 #####  Bugzilla  #####
