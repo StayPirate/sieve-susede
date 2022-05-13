@@ -37,7 +37,8 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   │   ├── Gentoo
 # │   │   ├── Fedora
 # │   │   ├── Slackware
-# │   │   └── Archlinux
+# │   │   ├── Archlinux
+# │   │   └── Oracle
 # │   ├── Github
 # │   ├── PowerDNS
 # │   ├── RustSec
@@ -280,6 +281,9 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # Slackware Security Advisories (SSA) are fetched from the slackware-security ML.
     # SSA:          http://www.slackware.com/lists/archive/
+
+    # Oracle Linux Security Advisories (ELSA) are fetched from the el-errata ML.
+    # ELSA:         https://oss.oracle.com/mailman/listinfo/el-errata
 
     # rule:[Fedora]
     # https://bodhi.fedoraproject.org/updates/?search=&type=security
