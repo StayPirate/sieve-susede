@@ -136,6 +136,7 @@ INBOX
     │   ├── Microsoft
     │   ├── Chromium
     │   ├── Chrome
+    │   ├── Google
     │   ├── Good Reads
     │   └── Guerredirete
     ├── Ezine

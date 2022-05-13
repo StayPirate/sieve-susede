@@ -20,6 +20,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Microsoft
 # │   ├── Chromium
 # │   ├── Chrome
+# │   ├── Google
 # │   ├── Good Reads
 # │   └── Guerredirete
 # ├── Ezine
@@ -124,6 +125,14 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # http://security.googleblog.com/
     if header :contains "X-RSS-Feed" "http://security.googleblog.com/" {
         fileinto :create "INBOX/Feed/Blog/Chrome";
+        stop;
+    }
+
+    # rule:[Google Blog (security)]
+    # https://blog.google
+    if allof ( header :is "X-RSS-Feed" "https://blog.google/",
+               header :contains "Keywords" "security" ) {
+        fileinto :create "INBOX/Feed/Blog/Google";
         stop;
     }
 
