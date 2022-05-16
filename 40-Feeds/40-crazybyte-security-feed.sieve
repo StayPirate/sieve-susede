@@ -217,6 +217,15 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         stop;
     }
 
+    # rule:[copernicani]
+    # https://www.copernicani.it
+    if allof ( header :is "X-RSS-Feed" "https://www.copernicani.it",
+               header :contains "Keywords" [ "cybersecurity", "cyberwarfare" ] ) {
+        fileinto :create "INBOX/Feed/Blog/Activism";
+        addflag "italian";
+        stop;
+    }
+
 #   ███████╗███████╗██╗███╗   ██╗███████╗
 #   ██╔════╝╚══███╔╝██║████╗  ██║██╔════╝
 #   █████╗    ███╔╝ ██║██╔██╗ ██║█████╗  
