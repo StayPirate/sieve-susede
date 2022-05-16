@@ -22,6 +22,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Chrome
 # │   ├── Google
 # │   ├── Good Reads
+# │   ├── Activism
 # │   └── Guerredirete
 # ├── Ezine
 # │   ├── AppSec
@@ -175,6 +176,7 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://guerredirete.substack.com
     if header :is "X-RSS-Feed" "https://guerredirete.substack.com" {
         fileinto :create "INBOX/Feed/Blog/Guerredirete";
+        addflag "ita";
         stop;
     }
 
@@ -206,6 +208,14 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # Grapl Security
     # https://www.graplsecurity.com/subscribe
 
+    # rule:[Hermes Press]
+    # Center for Transparency and Digital Human Rights
+    # https://www.hermescenter.org/press/
+    if header :is "X-RSS-Feed" "https://www.hermescenter.org" {
+        fileinto :create "INBOX/Feed/Blog/Activism";
+        addflag "ita";
+        stop;
+    }
 
 #   ███████╗███████╗██╗███╗   ██╗███████╗
 #   ██╔════╝╚══███╔╝██║████╗  ██║██╔════╝
