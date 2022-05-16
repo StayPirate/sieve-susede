@@ -41,6 +41,7 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 #         │   └── smash-smelt
 #         ├── security-reports
 #         │   ├── Embargo Alerts
+#         │   ├── Missing KPI
 #         │   └── Chromium
 #         ├── devel
 #         ├── high-impact-vul
@@ -271,16 +272,27 @@ if header :contains "List-Id" "<qemu-security.nongnu.org>" { fileinto :create "I
 # https://mailman.suse.de/mailman/listinfo/security-intern
 if header :contains "List-Id" "<security-intern.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-intern"; stop; }
 
+# rule:[security-reports - Missing KPI]
+if allof ( header :contains "List-Id" "<security-reports.suse.de>",
+           header :is "Subject" "SUSE Maintenance - Reports - Imminent-Kpis" ) {
+               if body :contains "[ SUSE:Maintenance:" {
+                   fileinto :create "INBOX/ML/SUSE/security-reports/Missing KPI";
+               }
+               else {
+                   fileinto :create "INBOX/Trash";
+               }
+               stop;
+}
 # rule:[security-reports - Embargo Alerts]
 if allof ( header :contains "List-Id" "<security-reports.suse.de>",
            header :contains "Subject" "EMBARGOED ISSUE MENTIONED IN" ) {
-    fileinto :create "INBOX/ML/SUSE/security-reports/Embargo Alerts"; 
+    fileinto :create "INBOX/ML/SUSE/security-reports/Embargo Alerts";
     stop;
 }
 # rule:[security-reports - Embargo date missing]
 if allof ( header :contains "List-Id" "<security-reports.suse.de>",
            header :contains "Subject" "OBS:EmbargoDate not set for" ) {
-    fileinto :create "INBOX/ML/SUSE/security-reports/Embargo Alerts"; 
+    fileinto :create "INBOX/ML/SUSE/security-reports/Embargo Alerts";
     stop;
 }
 # rule:[security-reports - Chromium Releases]
