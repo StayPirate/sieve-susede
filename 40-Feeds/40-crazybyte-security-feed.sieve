@@ -176,7 +176,7 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://guerredirete.substack.com
     if header :is "X-RSS-Feed" "https://guerredirete.substack.com" {
         fileinto :create "INBOX/Feed/Blog/Guerredirete";
-        addflag "ita";
+        addflag "italian";
         stop;
     }
 
@@ -213,7 +213,7 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://www.hermescenter.org/press/
     if header :is "X-RSS-Feed" "https://www.hermescenter.org" {
         fileinto :create "INBOX/Feed/Blog/Activism";
-        addflag "ita";
+        addflag "italian";
         stop;
     }
 

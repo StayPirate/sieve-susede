@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include" ];
+require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
@@ -15,6 +15,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 if allof ( address :contains "From" "@cybersaiyan.it",
            address :contains "To" "${SUSEDE_ADDR}" ) {
     fileinto :create "INBOX/Feed/News Letter/CyberSaiyan";
+    addflag "italian";
     stop;
 }
 
