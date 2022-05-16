@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "variables", "include", "envelope" ];
+require [ "fileinto", "mailbox", "variables", "include", "envelope", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 
 #######################
@@ -12,6 +12,13 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
 #     └── Smelt
 
 if envelope :is "From" "gitlab@suse.de" {
+
+    # I enabled on GL to also send me notification for my activity. This helps
+    # me to maintain full threads, but at the same time I prefer to automatically
+    # set notificaion about my own activity as "read". 
+    if header :contains "X-GitLab-NotificationReason" "own_activity" {
+        addflag "\\Seen";
+    }
 
     if header :is "X-GitLab-Project" "smash" {
         fileinto :create "INBOX/Tools/Gitlab/Smash";
