@@ -297,3 +297,11 @@ if address :is "To" "slackware-security@slackware.com" { fileinto :create "INBOX
 # rule:[Oracle Linux SA - ELSA]
 # https://oss.oracle.com/mailman/listinfo/el-errata
 if header :contains "List-Id" "<el-errata.oss.oracle.com>" { fileinto :create "INBOX/Feed/SA/Distro/Oracle"; stop; }
+
+# rule:[Tomcat SA]
+# https://lists.apache.org/list?announce@tomcat.apache.org
+if allof ( header :contains "Mailing-List" "announce-help@tomcat.apache.org",
+           header :contains "Subject" "[SECURITY]" ) { 
+               fileinto :create "INBOX/Feed/SA/Tomcat";
+               stop;
+}
