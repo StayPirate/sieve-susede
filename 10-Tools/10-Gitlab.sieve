@@ -11,6 +11,7 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA", "FLAG_DIRECT" ];
 #     ├── Checkers
 #     ├── Mtk
 #     ├── Smash
+#     │   ├── Merge request
 #     │   └── smash-devel
 #     └── Smelt
 
@@ -27,7 +28,11 @@ if envelope :is "From" "gitlab@suse.de" {
     if body :contains [ "${USERNAME}", "${NAME}" ] { addflag "${FLAG_DIRECT}"; }
 
     if header :is "X-GitLab-Project" "smash" {
-        fileinto :create "INBOX/Tools/Gitlab/Smash";
+        if exists "X-GitLab-MergeRequest-ID" {
+            fileinto :create "INBOX/Tools/Gitlab/Smash/Merge request";
+        } else {
+            fileinto :create "INBOX/Tools/Gitlab/Smash";
+        }
         stop;
     }
 

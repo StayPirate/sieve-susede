@@ -25,6 +25,7 @@ INBOX
 │       ├── Checkers
 │       ├── Mtk
 │       ├── Smash
+│       │   ├── Merge request
 │       │   └── smash-devel
 │       └── Smelt
 ├── ML
