@@ -11,6 +11,7 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA", "FLAG_DIRECT" ];
 #     ├── Checkers
 #     ├── Mtk
 #     ├── Smash
+#     │   └── smash-devel
 #     └── Smelt
 
 if envelope :is "From" "gitlab@suse.de" {

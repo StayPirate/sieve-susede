@@ -10,11 +10,6 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 ### SUSECOM: http://lists.suse.com/mailman/listinfo
 
 # INBOX
-# ├── Tools
-# │  └── Bugzilla
-# │      └── Security Team
-# │          └── Proactive
-# │              └── Reports
 # └── ML
 #     └── SUSE
 #         ├── security-team
@@ -58,7 +53,6 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 #         ├── secure-devel
 #         ├── security-intern
 #         ├── security-review
-#         ├── smash-devel
 #         └── users
 
 # rule:[devel]
@@ -380,4 +374,4 @@ if header :contains "List-Id" "<kernel-security-sentinel.lists.suse.com>" { file
 
 # rule:[smash-devel]
 # https://mailman.suse.de/mailman/listinfo/smash-devel
-if header :contains "List-Id" "<smash-devel.suse.de>" { fileinto :create "INBOX/ML/SUSE/smash-devel"; stop; }
+if header :contains "List-Id" "<smash-devel.suse.de>" { fileinto :create "INBOX/Tools/Gitlab/Smash/smash-devel"; stop; }

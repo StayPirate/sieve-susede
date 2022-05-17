@@ -25,6 +25,7 @@ INBOX
 │       ├── Checkers
 │       ├── Mtk
 │       ├── Smash
+│       │   └── smash-devel
 │       └── Smelt
 ├── ML
 │   ├── SUSE
@@ -69,7 +70,6 @@ INBOX
 │   │   ├── secure-devel
 │   │   ├── security-intern
 │   │   ├── security-review
-│   │   ├── smash-devel
 │   │   └── users
 │   ├── OpenSUSE
 │   │   ├── factory
