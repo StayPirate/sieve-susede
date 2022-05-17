@@ -1,5 +1,5 @@
 require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress", "imap4flags" ];
-global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME", "SECURITY_TEAM_ADDR" ];
 # Flags
 global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 

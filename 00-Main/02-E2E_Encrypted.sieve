@@ -1,5 +1,5 @@
 require ["fileinto", "mailbox", "variables", "include", "editheader", "regex"];
-global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 
 # GPG encrypted emails are not checked from the SUSE mail server, and
 # it change the subject by prepending the string ***UNCHECKED***.

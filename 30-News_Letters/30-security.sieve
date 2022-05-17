@@ -1,5 +1,5 @@
 require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include", "imap4flags" ];
-global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 
 #######################
 ##### NEWS LETTER #####

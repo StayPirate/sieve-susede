@@ -1,5 +1,5 @@
 require [ "fileinto", "mailbox", "variables", "include" ];
-global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 
 #######################
 #####    I B S    #####
@@ -50,7 +50,7 @@ if allof ( header :is "X-Mailer" "OBS Notification System",
 # A request issued by me is not accepted
 if allof (     header :is "X-Mailer" "OBS Notification System",
                header :is "X-OBS-URL" "https://build.suse.de",
-               header :is "x-obs-request-creator" "${BZ_USERNAME}",
+               header :is "x-obs-request-creator" "${USERNAME}",
                header :is "x-obs-event-type" "request_statechange",
            not header :is "x-obs-request-state" "accepted" ) {
     fileinto :create "INBOX/Tools/IBS/requests/pushed back";
@@ -71,7 +71,7 @@ if allof ( header  :is "X-Mailer" "OBS Notification System",
 # Notification for requests I issued
 if allof ( header :is "X-Mailer" "OBS Notification System",
            header :is "X-OBS-URL" "https://build.suse.de",
-           header :is "x-obs-request-creator" "${BZ_USERNAME}" ) {
+           header :is "x-obs-request-creator" "${USERNAME}" ) {
     fileinto :create "INBOX/Tools/IBS/requests";
     stop;
 }

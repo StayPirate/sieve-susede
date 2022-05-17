@@ -4,10 +4,11 @@ require [ "variables", "include" ];
 
 ### Variables ###
 #
-global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "BZ_USERNAME", "SECURITY_TEAM_ADDR" ];
+global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME", "NAME", "SECURITY_TEAM_ADDR" ];
 set "SUSEDE_ADDR" "ggabrielli@suse.de";
 set "SUSECOM_ADDR" "gianluca.gabrielli@suse.com";
-set "BZ_USERNAME" "crazybyte";
+set "USERNAME" "crazybyte";
+set "NAME" "gianluca";
 set "SECURITY_TEAM_ADDR" "security-team@suse.de";
 
 ### IMAP System Flags (Tags) ###
@@ -24,10 +25,11 @@ set "SECURITY_TEAM_ADDR" "security-team@suse.de";
 # use the openssl cmdline utility for that:
 #     > openssl s_client -connect imap-int.suse.de:993
 #
-global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
+global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA", "FLAG_DIRECT" ];
 set "FLAG_DUPLICATED"     "duplicated";
 set "FLAG_MUTED"          "muted";
 set "FLAG_BETA"           "BETA_RULE";
+set "FLAG_DIRECT"         "direct";
 
 include :personal "01-Spam.sieve";
 
