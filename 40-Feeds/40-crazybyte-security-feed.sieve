@@ -55,9 +55,11 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Podman
 # │   ├── ClamAV
 # │   ├── Chrome
-# │   └── SUSE
-# │       ├── Secbox
-# │       └── Userscripts
+# │   ├── SUSE
+# │   │   ├── Secbox
+# │   │   └── Userscripts
+# │   └── ucode
+# │       └── Intel
 # └── News Letter
 #     ├── CyberSaiyan
 #     └── Linux Foundation
@@ -394,6 +396,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # Nmap/Npcap announcements are fetched from the nmap announce ML.
     # https://nmap.org/mailman/listinfo/announce
+
+    # rule:[intel ucode]
+    # https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files
+    if header :is "X-RSS-Feed" "https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases" {
+        fileinto :create "INBOX/Feed/Release/ucode/Intel";
+        stop;
+    }
 
 #   ███╗   ██╗███████╗██╗    ██╗███████╗    ██╗     ███████╗████████╗████████╗███████╗██████╗ 
 #   ████╗  ██║██╔════╝██║    ██║██╔════╝    ██║     ██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
