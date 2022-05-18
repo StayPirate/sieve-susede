@@ -49,6 +49,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Tomcat
 # │   ├── Jenkins
 # │   ├── WebKit
+# │   ├── Nmap
 # │   └── GCP
 # ├── Release
 # │   ├── Podman
@@ -390,6 +391,9 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         fileinto :create "INBOX/Feed/Release/SUSE/Secbox";
         stop;
     }
+
+    # Nmap/Npcap announcements are fetched from the nmap announce ML.
+    # https://nmap.org/mailman/listinfo/announce
 
 #   ███╗   ██╗███████╗██╗    ██╗███████╗    ██╗     ███████╗████████╗████████╗███████╗██████╗ 
 #   ████╗  ██║██╔════╝██║    ██║██╔════╝    ██║     ██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗

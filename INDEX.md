@@ -74,7 +74,6 @@ INBOX
 │   │   ├── factory
 │   │   └── users
 │   ├── SecList
-│   │   ├── Nmap Announce
 │   │   ├── Breach Exchange
 │   │   ├── Full Disclosure
 │   │   │   ├── malvuln
@@ -164,6 +163,7 @@ INBOX
     │   ├── Tomcat
     │   ├── Jenkins
     │   ├── WebKit
+    │   ├── Nmap
     │   └── GCP
     ├── Release
     │   ├── Podman

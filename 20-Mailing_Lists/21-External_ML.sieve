@@ -13,7 +13,6 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   ├── factory
 # │   └── users
 # ├── SecList
-# │   ├── Nmap Announce
 # │   ├── Breach Exchange
 # │   ├── Full Disclosure
 # │   │   ├── malvuln
@@ -75,7 +74,7 @@ if header :contains "List-Id" "<security-announce.lists.opensuse.org>" { fileint
 
 # rule:[Seclist - nmap announce]
 # https://nmap.org/mailman/listinfo/announce
-if header :contains "List-Id" "<announce.nmap.org>" { fileinto :create "INBOX/ML/SecList/Nmap Announce"; stop; }
+if header :contains "List-Id" "<announce.nmap.org>" { fileinto :create "INBOX/Feed/Release/Nmap"; stop; }
 
 # rule:[Seclist - breachexchang]
 # https://www.riskbasedsecurity.com/mailing-list/
