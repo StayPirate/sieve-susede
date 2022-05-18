@@ -20,6 +20,20 @@ set "FLAG_OBS_RQ_REVIEW_NEEDED" "rq_need-review";
 if allof (  header :is "X-Mailer" "OBS Notification System",
             header :is "X-OBS-URL" "https://build.suse.de" ) {
 
+    ##### BETA RULE #####
+    #
+    # This rule is intended to monitor the review requests for the new
+    # gorup maintenance-release-approver related to SLSA.
+    #
+    # rule:[TEST maintenance-release-approver review requested]
+    # IBS ignore reviews for the maintenance-team
+    if allof (  header :is "x-obs-event-type" "review_wanted",
+                header :is "x-obs-review-by-group" "maintenance-release-approver" ) {
+                    addflag "${FLAG_BETA}";
+    }
+    #
+    ##### BETA RULE #####
+
     # rule:[mute bots]
     # Delete noisy bot comments
     if allof (  anyof ( header :is "x-obs-event-type" "comment_for_request",
