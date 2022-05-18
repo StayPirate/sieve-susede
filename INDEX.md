@@ -84,7 +84,7 @@ INBOX
 │   │   │   ├── asterisk
 │   │   │   ├── atlassian
 │   │   │   └── mikrotik
-│   │   ├── Open Source Security
+│   │   ├── osss
 │   │   ├── linux-distros
 │   │   ├── distros
 │   │   ├── vince

@@ -23,7 +23,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   │   ├── asterisk
 # │   │   ├── atlassian
 # │   │   └── mikrotik
-# │   ├── Open Source Security
+# │   ├── osss
 # │   ├── linux-distros
 # │   ├── distros
 # │   ├── vince
@@ -145,7 +145,7 @@ if header :contains "List-Id" "<oss-security.lists.openwall.com>" {
     }
 
     # oss-security catch all rule
-    fileinto :create "INBOX/ML/SecList/Open Source Security";
+    fileinto :create "INBOX/ML/SecList/osss";
     stop;
 
 }
