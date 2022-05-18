@@ -143,6 +143,14 @@ if header :contains "List-Id" "<oss-security.lists.openwall.com>" {
         stop;
     }
 
+    # Xen Security Advisory (XSA)
+    # XSA are sent to osss and also to the xen-announce ML, since I'm subscribed to both
+    # then I discard the ones sent to osss.
+    if anyof (  address :contains "To" "xen-announce@lists.xen.org",
+                header  :contains "Subject" "Xen Security Advisory" ) {
+                    discard;
+    }
+
     # oss-security catch all rule
     fileinto :create "INBOX/ML/SecList/osss";
     stop;
@@ -316,3 +324,7 @@ if allof ( header :contains "Mailing-List" "announce-help@tomcat.apache.org",
                fileinto :create "INBOX/Feed/SA/Tomcat";
                stop;
 }
+
+# rule:[Xen SA - XSA]
+# https://lists.xenproject.org/cgi-bin/mailman/listinfo/xen-announce
+if header :contains "List-Id" "<xen-announce.lists.xenproject.org>" { fileinto :create "INBOX/Feed/SA/Xen"; stop; }

@@ -17,7 +17,7 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 #         │   └── Samba
 #         ├── security
 #         │   ├── Xen
-#         │   │   └── Security Advisory
+#         │   │   └── XSA Embargo
 #         │   ├── MariaDB
 #         │   ├── Django
 #         │   ├── Ceph
@@ -157,7 +157,7 @@ if allof ( header  :contains "List-Id" "<security.suse.de>",
 # rule:[security - XSA]
 if allof ( header  :contains "List-Id" "<security.suse.de>",
            address :is       "From"    "security@xen.org" ) {
-    fileinto :create "INBOX/ML/SUSE/security/Xen/Security Advisory";
+    fileinto :create "INBOX/ML/SUSE/security/Xen/XSA Embargo";
     stop;
 }
 # rule:[security - xen]

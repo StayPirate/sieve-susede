@@ -50,6 +50,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Jenkins
 # │   ├── WebKit
 # │   ├── Nmap
+# │   ├── Xen
 # │   └── GCP
 # ├── Release
 # │   ├── Podman
@@ -349,6 +350,9 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # WebKit SA are fetched from the osss ML.
     # http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+
+    # Xen SA (XSA) are fetched from the xen-announce ML.
+    # https://lists.xenproject.org/cgi-bin/mailman/listinfo/xen-announce
 
 #   ██████╗ ███████╗██╗     ███████╗ █████╗ ███████╗███████╗
 #   ██╔══██╗██╔════╝██║     ██╔════╝██╔══██╗██╔════╝██╔════╝

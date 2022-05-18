@@ -33,7 +33,7 @@ INBOX
 │   │   │   └── Samba
 │   │   ├── security
 │   │   │   ├── Xen
-│   │   │   │   └── Security Advisory
+│   │   │   │   └── XSA Embargo
 │   │   │   ├── MariaDB
 │   │   │   ├── Django
 │   │   │   ├── Ceph
@@ -164,6 +164,7 @@ INBOX
     │   ├── Jenkins
     │   ├── WebKit
     │   ├── Nmap
+    │   ├── Xen
     │   └── GCP
     ├── Release
     │   ├── Podman
