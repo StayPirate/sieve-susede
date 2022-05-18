@@ -24,7 +24,6 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   │   ├── atlassian
 # │   │   └── mikrotik
 # │   ├── Open Source Security
-# │   │   └── WebKit SA
 # │   ├── linux-distros
 # │   ├── distros
 # │   ├── vince
@@ -128,15 +127,28 @@ if allof ( header  :contains "List-Id" "<fulldisclosure.seclists.org>",
 # https://nmap.org/mailman/listinfo/fulldisclosure
 if header :contains "List-Id" "<fulldisclosure.seclists.org>" { fileinto :create "INBOX/ML/SecList/Full Disclosure"; stop; }
 
-# rule:[Seclist - oss-security - WebKit]
-if allof ( header  :contains "List-Id" "<oss-security.lists.openwall.com>",
-           header  :contains "Subject" "WebKit Security Advisory" ) {
-    fileinto :create "INBOX/ML/SecList/Open Source Security/WebKit SA";
-    stop;
-}
 # rule:[Seclist - oss-security]
 # http://oss-security.openwall.org/wiki/mailing-lists/oss-security
-if header :contains "List-Id" "<oss-security.lists.openwall.com>" { fileinto :create "INBOX/ML/SecList/Open Source Security"; stop; }
+if header :contains "List-Id" "<oss-security.lists.openwall.com>" {
+
+    # WebKit SA
+    if header :contains "Subject" "WebKit Security Advisory" {
+        fileinto :create "INBOX/Feed/SA/WebKit";
+        stop;
+    }
+
+    # Jenkins SA
+    if anyof ( header :contains "Subject" "Multiple vulnerabilities in Jenkins",
+               header :contains "Subject" "Vulnerability in Jenkins" ) {
+        fileinto :create "INBOX/Feed/SA/Jenkins";
+        stop;
+    }
+
+    # oss-security catch all rule
+    fileinto :create "INBOX/ML/SecList/Open Source Security";
+    stop;
+
+}
 
 # rule:[Seclist - linux-distros and distros]
 # https://oss-security.openwall.org/wiki/mailing-lists/distros

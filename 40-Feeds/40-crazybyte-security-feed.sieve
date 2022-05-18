@@ -47,6 +47,8 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── RustSec
 # │   ├── Drupal
 # │   ├── Tomcat
+# │   ├── Jenkins
+# │   ├── WebKit
 # │   └── GCP
 # ├── Release
 # │   ├── Podman
@@ -338,6 +340,12 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         fileinto :create "INBOX/Feed/SA/GCP";
         stop;
     }
+
+    # Jenkins SA are fetched from the osss ML.
+    # http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+
+    # WebKit SA are fetched from the osss ML.
+    # http://oss-security.openwall.org/wiki/mailing-lists/oss-security
 
 #   ██████╗ ███████╗██╗     ███████╗ █████╗ ███████╗███████╗
 #   ██╔══██╗██╔════╝██║     ██╔════╝██╔══██╗██╔════╝██╔════╝
