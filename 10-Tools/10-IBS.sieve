@@ -60,6 +60,12 @@ if allof (  header :is "X-Mailer" "OBS Notification System",
                     }
     }
 
+    # rule:[my request]
+    # Notification for requests I issued
+    if header :is "x-obs-request-creator" "${USERNAME}" {
+        addflag "${FLAG_DIRECT}";
+    }
+
     # rule:[my build failed]
     # A package I maintain failed to build
     if allof (  address :contains "To" "${SUSECOM_ADDR}",
@@ -68,15 +74,8 @@ if allof (  header :is "X-Mailer" "OBS Notification System",
                     stop;
     }
 
-    # rule:[my request]
-    # Notification for requests I issued
-    if header :is "x-obs-request-creator" "${USERNAME}" {
-        fileinto :create "INBOX/Tools/IBS/requests";
-        stop;
-    }
-
     # Catch all, any other notification from IBS goes into the generic IBS folder
-    fileinto :create "INBOX/Tools/IBS";
+    fileinto :create "INBOX/Tools/IBS/requests";
     stop;
 
 }
