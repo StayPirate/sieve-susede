@@ -25,7 +25,10 @@ if envelope :is "From" "gitlab@suse.de" {
     }
 
     # Add the "direct" imap_flag for notification where I've been mentioned
-    if body :contains [ "${USERNAME}", "${NAME}" ] { addflag "${FLAG_DIRECT}"; }
+    if allof (      body :contains [ "${USERNAME}", "${NAME}" ],
+                not header :contains "X-GitLab-NotificationReason" "own_activity" ) {
+                    addflag "${FLAG_DIRECT}";
+    }
 
     if header :is "X-GitLab-Project" "smash" {
         if exists "X-GitLab-MergeRequest-ID" {
