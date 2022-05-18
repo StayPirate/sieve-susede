@@ -13,8 +13,6 @@ INBOX
 │   ├── IBS
 │   │   ├── build
 │   │   └── requests
-│   │       ├── pushed back
-│   │       └── to review
 │   ├── OBS
 │   │   ├── build
 │   │   └── Security Tools
