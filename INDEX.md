@@ -116,10 +116,8 @@ INBOX
 │   │   ├── security
 │   │   ├── selinux
 │   │   └── users
-│   ├── Italian
-│   │   └── GNU Translation
-│   └── Security Advisory
-│       └── Weechat
+│   └── Italian
+│       └── GNU Translation
 └── Feed
     ├── Weekly update
     │   ├── Ubuntu sec podcast
@@ -165,6 +163,7 @@ INBOX
     │   ├── WebKit
     │   ├── Nmap
     │   ├── Xen
+    │   ├── Weechat
     │   └── GCP
     ├── Release
     │   ├── Podman

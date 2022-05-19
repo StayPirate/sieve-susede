@@ -55,10 +55,8 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   ├── security
 # │   ├── selinux
 # │   └── users
-# ├── Italian
-# │   └── GNU Translation
-# └── Security Advisory
-#     └── Weechat
+# └── Italian
+#     └── GNU Translation
 
 # rule:[OpenSUSE - factory]
 # https://lists.opensuse.org/archives/list/factory@lists.opensuse.org/
@@ -275,7 +273,7 @@ if header :contains "List-Id" "<www-it-traduzioni.gnu.org>" { fileinto :create "
 
 # rule:[SA - weechat]
 # https://lists.nongnu.org/mailman/listinfo/weechat-security
-if header :contains "List-Id" "<weechat-security.nongnu.org>" { fileinto :create "INBOX/ML/Security Advisory/Weechat"; stop; }
+if header :contains "List-Id" "<weechat-security.nongnu.org>" { fileinto :create "INBOX/Feed/SA/Weechat"; stop; }
 
 # rule:[Archlinux - arch-announce]
 # https://lists.archlinux.org/listinfo/arch-announce

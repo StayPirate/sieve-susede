@@ -51,6 +51,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── WebKit
 # │   ├── Nmap
 # │   ├── Xen
+# │   ├── Weechat
 # │   └── GCP
 # ├── Release
 # │   ├── Podman
@@ -353,6 +354,9 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # Xen SA (XSA) are fetched from the xen-announce ML.
     # https://lists.xenproject.org/cgi-bin/mailman/listinfo/xen-announce
+
+    # Weechat SA are fetched from the weechat-security ML.
+    # https://lists.nongnu.org/mailman/listinfo/weechat-security
 
 #   ██████╗ ███████╗██╗     ███████╗ █████╗ ███████╗███████╗
 #   ██╔══██╗██╔════╝██║     ██╔════╝██╔══██╗██╔════╝██╔════╝
