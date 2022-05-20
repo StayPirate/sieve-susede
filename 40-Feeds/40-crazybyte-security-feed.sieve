@@ -21,6 +21,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Chromium
 # │   ├── Chrome
 # │   ├── Google
+# │   ├── Sentinelone
 # │   ├── Good Reads
 # │   ├── Activism
 # │   └── Guerredirete
@@ -232,6 +233,22 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         fileinto :create "INBOX/Feed/Blog/Activism";
         addflag "italian";
         stop;
+    }
+
+    # rule:[Sentinelone]
+    # https://sentinelone.com/blog/
+    if allof (  header :contains "X-RSS-Feed" "sentinelone.com",
+                header :contains "Keywords" [ "security", "cybercrime", "malware", "escape" ] ) {
+
+                    # They use Cloudflare CDN which in turn redirects (302) to the italian
+                    # blog (it.sentinelone.com) if the request comes from an italian IP.
+                    # (╯°□°)╯︵ ┻━┻
+                    if header :contains "X-RSS-Feed" "https://it.sentinelone.com" { 
+                        addflag "italian";
+                    }
+
+                    fileinto :create "INBOX/Feed/Blog/Sentinelone";
+                    stop;
     }
 
 #   ███████╗███████╗██╗███╗   ██╗███████╗

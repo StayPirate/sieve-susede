@@ -133,6 +133,7 @@ INBOX
     │   ├── Chromium
     │   ├── Chrome
     │   ├── Google
+    │   ├── Sentinelone
     │   ├── Good Reads
     │   ├── Activism
     │   └── Guerredirete
