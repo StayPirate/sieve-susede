@@ -157,7 +157,7 @@ INBOX
     │   │   └── Oracle
     │   ├── Github
     │   ├── PowerDNS
-    │   ├── RustSec
+    │   ├── Rust
     │   ├── Drupal
     │   ├── Tomcat
     │   ├── Jenkins

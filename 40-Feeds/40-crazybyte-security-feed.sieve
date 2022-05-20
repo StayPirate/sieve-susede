@@ -45,7 +45,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   │   └── Oracle
 # │   ├── Github
 # │   ├── PowerDNS
-# │   ├── RustSec
+# │   ├── Rust
 # │   ├── Drupal
 # │   ├── Tomcat
 # │   ├── Jenkins
@@ -311,10 +311,20 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     }
 
     # rule:[RustSec]
-    # https://rustsec.org - The Rust Security Advisory Database
+    # https://rustsec.org - SA for Rust crates published via crates.io
     if header :is "X-RSS-Feed" "https://rustsec.org/" {
-        fileinto :create "INBOX/Feed/SA/RustSec";
+        addflag "rustsec";
+        fileinto :create "INBOX/Feed/SA/Rust";
         stop;
+    }
+
+    # rule:[Rust]
+    # https://blog.rust-lang.org/ - SA from the main Rust blog
+    if allof (  header :is "X-RSS-Feed" "https://blog.rust-lang.org/",
+                header :contains "Subject" "Security advisory" ) {
+                    addflag "rust-blog";
+                    fileinto :create "INBOX/Feed/SA/Rust";
+                    stop;
     }
 
     # Debian Security Advisories (DSA) are fetched from the debian-security-announce ML, since
