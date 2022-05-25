@@ -214,6 +214,14 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         stop;
     }
 
+    # rule:[0pointer]
+    # Lennart Poettering personal blog
+    # https://0pointer.net/blog
+    if header :is "X-RSS-Feed" "https://0pointer.net/blog/" {
+        fileinto :create "INBOX/Feed/Blog/Good Reads";
+        stop;
+    }
+
     # Grapl Security
     # https://www.graplsecurity.com/subscribe
 
