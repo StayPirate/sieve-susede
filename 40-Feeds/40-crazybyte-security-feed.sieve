@@ -153,6 +153,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         stop;
     }
 
+    # rule:[Microsoft Security Response Center Blog]
+    # https://msrc-blog.microsoft.com
+    if header :is "X-RSS-Feed" "https://msrc-blog.microsoft.com" {
+        fileinto :create "INBOX/Feed/Blog/Microsoft";
+        stop;
+    }
+
     # rule:[GitHub Security Blog]
     # https://github.blog/category/security/feed/
     if header :is "X-RSS-Feed" "https://github.blog" {
