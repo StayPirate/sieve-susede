@@ -21,6 +21,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Chromium
 # │   ├── Chrome
 # │   ├── Google
+# │   ├── Cloudflare
 # │   ├── Sentinelone
 # │   ├── Good Reads
 # │   ├── Activism
@@ -268,6 +269,14 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
                     fileinto :create "INBOX/Feed/Blog/Sentinelone";
                     stop;
+    }
+
+    # rule:[Cloudflare]
+    # https://blog.cloudflare.com
+    if allof ( header :is "X-RSS-Feed" "https://blog.cloudflare.com/",
+               header :contains "Keywords" [ "security", "Vulnerabilit" ] ) {
+        fileinto :create "INBOX/Feed/Blog/Cloudflare";
+        stop;
     }
 
 #   ███████╗███████╗██╗███╗   ██╗███████╗
