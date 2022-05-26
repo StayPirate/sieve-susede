@@ -53,6 +53,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Nmap
 # │   ├── Xen
 # │   ├── Weechat
+# │   ├── TOR
 # │   └── GCP
 # ├── Release
 # │   ├── Podman
@@ -183,7 +184,10 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # rule:[TOR blog]
     # https://blog.torproject.org/
-    if header :is "X-RSS-Feed" "https://blog.torproject.org/" {
+    # Ignore release notifications
+    if allof (  header :is "X-RSS-Feed" "https://blog.torproject.org/",
+                not header :contains "Subject" "New",
+                not header :contains "Subject" "Release:" ) {
         fileinto :create "INBOX/Feed/Blog/TOR";
         stop;
     }
@@ -399,6 +403,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # Weechat SA are fetched from the weechat-security ML.
     # https://lists.nongnu.org/mailman/listinfo/weechat-security
+
+    # rule:[TOR SA]
+    # https://tails.boum.org/security/index.en.html
+    if header :contains "X-RSS-Feed" "https://tails.boum.org/security/index.en.html" {
+        fileinto :create "INBOX/Feed/SA/TOR";
+        stop;
+    }
 
 #   ██████╗ ███████╗██╗     ███████╗ █████╗ ███████╗███████╗
 #   ██╔══██╗██╔════╝██║     ██╔════╝██╔══██╗██╔════╝██╔════╝
