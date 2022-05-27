@@ -214,18 +214,20 @@ if address :is "From" "bugzilla_noreply@suse.com" {
     }
 
     # rule:[flags - issue is resolved]
-    # As an agreement, all the security related issues should not be closed by the
-    # assignee once he did his work, instead the issue should to be assigned back to
-    # the security team, who will then review and close the issue if everything is fine.
-    # The rule put the closing notification in the same folder of the re-assigned one.
-    # This helps me to quickly check which BZ issues are still open and which not.
-    # Also prepend the tag [RESOLVED] in the email's subject.
+    # Internal agreement states that all the security related BZ issues should NOT be closed
+    # by the assignee once his job is done, instead the issue should to be reassigned back to
+    # the security team, who will then review it and only close the issue if everything is fine.
+    # This sieve rule flags incoming notifications as FLAG_BZ_RESOLVED if that's assigned to the
+    # security-team at the time it gets closed, or flags it as FLAG_BZ_BAD_HANDLED if that was
+    # still assigned to anybody else.
+    # That helps to quickly spot BZ issues that are correcly closed and the ones which haven't
+    # followed the right steps.
     if allof ( header  :is       "X-Bugzilla-Type"           "changed",
                header  :contains "x-bugzilla-changed-fields" "bug_status",
                header  :is       "X-Bugzilla-Status"         "RESOLVED" ) {
                    if header :is "x-bugzilla-assigned-to"    "${SECURITY_TEAM_ADDR}" {
                        addflag "${FLAG_BZ_RESOLVED}";
-                       # TODO: I can also add here the flag \\Seen in case the issue was
+                       # TODO: I could add here the flag \\Seen in case the issue was
                        #       closed by a security team member.
                    } else {
                        addflag "${FLAG_BZ_BAD_HANDLED}";
