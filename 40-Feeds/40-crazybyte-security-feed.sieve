@@ -279,6 +279,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         stop;
     }
 
+    # rule:[Grsecurity]
+    # https://www.grsecurity.net/blog
+    if header :is "X-RSS-Feed" "https://www.grsecurity.net/blog.rss" {
+        fileinto :create "INBOX/Feed/Blog/Good Reads";
+        stop;
+    }
+
 #   ███████╗███████╗██╗███╗   ██╗███████╗
 #   ██╔════╝╚══███╔╝██║████╗  ██║██╔════╝
 #   █████╗    ███╔╝ ██║██╔██╗ ██║█████╗  
