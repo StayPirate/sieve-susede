@@ -317,10 +317,13 @@ if header :contains "List-Id" "<el-errata.oss.oracle.com>" { fileinto :create "I
 
 # rule:[Tomcat SA]
 # https://lists.apache.org/list?announce@tomcat.apache.org
-if allof ( header :contains "Mailing-List" "announce-help@tomcat.apache.org",
-           header :contains "Subject" "[SECURITY]" ) { 
-               fileinto :create "INBOX/Feed/SA/Tomcat";
-               stop;
+if header :contains "List-Id" "<announce.tomcat.apache.org>" {
+    if header :contains "Subject" "[SECURITY]" { 
+        fileinto :create "INBOX/Feed/SA/Tomcat";
+    } else {
+        discard;
+    }
+    stop;
 }
 
 # rule:[Xen SA - XSA]
