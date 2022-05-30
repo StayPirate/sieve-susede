@@ -33,6 +33,9 @@ set "FLAG_DIRECT"         "direct";
 
 include :personal "01-Spam.sieve";
 
+# Flag duplicated emails
+include :personal "02-Duplicate.sieve";
+
 # GPG encrypted emails
 include :personal "02-E2E_Encrypted.sieve";
 
