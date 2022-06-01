@@ -31,13 +31,15 @@ set "FLAG_MUTED"          "muted";
 set "FLAG_BETA"           "BETA_RULE";
 set "FLAG_DIRECT"         "direct";
 
-include :personal "01-Spam.sieve";
+# Unchecked emails
+include :personal "01-Unchecked.sieve";
+
+# Manage SPAM emails 
+include :personal "02-Spam.sieve";
 
 # Flag duplicated emails
-include :personal "02-Duplicate.sieve";
+include :personal "03-Duplicate.sieve";
 
-# GPG encrypted emails
-include :personal "02-E2E_Encrypted.sieve";
 
 # Internal tools notification
 include :personal "10-Bugzilla.sieve";
