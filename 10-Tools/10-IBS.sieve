@@ -47,10 +47,11 @@ if allof (  header :is "X-Mailer" "OBS Notification System",
                             stop;
     }
 
-    # rule:[ignore maintenance-team review requested]
-    # IBS ignore reviews for the maintenance-team
+    # rule:[ignore maintenance review requested]
+    # IBS ignore reviews for the maintenance-team and maintenance-release-approver
     if allof (  header :is "x-obs-event-type" "review_wanted",
-                header :is "x-obs-review-by-group" "maintenance-team" ) {
+                anyof ( header :is "x-obs-review-by-group" "maintenance-team",
+                        header :is "x-obs-review-by-group" "maintenance-release-approver" )) {
                     discard;
                     stop;
     }
@@ -62,16 +63,14 @@ if allof (  header :is "X-Mailer" "OBS Notification System",
                     addflag "${FLAG_OBS_RQ_REVIEW_NEEDED}";
     }
 
-    # rule:[my request declined]
-    # For requests issued by me: discard notifications if those become accepted and notify about the others
-    if allof (  header :is "x-obs-request-creator" "${USERNAME}",
-                header :is "x-obs-event-type" "request_statechange" ) {
-                    if header :is "x-obs-request-state" "accepted" {
-                        discard;
-                        stop;
-                    } else {
-                        addflag "${FLAG_OBS_RQ_NOT_ACCEPTED}";
-                    }
+    # rule:[request declined]
+    if header :is "x-obs-event-type" "request_statechange" {
+        if header :is "x-obs-request-state" "accepted" {
+            discard;
+            stop;
+        } else {
+            addflag "${FLAG_OBS_RQ_NOT_ACCEPTED}";
+        }
     }
 
     # rule:[my request]
