@@ -1,21 +1,12 @@
 #!/usr/bin/env -S bash -i
 
-unlock_wallet() {
-    echo "check the explanation attribute ;)" | secret-tool store --label="dummy-entry" explanation \
-    "Because of quirks in the gnome libsecret API, a dummy entry needs to be stored in order to \
-    guarantee that this keyring was properly unlocked. More details at http://crbug.com/660005 and \
-    https://github.com/keepassxreboot/keepassxc/issues/4443"
-}
-
 get_user() {
-    unlock_wallet
     secret-tool search client sieveshell workstation wintermute 2>&1 | \
     grep -E "^attribute\.UserName" | \
     cut -d " " -f3
 }
 
 get_pass() {
-    unlock_wallet
     secret-tool search client sieveshell workstation wintermute 2>&1 | \
     grep -E "^secret" | \
     cut -d " " -f3
@@ -28,9 +19,6 @@ local managesieve_port=4190
 
 # If sieveshell is not installed skip this check w/o blocking the commit
 type sieveshell >/dev/null 2>&1 || return 0
-
-# Ensure the local wallet is unlocked before query for username and password
-unlock_wallet
 
 # This hook has to be run from there or it won't find all the sieve files
 find $(git rev-parse --show-toplevel) -type f -name "*.sieve" -printf "put %p %f\n" | sort -nr | \
