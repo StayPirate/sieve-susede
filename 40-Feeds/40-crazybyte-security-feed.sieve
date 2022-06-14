@@ -23,6 +23,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Google
 # │   ├── Cloudflare
 # │   ├── Sentinelone
+# │   ├── Intezer
 # │   ├── Good Reads
 # │   ├── Activism
 # │   └── Guerredirete
@@ -283,6 +284,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://www.grsecurity.net/blog
     if header :is "X-RSS-Feed" "https://www.grsecurity.net/blog.rss" {
         fileinto :create "INBOX/Feed/Blog/Good Reads";
+        stop;
+    }
+
+    # rule:[Intezer]
+    # https://www.intezer.com/blog/
+    if header :is "X-RSS-Feed" "https://www.intezer.com" {
+        fileinto :create "INBOX/Feed/Blog/Intezer";
         stop;
     }
 

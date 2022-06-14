@@ -135,6 +135,7 @@ INBOX
     │   ├── Google
     │   ├── Cloudflare
     │   ├── Sentinelone
+    │   ├── Intezer
     │   ├── Good Reads
     │   ├── Activism
     │   └── Guerredirete
