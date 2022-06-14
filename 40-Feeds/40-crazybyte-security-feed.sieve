@@ -24,6 +24,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Cloudflare
 # │   ├── Sentinelone
 # │   ├── Intezer
+# │   ├── Avast
 # │   ├── Good Reads
 # │   ├── Activism
 # │   └── Guerredirete
@@ -291,6 +292,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://www.intezer.com/blog/
     if header :is "X-RSS-Feed" "https://www.intezer.com" {
         fileinto :create "INBOX/Feed/Blog/Intezer";
+        stop;
+    }
+
+    # rule:[Avast]
+    # https://decoded.avast.io/
+    if header :is "X-RSS-Feed" "https://decoded.avast.io" {
+        fileinto :create "INBOX/Feed/Blog/Avast";
         stop;
     }
 
