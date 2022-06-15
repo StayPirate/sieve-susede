@@ -25,7 +25,6 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 #         │   ├── Qemu
 #         │   ├── Cloud Foundry
 #         │   ├── strongSwan
-#         │   ├── Adobe
 #         │   ├── Subversion
 #         │   └── Mitre
 #         │       └── SUSE CNA
@@ -221,11 +220,13 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
     fileinto :create "INBOX/ML/SUSE/security/strongSwan";
     stop;
 }
+# Discard Adobe SA, from the open source pov we don't care
 # rule:[security - Adobe]
 if allof ( header   :contains "List-Id" "<security.suse.de>",
            address  :domain   "From"    "mail.adobe.com",
            header   :contains "Subject" "Adobe Security Bulletin") {
-    fileinto :create "INBOX/ML/SUSE/security/Adobe";
+    addflag "\\Seen";
+    fileinto :create "INBOX/Trash";
     stop;
 }
 # rule:[security - no VINCE]

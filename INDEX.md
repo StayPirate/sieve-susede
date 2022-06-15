@@ -41,7 +41,6 @@ INBOX
 │   │   │   ├── Qemu
 │   │   │   ├── Cloud Foundry
 │   │   │   ├── strongSwan
-│   │   │   ├── Adobe
 │   │   │   ├── Subversion
 │   │   │   └── Mitre
 │   │   │       └── SUSE CNA
