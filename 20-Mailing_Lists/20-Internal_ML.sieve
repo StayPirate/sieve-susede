@@ -270,7 +270,8 @@ if header :contains "List-Id" "<security-intern.suse.de>" { fileinto :create "IN
 # rule:[security-reports - Missing KPI]
 if allof ( header :contains "List-Id" "<security-reports.suse.de>",
            header :is "Subject" "SUSE Maintenance - Reports - Imminent-Kpis" ) {
-               if body :contains "[ SUSE:Maintenance:" {
+               if allof ( body :contains "[ SUSE:Maintenance:",
+                          body :contains [ "security", "emu" ] ) {
                    fileinto :create "INBOX/ML/SUSE/security-reports/Missing KPI";
                }
                else {
