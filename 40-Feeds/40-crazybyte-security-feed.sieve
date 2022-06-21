@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include", "imap4flags" ];
+require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include", "imap4flags", "body" ];
 
 ###################################
 ##### CRAZYBYTE SECURITY FEED #####
@@ -57,6 +57,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Xen
 # │   ├── Weechat
 # │   ├── TOR
+# │   ├── VLC
 # │   └── GCP
 # ├── Release
 # │   ├── Podman
@@ -440,6 +441,14 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://tails.boum.org/security/index.en.html
     if header :contains "X-RSS-Feed" "https://tails.boum.org/security/index.en.html" {
         fileinto :create "INBOX/Feed/SA/TOR";
+        stop;
+    }
+
+    # rule:[VLC]
+    # https://www.videolan.org/security/
+    if allof( header :contains "X-RSS-Feed" "http://www.videolan.org/",
+              body :contains [ "security", "affected" ] ) {
+        fileinto :create "INBOX/Feed/SA/VLC";
         stop;
     }
 
