@@ -166,6 +166,7 @@ INBOX
     │   ├── WebKit
     │   ├── Nmap
     │   ├── Xen
+    │   ├── OpenJDK
     │   ├── Weechat
     │   ├── TOR
     │   ├── VLC

@@ -55,6 +55,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── WebKit
 # │   ├── Nmap
 # │   ├── Xen
+# │   ├── OpenJDK
 # │   ├── Weechat
 # │   ├── TOR
 # │   ├── VLC
@@ -451,6 +452,9 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         fileinto :create "INBOX/Feed/SA/VLC";
         stop;
     }
+
+    # OpenJDK Vulnerability Advisory are fetched from the vuln-announce ML.
+    # https://mail.openjdk.org/mailman/listinfo/vuln-announce
 
 #   ██████╗ ███████╗██╗     ███████╗ █████╗ ███████╗███████╗
 #   ██╔══██╗██╔════╝██║     ██╔════╝██╔══██╗██╔════╝██╔════╝

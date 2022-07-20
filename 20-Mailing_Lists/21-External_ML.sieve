@@ -329,3 +329,7 @@ if header :contains "List-Id" "<announce.tomcat.apache.org>" {
 # rule:[Xen SA - XSA]
 # https://lists.xenproject.org/cgi-bin/mailman/listinfo/xen-announce
 if header :contains "List-Id" "<xen-announce.lists.xenproject.org>" { fileinto :create "INBOX/Feed/SA/Xen"; stop; }
+
+# rule:[OpenJDK SA - XSA]
+# https://mail.openjdk.org/mailman/listinfo/vuln-announce
+if header :contains "List-Id" "<vuln-announce.openjdk.org>" { fileinto :create "INBOX/Feed/SA/OpenJDK"; stop; }
