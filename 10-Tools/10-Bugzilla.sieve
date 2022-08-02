@@ -294,8 +294,8 @@ if address :is "From" "bugzilla_noreply@suse.com" {
 
     # rule:[folders - not security reactive issues]
     # Security related issues that are not the usual reactive/proactive tasks.
-    if allof ( not header :is "X-Bugzilla-Product" "SUSE Security Incidents",
-               not header :is "X-Bugzilla-Component" [ "Incidents", "Live Patches" ] ){
+    if allof ( not header :is "X-Bugzilla-Product" [ "SUSE Security Incidents", "SUSE Linux Enterprise Live Patching" ],
+               not header :is "X-Bugzilla-Component" [ "Incidents", "Live Patches", "Kernel Live Patches" ] ){
                   fileinto :create "INBOX/Tools/Bugzilla/Other";
                   stop;
     }
