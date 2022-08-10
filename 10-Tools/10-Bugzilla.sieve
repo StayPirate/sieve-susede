@@ -43,6 +43,7 @@ if address :is "From" "bugzilla_noreply@suse.com" {
                header :is "X-Bugzilla-Who" "bwiedemann+obsbugzillabot@suse.com",
                header :is "X-Bugzilla-Who" "smash_bz@suse.de",
                header :is "x-bugzilla-who" "maint-coord+maintenance_robot@suse.de",
+               header :is "x-bugzilla-who" "maint-coord+maintenance-robot@suse.de",
                header :is "x-bugzilla-who" "openqa-review@suse.de" ) {
     	discard;
         stop;
