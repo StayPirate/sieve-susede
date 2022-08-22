@@ -7,9 +7,22 @@ if allof ( header :contains "X-Spam-Flag" "YES",
            ###    W H I T E L I S T    ###
            #▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔#
            # Important emails I don't want that fall into the SPAM folder
-           not anyof ( header  :is "X-List" "vs.openwall.org",
-                       address :is "From" [ "cert+donotreply@cert.org", "US-CERT@messages.cisa.gov" ] )) {
-           #▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔#
+           not anyof ( 
+                       # Always deliver distros and linux-distros messages
+                       header  :is "X-List" "vs.openwall.org",
+
+                       # Always deliver CISA notifications
+                       address :is "From" [ "cert+donotreply@cert.org", "US-CERT@messages.cisa.gov" ],
+
+                       # Jenkis' security advisories are always flagged as SPAM due to the misconfigured DKIM
+                       # record of the domain of the usual sender (*@beckweb.net)
+                       # dmarc=fail reason="SPF not aligned (relaxed), No valid DKIM" header.from=beckweb.net (policy=quarantine);
+                       allof ( header :contains "List-ID" "<oss-security.lists.openwall.com>",
+                               header :contains "Subject" "Jenkins",
+                               header :contains "Subject" "vulnerabilit"
+                       )
+            )
+) {
     fileinto :create "INBOX/Spam";
     stop;
 }
