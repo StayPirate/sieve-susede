@@ -70,6 +70,7 @@ if allof (  header :is "X-Mailer" "OBS Notification System",
             stop;
         } else {
             addflag "${FLAG_OBS_RQ_NOT_ACCEPTED}";
+            addflag "\\Seen";
         }
     }
 
