@@ -136,6 +136,7 @@ INBOX
     │   ├── Sentinelone
     │   ├── Intezer
     │   ├── Avast
+    │   ├── Security Nation
     │   ├── Good Reads
     │   ├── Activism
     │   └── Guerredirete

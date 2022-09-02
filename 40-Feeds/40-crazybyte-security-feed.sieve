@@ -25,6 +25,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Sentinelone
 # │   ├── Intezer
 # │   ├── Avast
+# │   ├── Security Nation
 # │   ├── Good Reads
 # │   ├── Activism
 # │   └── Guerredirete
@@ -301,6 +302,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://decoded.avast.io/
     if header :is "X-RSS-Feed" "https://decoded.avast.io" {
         fileinto :create "INBOX/Feed/Blog/Avast";
+        stop;
+    }
+
+    # rule:[Security Nation]
+    # https://rapid7.com/resources/podcasts
+    if header :is "X-RSS-Feed" "https://rapid7.com/resources/podcasts" {
+        fileinto :create "INBOX/Feed/Blog/Security Nation";
         stop;
     }
 
