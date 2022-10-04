@@ -69,9 +69,6 @@ INBOX
 │   │   ├── security-intern
 │   │   ├── security-review
 │   │   └── users
-│   ├── OpenSUSE
-│   │   ├── factory
-│   │   └── users
 │   ├── SecList
 │   │   ├── Breach Exchange
 │   │   ├── Full Disclosure
@@ -87,17 +84,20 @@ INBOX
 │   │   ├── distros
 │   │   ├── vince
 │   │   ├── Info Security News
-│   │   ├── CERT Advisories
-│   │   │   └── Week Summary
-│   │   └── OpenSSF
-│   │       ├── Announcements
-│   │       ├── Security Threats
-│   │       ├── Security Tooling
-│   │       ├── Vul Disclosure
-│   │       ├── Code Best Practices
-│   │       ├── Alpha-Omega Announcements
-│   │       ├── Supply Chain Integrity
-│   │       └── Securing Critical Projects
+│   │   └── CERT Advisories
+│   │       └── Week Summary
+│   ├── OpenSSF
+│   │   ├── Announcements
+│   │   ├── Security Threats
+│   │   ├── Security Tooling
+│   │   ├── Vul Disclosure
+│   │   ├── Code Best Practices
+│   │   ├── Alpha-Omega Announcements
+│   │   ├── Supply Chain Integrity
+│   │   └── Securing Critical Projects
+│   ├── OpenSUSE
+│   │   ├── factory
+│   │   └── users
 │   ├── Debian
 │   │   ├── Security
 │   │   ├── Security Tools

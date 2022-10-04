@@ -9,9 +9,6 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 ### Open Source Security Foundation: https://lists.openssf.org/g/mas
 #
 # ML
-# ├── OpenSUSE
-# │   ├── factory
-# │   └── users
 # ├── SecList
 # │   ├── Breach Exchange
 # │   ├── Full Disclosure
@@ -27,17 +24,20 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   ├── distros
 # │   ├── vince
 # │   ├── Info Security News
-# │   ├── CERT Advisories
-# │   │   └── Week Summary
-# │   └── OpenSSF
-# │       ├── Announcements
-# │       ├── Security Threats
-# │       ├── Security Tooling
-# │       ├── Vul Disclosure
-# │       ├── Code Best Practices
-# │       ├── Alpha-Omega Announcements
-# │       ├── Supply Chain Integrity
-# │       └── Securing Critical Projects
+# │   └── CERT Advisories
+# │       └── Week Summary
+# ├── OpenSSF
+# │   ├── Announcements
+# │   ├── Security Threats
+# │   ├── Security Tooling
+# │   ├── Vul Disclosure
+# │   ├── Code Best Practices
+# │   ├── Alpha-Omega Announcements
+# │   ├── Supply Chain Integrity
+# │   └── Securing Critical Projects
+# ├── OpenSUSE
+# │   ├── factory
+# │   └── users
 # ├── Debian
 # │   ├── Security
 # │   ├── Security Tools
