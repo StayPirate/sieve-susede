@@ -24,6 +24,8 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   ├── distros
 # │   ├── vince
 # │   ├── Info Security News
+# │   ├── WebKit
+# │   │   └── Upstream Private
 # │   └── CERT Advisories
 # │       └── Week Summary
 # ├── OpenSSF
@@ -337,3 +339,7 @@ if header :contains "List-Id" "<xen-announce.lists.xenproject.org>" { fileinto :
 # rule:[OpenJDK SA - XSA]
 # https://mail.openjdk.org/mailman/listinfo/vuln-announce
 if header :contains "List-Id" "<vuln-announce.openjdk.org>" { fileinto :create "INBOX/Feed/SA/OpenJDK"; stop; }
+
+# rule:[WebKit Security Private ML]
+# https://webkit.org/security-policy/
+if header :contains "List-Id" "<webkit-security.lists.webkit.org>" { fileinto :create "INBOX/ML/SecList/WebKit/Upstream Private"; stop; }
