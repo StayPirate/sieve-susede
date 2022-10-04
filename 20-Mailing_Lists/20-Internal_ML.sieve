@@ -203,6 +203,9 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
                            header   :contains "Subject" "suse CNA Report" ),
                    allof ( header   :is       "From"    "nvd@nist.gov",
                            header   :contains "Subject" "audit has been completed SUSE" ))) {
+    if not body :contains [ "Failed", "failure" ] {
+        addflag "\\Seen";
+    }
     fileinto :create "INBOX/ML/SUSE/security/Mitre/SUSE CNA";
     stop;
 }
