@@ -25,7 +25,8 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   ├── vince
 # │   ├── Info Security News
 # │   ├── WebKit
-# │   │   └── Upstream Private
+# │   │   ├── Upstream Private
+# │   │   └── Security Advisory
 # │   └── CERT Advisories
 # │       └── Week Summary
 # ├── OpenSSF
@@ -132,7 +133,7 @@ if header :contains "List-Id" "<oss-security.lists.openwall.com>" {
 
     # WebKit SA
     if header :contains "Subject" "WebKit Security Advisory" {
-        fileinto :create "INBOX/Feed/SA/WebKit";
+        fileinto :create "INBOX/ML/SecList/WebKit/Security Advisory";
         stop;
     }
 

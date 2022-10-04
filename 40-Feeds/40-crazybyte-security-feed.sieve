@@ -53,7 +53,6 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Drupal
 # │   ├── Tomcat
 # │   ├── Jenkins
-# │   ├── WebKit
 # │   ├── Nmap
 # │   ├── Xen
 # │   ├── OpenJDK
@@ -435,9 +434,6 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     }
 
     # Jenkins SA are fetched from the osss ML.
-    # http://oss-security.openwall.org/wiki/mailing-lists/oss-security
-
-    # WebKit SA are fetched from the osss ML.
     # http://oss-security.openwall.org/wiki/mailing-lists/oss-security
 
     # Xen SA (XSA) are fetched from the xen-announce ML.

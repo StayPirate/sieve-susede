@@ -85,7 +85,8 @@ INBOX
 │   │   ├── vince
 │   │   ├── Info Security News
 │   │   ├── WebKit
-│   │   │   └── Upstream Private
+│   │   │   ├── Upstream Private
+│   │   │   └── Security Advisory
 │   │   └── CERT Advisories
 │   │       └── Week Summary
 │   ├── OpenSSF
@@ -166,7 +167,6 @@ INBOX
     │   ├── Drupal
     │   ├── Tomcat
     │   ├── Jenkins
-    │   ├── WebKit
     │   ├── Nmap
     │   ├── Xen
     │   ├── OpenJDK
