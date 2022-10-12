@@ -381,7 +381,7 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # rule:[Rust]
     # https://blog.rust-lang.org/ - SA from the main Rust blog
     if allof (  header :is "X-RSS-Feed" "https://blog.rust-lang.org/",
-                header :contains "Subject" "Security advisory" ) {
+                header :contains "Subject" "Security advisor" ) {
                     addflag "rust-blog";
                     fileinto :create "INBOX/Feed/SA/Rust";
                     stop;
