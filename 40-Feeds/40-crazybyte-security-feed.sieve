@@ -168,7 +168,7 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # rule:[GitHub Security Blog]
     # https://github.blog/category/security/feed/
-    if header :is "X-RSS-Feed" "https://github.blog" {
+    if header :contains "X-RSS-Feed" "https://github.blog" {
         fileinto :create "INBOX/Feed/Blog/Github";
         stop;
     }
