@@ -62,6 +62,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   └── GCP
 # ├── Release
 # │   ├── Podman
+# │   ├── KeePassXC
 # │   ├── ClamAV
 # │   ├── Chrome
 # │   ├── SUSE
@@ -511,6 +512,14 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files
     if header :is "X-RSS-Feed" "https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases" {
         fileinto :create "INBOX/Feed/Release/ucode/Intel";
+        stop;
+    }
+
+    # rule:[KeePassXC]
+    # https://github.com/keepassxreboot/keepassxc/releases
+    # https://keepassxc.org/blog/
+    if header :is "X-RSS-Feed" "https://github.com/keepassxreboot/keepassxc/releases" {
+        fileinto :create "INBOX/Feed/Release/KeePassXC";
         stop;
     }
 

@@ -176,6 +176,7 @@ INBOX
     │   └── GCP
     ├── Release
     │   ├── Podman
+    │   ├── KeePassXC
     │   ├── ClamAV
     │   ├── Chrome
     │   ├── SUSE
