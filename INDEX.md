@@ -24,6 +24,7 @@ INBOX
 │       ├── Mtk
 │       ├── Smash
 │       │   ├── Merge request
+│       │   │   └── Merged
 │       │   └── smash-devel
 │       └── Smelt
 ├── ML

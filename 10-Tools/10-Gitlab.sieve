@@ -12,6 +12,7 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA", "FLAG_DIRECT" ];
 #     ├── Mtk
 #     ├── Smash
 #     │   ├── Merge request
+#     │   │   └── Merged
 #     │   └── smash-devel
 #     └── Smelt
 
