@@ -180,6 +180,7 @@ INBOX
     │   ├── KeePassXC
     │   ├── ClamAV
     │   ├── Chrome
+    │   ├── Unifi Controller
     │   ├── SUSE
     │   │   ├── Secbox
     │   │   └── Userscripts

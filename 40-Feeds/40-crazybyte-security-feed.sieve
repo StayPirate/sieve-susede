@@ -65,6 +65,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── KeePassXC
 # │   ├── ClamAV
 # │   ├── Chrome
+# │   ├── Unifi Controller
 # │   ├── SUSE
 # │   │   ├── Secbox
 # │   │   └── Userscripts
@@ -520,6 +521,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://keepassxc.org/blog/
     if header :is "X-RSS-Feed" "https://github.com/keepassxreboot/keepassxc/releases" {
         fileinto :create "INBOX/Feed/Release/KeePassXC";
+        stop;
+    }
+
+    # rule:[Unifi Controller]
+    # https://community.ui.com/rss/releases/UniFi-Network-Application/e6712595-81bb-4829-8e42-9e2630fabcfe
+    if header :is "X-RSS-Feed" "https://community.ui.com" {
+        fileinto :create "INBOX/Feed/Release/Unifi Controller";
         stop;
     }
 
