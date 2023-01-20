@@ -21,6 +21,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── Chromium
 # │   ├── Chrome
 # │   ├── Google
+# │   ├── Project Zero
 # │   ├── Cloudflare
 # │   ├── Sentinelone
 # │   ├── Intezer
@@ -310,6 +311,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://rapid7.com/resources/podcasts
     if header :is "X-RSS-Feed" "https://rapid7.com/resources/podcasts" {
         fileinto :create "INBOX/Feed/Blog/Security Nation";
+        stop;
+    }
+
+    # rule:[Google Project Zero]
+    # https://googleprojectzero.blogspot.com/
+    if header :contains "X-RSS-Feed" "https://googleprojectzero.blogspot.com" {
+        fileinto :create "INBOX/Feed/Blog/Project Zero";
         stop;
     }
 
