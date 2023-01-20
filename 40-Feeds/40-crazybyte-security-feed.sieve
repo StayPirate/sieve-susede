@@ -553,14 +553,7 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://cybersaiyan.us17.list-manage.com
 
 
-    #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#
-    #                                                       #
-    #   If no rule matched the notification is discarded.   #
-    #                                                       #
-    #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#
 
-    #discard;
-    fileinto :create "INBOX/Trash";
 
 #   ██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗
 #   ██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝
@@ -580,5 +573,14 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         fileinto :create "INBOX/Tools/Gitlab/Smash/Merge request/Merged";
         stop;
     }
+
+    #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#
+    #                                                       #
+    #   If no rule matched the notification is discarded.   #
+    #                                                       #
+    #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#
+
+    #discard;
+    fileinto :create "INBOX/Trash";
 
 }
