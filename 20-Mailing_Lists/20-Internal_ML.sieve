@@ -213,7 +213,12 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
 if allof ( header  :contains "List-Id" "<security.suse.de>",
            anyof ( address :domain "From"             "mitre.org",
                    header  :is     "X-MITRE-External" "True" )) {
-    fileinto :create "INBOX/ML/SUSE/security/Mitre";
+    # The document foundation is echoing everything coming from this ML, so I need to kill it
+    if header :is "X-BeenThere" "tdf-security@lists.documentfoundation.org" {
+        fileinto :create "INBOX/Trash";
+    } else {
+        fileinto :create "INBOX/ML/SUSE/security/Mitre";
+    }
     stop;
 }
 # rule:[security - strongSwan]
