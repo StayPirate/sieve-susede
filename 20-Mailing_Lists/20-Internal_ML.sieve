@@ -124,6 +124,11 @@ if allof ( header  :contains "List-Id" "<maint-coord.suse.de>",
                    else { fileinto :create "INBOX/ML/SUSE/maint-coord"; }
                    stop;
 }
+# rule:[maint-coord - ignore BZ report]
+if allof ( header  :contains "List-Id" "<maint-coord.suse.de>",
+           header  :contains "Subject" "[Bugzilla] Bugs for Maintenance Team" ) {
+                addflag "\\Seen";
+}
 # rule:[maint-coord]
 # https://mailman.suse.de/mailman/listinfo/maint-coord
 if header :contains "List-Id" "<maint-coord.suse.de>" { fileinto :create "INBOX/ML/SUSE/maint-coord"; stop; }
