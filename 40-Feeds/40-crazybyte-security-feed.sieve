@@ -67,6 +67,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── ClamAV
 # │   ├── Chrome
 # │   ├── Unifi Controller
+# │   ├── Apple
 # │   ├── SUSE
 # │   │   ├── Secbox
 # │   │   └── Userscripts
@@ -537,6 +538,16 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     if header :is "X-RSS-Feed" "https://community.ui.com" {
         fileinto :create "INBOX/Feed/Release/Unifi Controller";
         stop;
+    }
+
+    # rule:[Apple Products]
+    # https://developer.apple.com/news/releases/
+    if header :is "X-RSS-Feed" "https://developer.apple.com/news/" {
+        # I'm only interested to iOS updates
+        if header :contains "Subject" "iOS" {
+            fileinto :create "INBOX/Feed/Release/Apple";
+            stop;
+        }
     }
 
 #   ███╗   ██╗███████╗██╗    ██╗███████╗    ██╗     ███████╗████████╗████████╗███████╗██████╗ 

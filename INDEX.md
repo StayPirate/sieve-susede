@@ -182,6 +182,7 @@ INBOX
     │   ├── ClamAV
     │   ├── Chrome
     │   ├── Unifi Controller
+    │   ├── Apple
     │   ├── SUSE
     │   │   ├── Secbox
     │   │   └── Userscripts
