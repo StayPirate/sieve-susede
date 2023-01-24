@@ -188,7 +188,9 @@ INBOX
     │   │   └── Userscripts
     │   └── ucode
     │       └── Intel
-    └── News Letter
-        ├── CyberSaiyan
-        └── Linux Foundation
+    ├── News Letter
+    │   ├── CyberSaiyan
+    │   └── Linux Foundation
+    └── News
+        └── Archlinux
 ```

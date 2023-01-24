@@ -73,9 +73,11 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   │   └── Userscripts
 # │   └── ucode
 # │       └── Intel
-# └── News Letter
-#     ├── CyberSaiyan
-#     └── Linux Foundation
+# ├── News Letter
+# │   ├── CyberSaiyan
+# │   └── Linux Foundation
+# └── News
+#     └── Archlinux
 
 if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
@@ -563,8 +565,20 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # CyberSaiyan (ITA)
     # https://cybersaiyan.us17.list-manage.com
 
+#   ███╗   ██╗███████╗██╗    ██╗███████╗
+#   ████╗  ██║██╔════╝██║    ██║██╔════╝
+#   ██╔██╗ ██║█████╗  ██║ █╗ ██║███████╗
+#   ██║╚██╗██║██╔══╝  ██║███╗██║╚════██║
+#   ██║ ╚████║███████╗╚███╔███╔╝███████║
+#   ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════╝
 
-
+    # rule:[Archlinux News]
+    # https://archlinux.org/news/
+    # It handles the same content of arch-announce ML
+    if header :is "X-RSS-Feed" "https://archlinux.org/news/" {
+        fileinto :create "INBOX/Feed/News/Archlinux";
+        stop;
+    }
 
 #   ██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗
 #   ██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝
