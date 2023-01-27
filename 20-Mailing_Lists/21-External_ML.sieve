@@ -89,7 +89,7 @@ if allof ( header  :contains "List-Id" "<fulldisclosure.seclists.org>",
 }
 # rule:[Seclist - Full-Disclosure - apple-sa]
 if allof ( header  :contains "List-Id" "<fulldisclosure.seclists.org>",
-           address :is "To" "security-announce@lists.apple.com" ) {
+           address :is "To" [ "security-announce@lists.apple.com", "product-security-noreply@lists.apple.com" ] ) {
     fileinto :create "INBOX/ML/SecList/Full Disclosure/apple"; 
     stop;
 }
