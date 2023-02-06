@@ -41,6 +41,9 @@ if envelope :is "From" "gitlab@suse.de" {
     }
 
     if header :is "X-GitLab-Project" "smelt" {
+        if not hasflag :contains "${FLAG_DIRECT}" {
+            addflag "\\Seen";
+        }
         fileinto :create "INBOX/Tools/Gitlab/Smelt";
         stop;
     }
