@@ -30,6 +30,7 @@ INBOX
 ├── ML
 │   ├── SUSE
 │   │   ├── security-team
+│   │   │   ├── workreport
 │   │   │   ├── Xorg
 │   │   │   └── Samba
 │   │   ├── security
@@ -48,7 +49,6 @@ INBOX
 │   │   ├── kernel-security
 │   │   ├── maintsecteam
 │   │   │   ├── maintenance wr
-│   │   │   ├── workreport
 │   │   │   └── smash-smelt
 │   │   ├── security-reports
 │   │   │   ├── Embargo Alerts

@@ -13,6 +13,7 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 # └── ML
 #     └── SUSE
 #         ├── security-team
+#         │   ├── workreport
 #         │   ├── Xorg
 #         │   └── Samba
 #         ├── security
@@ -31,7 +32,6 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 #         ├── kernel-security
 #         ├── maintsecteam
 #         │   ├── maintenance wr
-#         │   ├── workreport
 #         │   └── smash-smelt
 #         ├── security-reports
 #         │   ├── Embargo Alerts
@@ -77,15 +77,6 @@ if allof ( header  :contains "List-Id" "<maintsecteam.suse.de>",
            header :contains "Subject" "Maintenance",
            header :contains "Subject" "Weekly Report" ) {
     fileinto :create "INBOX/ML/SUSE/maintsecteam/maintenance wr";
-    stop;
-}
-# rule:[maintsecteam - workreports]
-if allof ( header :contains "List-Id" "<maintsecteam.suse.de>",
-           # The subject contains ( workreport || (work && report) )
-           anyof ( header :contains "Subject" "workreport",
-                   allof ( header :contains "Subject" "work",
-                           header :contains "Subject" "report" ))) {
-    fileinto :create "INBOX/ML/SUSE/maintsecteam/workreport";
     stop;
 }
 # rule:[maintsecteam - SMESH-SMELT_Releases]
@@ -354,6 +345,15 @@ if header  :contains "List-Id" "<security-team.suse.de>" {
         fileinto :create "INBOX/Tools/Bugzilla/Proactive/Reports";
         stop;
     }
+
+    # Team's workreports
+    # The subject contains ( workreport || (work && report) )
+    if anyof ( header :contains "Subject" "workreport",
+               allof ( header :contains "Subject" "work",
+                       header :contains "Subject" "report" )) {
+    fileinto :create "INBOX/ML/SUSE/security-team/workreport";
+    stop;
+}
 
     # If none of the above rules matched, then put to the main security-team folder
     if header :contains "List-Id" "<security-team.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-team"; stop; }
