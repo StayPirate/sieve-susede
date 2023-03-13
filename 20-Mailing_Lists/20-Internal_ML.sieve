@@ -295,6 +295,7 @@ if allof ( header :contains "List-Id" "<security-reports.suse.de>",
 # rule:[security-reports - Embargo Alerts]
 if allof ( header :contains "List-Id" "<security-reports.suse.de>",
            header :contains "Subject" "EMBARGOED ISSUE MENTIONED IN" ) {
+    addflag "\\Seen";
     fileinto :create "INBOX/ML/SUSE/security-reports/Embargo Alerts";
     stop;
 }
