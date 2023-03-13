@@ -89,6 +89,9 @@ if allof (  header :is "X-Mailer" "OBS Notification System",
     }
 
     # Catch all, any other notification from IBS goes into the generic IBS folder
+    if not hasflag :contains [ "$FLAG_OBS_RQ_REVIEW_NEEDED", "FLAG_DIRECT" ] {
+        addflag "\\Seen";
+    }
     fileinto :create "INBOX/Tools/IBS/requests";
     stop;
 
