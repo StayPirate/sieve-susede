@@ -191,6 +191,7 @@ INBOX
     ├── News Letter
     │   ├── CyberSaiyan
     │   └── Linux Foundation
-    └── News
-        └── Archlinux
+    ├── News
+    │   └── Archlinux
+    └── Trash
 ```

@@ -76,8 +76,9 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # ├── News Letter
 # │   ├── CyberSaiyan
 # │   └── Linux Foundation
-# └── News
-#     └── Archlinux
+# ├── News
+# │   └── Archlinux
+# └── Trash
 
 if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
@@ -606,6 +607,6 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     #_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#_#
 
     #discard;
-    fileinto :create "INBOX/Trash";
+    fileinto :create "INBOX/Feed/Trash";
 
 }
