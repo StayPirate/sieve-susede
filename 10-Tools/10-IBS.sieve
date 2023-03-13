@@ -2,7 +2,7 @@ require [ "fileinto", "mailbox", "variables", "include", "imap4flags" ];
 
 # Global vars
 global [ "SUSECOM_ADDR", "USERNAME" ];
-global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA", "FLAG_DIRECT" ];
+global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_DIRECT" ];
 
 # Local vars
 set "FLAG_OBS_RQ_ACCEPTED"      "rq_accepted";
@@ -19,20 +19,6 @@ set "FLAG_OBS_RQ_REVIEW_NEEDED" "rq_need-review";
 
 if allof (  header :is "X-Mailer" "OBS Notification System",
             header :is "X-OBS-URL" "https://build.suse.de" ) {
-
-    ##### BETA RULE #####
-    #
-    # This rule is intended to monitor the review requests for the new
-    # gorup maintenance-release-approver related to SLSA.
-    #
-    # rule:[TEST maintenance-release-approver review requested]
-    # IBS ignore reviews for the maintenance-team
-    if allof (  header :is "x-obs-event-type" "review_wanted",
-                header :is "x-obs-review-by-group" "maintenance-release-approver" ) {
-                    addflag "${FLAG_BETA}";
-    }
-    #
-    ##### BETA RULE #####
 
     # rule:[mute bots]
     # Delete noisy bot comments
