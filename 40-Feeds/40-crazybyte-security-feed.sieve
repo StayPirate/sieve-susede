@@ -16,6 +16,7 @@ require [ "fileinto", "mailbox", "envelope", "subaddress", "variables", "include
 # │   ├── TOR
 # │   ├── Darknet Diaries
 # │   ├── Mozilla
+# │   ├── Thunderbird
 # │   ├── Github
 # │   ├── Microsoft
 # │   ├── Chromium
@@ -322,6 +323,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # https://googleprojectzero.blogspot.com/
     if header :contains "X-RSS-Feed" "https://googleprojectzero.blogspot.com" {
         fileinto :create "INBOX/Feed/Blog/Project Zero";
+        stop;
+    }
+
+    # rule:[Thunderbird Blog]
+    # https://blog.thunderbird.net
+    if header :contains "X-RSS-Feed" "https://blog.thunderbird.net" {
+        fileinto :create "INBOX/Feed/Blog/Thunderbird";
         stop;
     }
 

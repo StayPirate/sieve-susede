@@ -131,6 +131,7 @@ INBOX
     │   ├── TOR
     │   ├── Darknet Diaries
     │   ├── Mozilla
+    │   ├── Thunderbird
     │   ├── Github
     │   ├── Microsoft
     │   ├── Chromium
