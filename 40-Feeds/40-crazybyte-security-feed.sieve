@@ -371,7 +371,7 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
 
     # rule:[Drupal]
     # https://www.drupal.org/security
-    if header :is "X-RSS-Feed" "https://www.drupal.org/security" {
+    if header :contains "X-RSS-Feed" "https://www.drupal.org/security" {
         fileinto :create "INBOX/Feed/SA/Drupal";
         stop;
     }
