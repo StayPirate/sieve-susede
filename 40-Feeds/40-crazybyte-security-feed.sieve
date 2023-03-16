@@ -554,8 +554,9 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
     # rule:[Apple Products]
     # https://developer.apple.com/news/releases/
     if header :is "X-RSS-Feed" "https://developer.apple.com/news/" {
-        # I'm only interested to iOS updates
-        if header :contains "Subject" "iOS" {
+        # I'm only interested to stable iOS updates
+        if allof(     header :contains "Subject" "iOS",
+                  not header :contains "Subject" "beta" ) {
             fileinto :create "INBOX/Feed/Release/Apple";
             stop;
         }
