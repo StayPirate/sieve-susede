@@ -333,6 +333,13 @@ if header :is "X-RSS-Instance" "crazybyte-security-feed" {
         stop;
     }
 
+    # rule:[David Buchanan blog]
+    # https://www.da.vidbuchanan.co.uk/blog/
+    if header :contains "X-RSS-Feed" "https://www.da.vidbuchanan.co.uk/blog/" {
+        fileinto :create "INBOX/Feed/Blog/Good Reads";
+        stop;
+    }
+
 #   ███████╗███████╗██╗███╗   ██╗███████╗
 #   ██╔════╝╚══███╔╝██║████╗  ██║██╔════╝
 #   █████╗    ███╔╝ ██║██╔██╗ ██║█████╗  
