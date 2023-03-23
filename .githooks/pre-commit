@@ -1,32 +1,63 @@
 #!/usr/bin/env -S bash -i
 
+account="ggabrielli@suse.de"
+
 get_user() {
-    secret-tool search client sieveshell workstation wintermute 2>&1 | \
+    secret-tool search account ${account} 2>&1 | \
     grep -E "^attribute\.UserName" | \
     cut -d " " -f3
 }
 
 get_pass() {
-    secret-tool search client sieveshell workstation wintermute 2>&1 | \
+    secret-tool search account ${account} 2>&1 | \
     grep -E "^secret" | \
+    cut -d " " -f3
+}
+
+get_managesieve_port() {
+    secret-tool search account ${account} 2>&1 | \
+    grep -E "^attribute\.managesieve_port" | \
+    cut -d " " -f3
+}
+
+get_managesieve_addr() {
+    secret-tool search account ${account} 2>&1 | \
+    grep -E "^attribute\.managesieve_addr" | \
     cut -d " " -f3
 }
 
 main() {
 
-local managesieve_address=imap-int.suse.de
-local managesieve_port=4190
+    # If sieveshell is not installed skip this check w/o blocking the commit
+    type sieveshell >/dev/null 2>&1 || return 0
 
-# If sieveshell is not installed skip this check w/o blocking the commit
-type sieveshell >/dev/null 2>&1 || return 0
+    # Push all the *.sieve files in this repo to the managesieve server
+    find $(git rev-parse --show-toplevel) -type f -name "*.sieve" -printf "put %p %f\n" | sort -nr | \
+    sieveshell --user $(get_user) \
+               --passwd $(get_pass) \
+               --use-tls \
+               --port $(get_managesieve_port) \
+               $(get_managesieve_addr)
 
-# This hook has to be run from there or it won't find all the sieve files
-find $(git rev-parse --show-toplevel) -type f -name "*.sieve" -printf "put %p %f\n" | sort -nr | \
-sieveshell --user $(get_user) \
-           --passwd $(get_pass) \
-           --use-tls \
-           --port $managesieve_port \
-           $managesieve_address
+    # Check if 00-Init is active, otherwise activate it
+    if ! echo "list" | sieveshell \
+        --user $(get_user) \
+        --passwd $(get_pass) \
+        --use-tls \
+        --port $(get_managesieve_port) \
+        $(get_managesieve_addr) | \
+        grep > /dev/null 2>&1 "00-Init.sieve[[:space:]]*<<--[[:space:]]*active"; then
+
+            # Activate 00-Init.sieve
+            echo >&2 "[*] Activating 00-Init.sieve"
+            echo "activate 00-Init.sieve" | \
+            sieveshell --user $(get_user) \
+                    --passwd $(get_pass) \
+                    --use-tls \
+                    --port $(get_managesieve_port) \
+                    $(get_managesieve_addr)
+
+    fi
 }
 
 main
