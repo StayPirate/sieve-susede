@@ -21,7 +21,7 @@ if allof ( address :contains "From" "@cybersaiyan.it",
 
 # rule:[Grapl Security]
 # https://www.graplsecurity.com/subscribe
-if envelope :detail "to" "graplnl" {
+if envelope :detail "To" "graplnl" {
     fileinto :create "INBOX/Feed/Blog/Good Reads";
     stop;
 }

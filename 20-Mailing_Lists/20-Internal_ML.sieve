@@ -163,7 +163,7 @@ if allof ( header :contains "List-Id"     "<security.suse.de>",
 }
 # rule:[security - ceph]
 if allof ( header :contains "List-Id" "<security.suse.de>",
-           anyof ( address :is "CC" "security@ceph.io",
+           anyof ( address :is "Cc" "security@ceph.io",
                    address :is "To" "security@ceph.io" )) {
     fileinto :create "INBOX/ML/SUSE/security/Ceph";
     stop;
@@ -244,8 +244,8 @@ if allof ( header   :contains "List-Id" "<security.suse.de>",
 # security@suse.com redirects everything to security@suse.de, then if an email is sent
 # to both security@suse.de and security@suse.com I get it twice in my inbox
 if allof ( header  :contains "List-Id" "<security.suse.de>",
-           address :contains [ "To", "CC" ] "security@suse.com",
-           address :contains [ "To", "CC" ] "security@suse.de",
+           address :contains [ "To", "Cc" ] "security@suse.com",
+           address :contains [ "To", "Cc" ] "security@suse.de",
            header  :contains "Resent-From" "security@suse.com" ) {
     addflag "${FLAG_DUPLICATED}";
     fileinto :create "INBOX/Trash";

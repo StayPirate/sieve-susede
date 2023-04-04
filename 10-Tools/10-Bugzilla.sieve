@@ -99,7 +99,7 @@ if address :is "From" "bugzilla_noreply@suse.com" {
                                not header :is "X-Bugzilla-Assigned-To" [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ]),
 
                        # someone was CCed, but me
-                       allof (     header :is "X-Bugzilla-Changed-Fields" "cc",
+                       allof (     header :is "X-Bugzilla-Changed-Fields" "Cc",
                                not header :is "X-Bugzilla-Who" [ "${SUSECOM_ADDR}", "${SECURITY_TEAM_ADDR}" ]),
 
                        # the status change from NEW to IN_PROGRESS
