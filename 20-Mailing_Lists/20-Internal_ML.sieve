@@ -271,6 +271,25 @@ if header :contains "List-Id" "<qemu-security.nongnu.org>" { fileinto :create "I
 # https://mailman.suse.de/mailman/listinfo/security-intern
 if header :contains "List-Id" "<security-intern.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-intern"; stop; }
 
+# Dumplicated Embargo Notifications
+#
+# Since I'm subscribed to both the security-reports and security-team MLs, the following emails are duplicates.
+# Only keeps the copy sent to security-reports
+if allof ( address :is "To" "${SECURITY_TEAM_ADDR}",
+           address :is "Cc" "security-reports@suse.de",
+           header :contains "Subject" [ "OBS:EmbargoDate not set for", "EMBARGOED ISSUE MENTIONED IN" ] ) {
+
+                if header :contains "List-Id" "<security-reports.suse.de>" {
+                    fileinto :create "INBOX/ML/SUSE/security-reports/Embargo Alerts";
+                    stop;
+                }
+                elsif header :contains "List-Id" "<security-team.suse.de>" {
+                    fileinto :create "INBOX/Trash";
+                    stop;
+                }
+
+}
+
 # rule:[security-reports - Missing KPI]
 if allof ( header :contains "List-Id" "<security-reports.suse.de>",
            header :is "Subject" "SUSE Maintenance - Reports - Imminent-Kpis" ) {
@@ -282,19 +301,6 @@ if allof ( header :contains "List-Id" "<security-reports.suse.de>",
                    fileinto :create "INBOX/Trash";
                }
                stop;
-}
-# rule:[security-reports - Embargo Alerts]
-if allof ( header :contains "List-Id" "<security-reports.suse.de>",
-           header :contains "Subject" "EMBARGOED ISSUE MENTIONED IN" ) {
-    addflag "\\Seen";
-    fileinto :create "INBOX/ML/SUSE/security-reports/Embargo Alerts";
-    stop;
-}
-# rule:[security-reports - Embargo date missing]
-if allof ( header :contains "List-Id" "<security-reports.suse.de>",
-           header :contains "Subject" "OBS:EmbargoDate not set for" ) {
-    fileinto :create "INBOX/ML/SUSE/security-reports/Embargo Alerts";
-    stop;
 }
 # rule:[security-reports - Chromium Releases]
 if allof ( header :contains "List-Id" "<security-reports.suse.de>",
