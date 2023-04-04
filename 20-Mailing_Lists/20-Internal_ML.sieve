@@ -357,13 +357,15 @@ if header  :contains "List-Id" "<security-team.suse.de>" {
     if anyof ( header :contains "Subject" "workreport",
                allof ( header :contains "Subject" "work",
                        header :contains "Subject" "report" )) {
-    fileinto :create "INBOX/ML/SUSE/security-team/workreport";
-    stop;
-}
+        fileinto :create "INBOX/ML/SUSE/security-team/workreport";
+        stop;
+    }
 
     # If none of the above rules matched, then put to the main security-team folder
-    if header :contains "List-Id" "<security-team.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-team"; stop; }
-
+    if header :contains "List-Id" "<security-team.suse.de>" { 
+        fileinto :create "INBOX/ML/SUSE/security-team";
+        stop;
+    }
 }
 
 # rule:[users]
