@@ -23,6 +23,7 @@ INBOX
 │       ├── Checkers
 │       ├── Mtk
 │       ├── Smash
+│       │   ├── Issue
 │       │   ├── Merge request
 │       │   │   └── Merged
 │       │   └── smash-devel

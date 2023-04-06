@@ -34,6 +34,8 @@ if envelope :is "From" "gitlab@suse.de" {
     if header :is "X-GitLab-Project" "smash" {
         if exists "X-GitLab-MergeRequest-ID" {
             fileinto :create "INBOX/Tools/Gitlab/Smash/Merge request";
+        } elsif exists "X-GitLab-Issue-ID" {
+            fileinto :create "INBOX/Tools/Gitlab/Smash/Issue";
         } else {
             fileinto :create "INBOX/Tools/Gitlab/Smash";
         }
