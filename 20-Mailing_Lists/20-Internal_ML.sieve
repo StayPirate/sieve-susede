@@ -213,6 +213,7 @@ if allof ( header  :contains "List-Id" "<security.suse.de>",
     if header :is "X-BeenThere" "tdf-security@lists.documentfoundation.org" {
         fileinto :create "INBOX/Trash";
     } else {
+        addflag "\\Seen";
         fileinto :create "INBOX/ML/SUSE/security/Mitre";
     }
     stop;
