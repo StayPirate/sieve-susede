@@ -23,7 +23,7 @@ set "FLAG_BZ_BAD_HANDLED" "bz_bad_handled";
 #     │   └── Reports
 #     └── Other
 
-if address :is "From" "bugzilla_noreply@suse.com" {
+if address :is "From" "bugzilla-noreply@suse.com" {
 
     #    /$$      /$$             /$$
     #   | $$$    /$$$            | $$
