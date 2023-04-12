@@ -28,6 +28,12 @@ get_managesieve_addr() {
 
 main() {
 
+    # Since I use centralized hooks, I need to ensure that this one only runs in the sieve-susede repository
+    [[ "$(basename $(git rev-parse --show-toplevel))" == "sieve-susede" ]] || { 
+        echo -e "Skipped\n"
+        return 0
+    }
+
     # If sieveshell is not installed skip this check w/o blocking the commit
     type sieveshell >/dev/null 2>&1 || return 0
 
