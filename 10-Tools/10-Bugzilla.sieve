@@ -277,6 +277,13 @@ if address :is "From" [ "bugzilla-noreply@suse.com", "bugzilla_noreply@suse.com"
         addflag "${FLAG_DIRECT}";
     }
 
+    # rule:[flags - unfocus non-direct notifications]
+    # Mark all non-direct notifications as read. This rule is intented to help to only focus on bugs
+    # where I was involved.
+    if not hasflag :contains "${FLAG_DIRECT}" {
+         addflag "\\Seen";
+    }
+
     #    /$$$$$$$$        /$$       /$$
     #   | $$_____/       | $$      | $$
     #   | $$     /$$$$$$ | $$  /$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$$
