@@ -84,7 +84,7 @@ INBOX
 │   │   ├── osss
 │   │   ├── linux-distros
 │   │   ├── distros
-|   │   ├── kernel hardening
+│   │   ├── kernel hardening
 │   │   ├── vince
 │   │   ├── Info Security News
 │   │   ├── WebKit
@@ -100,8 +100,8 @@ INBOX
 │   │   ├── Code Best Practices
 │   │   ├── Alpha-Omega Announcements
 │   │   ├── Supply Chain Integrity
-|   │   ├── Securing Critical Projects
-|   │   └── OSS-SIRT
+│   │   ├── Securing Critical Projects
+│   │   └── OSS-SIRT
 │   ├── OpenSUSE
 │   │   ├── factory
 │   │   └── users
