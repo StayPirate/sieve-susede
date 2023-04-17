@@ -22,6 +22,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   ├── osss
 # │   ├── linux-distros
 # │   ├── distros
+# │   ├── kernel hardening
 # │   ├── vince
 # │   ├── Info Security News
 # │   ├── WebKit
@@ -165,6 +166,10 @@ if header :is "X-List" "vs.openwall.org" {
    if address :is [ "Cc", "To" ] "linux-distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/linux-distros"; stop; }
    elsif address :is [ "Cc", "To" ] "distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/distros"; stop; }
 }
+
+# rule:[Seclist - kernel-hardening]
+# https://www.openwall.com/lists/kernel-hardening/
+if header :is "List-Id" "<kernel-hardening.lists.openwall.com>"  { fileinto :create "INBOX/ML/SecList/kernel hardening"; stop; }
 
 # rule:[Seclist - VINCE]
 # https://kb.cert.org/vince/comm/auth/login/
