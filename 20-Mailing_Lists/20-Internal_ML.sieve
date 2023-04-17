@@ -362,6 +362,13 @@ if header  :contains "List-Id" "<security-team.suse.de>" {
         stop;
     }
 
+    # Ignore IDP TOTP pin codes
+    if allof( header :is "Subject" "Your OTP",
+              address :is "From" "idp-mfa@suse.de" ) {
+        fileinto :create "INBOX/Trash";
+        stop;
+    }
+
     # If none of the above rules matched, then put to the main security-team folder
     if header :contains "List-Id" "<security-team.suse.de>" { 
         fileinto :create "INBOX/ML/SUSE/security-team";
