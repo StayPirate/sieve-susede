@@ -37,7 +37,8 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   ├── Code Best Practices
 # │   ├── Alpha-Omega Announcements
 # │   ├── Supply Chain Integrity
-# │   └── Securing Critical Projects
+# │   ├── Securing Critical Projects
+# │   └── OSS-SIRT
 # ├── OpenSUSE
 # │   ├── factory
 # │   └── users
@@ -231,6 +232,10 @@ if header :contains "List-Id" "<openssf-supply-chain-integrity.lists.openssf.org
 # rule:[openSSF - Securing Critical Projects]
 # https://lists.openssf.org/g/openssf-wg-securing-crit-prjs
 if header :contains "List-Id" "<openssf-wg-securing-crit-prjs.lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/Securing Critical Projects"; stop; }
+
+# rule:[openSSF - OSS SIRT]
+# https://lists.openssf.org/g/openssf-sig-osssirt
+if header :contains "List-Id" "<openssf-sig-osssirt.lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/OSS-SIRT"; stop; }
 
 # rule:[Debian - security tracker mute bot]
 if allof ( header :contains "List-Id" "<debian-security-tracker.lists.debian.org>",

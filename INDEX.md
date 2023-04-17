@@ -99,7 +99,8 @@ INBOX
 │   │   ├── Code Best Practices
 │   │   ├── Alpha-Omega Announcements
 │   │   ├── Supply Chain Integrity
-│   │   └── Securing Critical Projects
+|   │   ├── Securing Critical Projects
+|   │   └── OSS-SIRT
 │   ├── OpenSUSE
 │   │   ├── factory
 │   │   └── users
