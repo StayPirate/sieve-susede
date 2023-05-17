@@ -172,14 +172,18 @@ if address :is "From" [ "bugzilla-noreply@suse.com", "bugzilla_noreply@suse.com"
     # sent from bugzilla.opensuse.org, even if these are about the same issue.
     # This rule is intended to fix this by overwriting relevant headers by
     # setting them to bugzilla.suse.com.
-    if header :regex "Message-ID" "(.*bug-[0-9]+-[0-9]+)(.*)@http\.bugzilla\.opensuse\.org/>$" {
+    if header :regex "Message-ID" "(.*bug-[0-9]+-[0-9]+)(.*)@http[s]?\.bugzilla\.(opensuse\.org|suse\.com)/>$" {
         deleteheader "Message-ID";
         addheader :last "Message-ID" "${1}${2}@http.bugzilla.suse.com/>";
-        if header :contains "In-Reply-To" "@http.bugzilla.opensuse.org/>" {
+        if header :matches "In-Reply-To" [ "*@https\.bugzilla\.suse\.com/>",
+                                           "*@https\.bugzilla\.opensuse\.org/>",
+                                           "*@http\.bugzilla\.opensuse\.org/>" ] {
             deleteheader "In-Reply-To";
             addheader :last "In-Reply-To" "${1}@http.bugzilla.suse.com/>";
         }
-        if header :contains "References" "@http.bugzilla.opensuse.org/>" {
+        if header :matches "References" [ "*@https\.bugzilla\.suse\.com/>",
+                                          "*@https\.bugzilla\.opensuse\.org/>",
+                                          "*@http\.bugzilla\.opensuse\.org/>" ] {
             deleteheader "References";
             addheader :last "References" "${1}@http.bugzilla.suse.com/>";
         }
