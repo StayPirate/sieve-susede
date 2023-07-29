@@ -184,14 +184,8 @@ if allof ( header :contains "List-Id" "<security.suse.de>",
 if allof ( header  :contains "List-Id"     "<security.suse.de>",
            anyof ( address :is "From" "distributors-announce@kubernetes.io",
                    address :is "From" "kubernetes-security-announce@googlegroups.com" )) {
-                        if allof ( header :contains "To" "distributors-announce@kubernetes.io", 
-                                   header :contains "To" "kubernetes-security-announce@googlegroups.com" ) {
-                                        # Avoid duplicates
-                                        fileinto :create "INBOX/Trash";
-                                        stop;
-                        }
-                        fileinto :create "INBOX/ML/SUSE/security/Kubernetes";
-                        stop;
+    fileinto :create "INBOX/ML/SUSE/security/Kubernetes";
+    stop;
 }
 # rule:[security - Cloud Foundry]
 if allof ( header   :contains "List-Id" "<security.suse.de>",
