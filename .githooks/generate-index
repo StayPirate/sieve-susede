@@ -1,0 +1,58 @@
+#!/usr/bin/env zsh
+# Automatically update the INDEX of the email folders
+#
+# The INDEX file is intended to be read by humans and provide an easy to read
+# folders hierarchy. It's annoying to keep it up-to-date everytime I do some
+# changes to my sieve filters. Hence, this script will update it if needed
+# and after have shown the changes to the user asks if he wants to add it to
+# the current commit or discard the auto-created changes.
+
+main() {
+
+    # Since I use centralized hooks, I need to ensure that this one only runs in the sieve-disroot repository
+    [[ "$(basename $(git rev-parse --show-toplevel))" =~ (sieve-disroot|sieve-susede) ]] || {
+        echo -e "Skipped\n"
+        return 0
+    }
+
+    # If tree is not installed skip this check w/o blocking the commit
+    type tree >/dev/null 2>&1 || return 0
+
+    # Create a temporary folder where create a folders tree from the
+    # fileinto instructions in the sieve files.
+    tmp_folder=$(mktemp -d -t tmp-XXXXXX -p ${XDG_RUNTIME_DIR:-/tmp})
+
+    # Search each fileinto instruction and use the hireaci strusture to create
+    # an equivalent folder structure.
+    while read i; do mkdir -p "$tmp_folder/$i"; done <<< `/usr/bin/grep --exclude-dir=.githooks -Ihor 'fileinto :create .*' . | \
+              cut -d '"' -f 2 | \
+              sort -u | \
+              sed -e 's/\./\//g'`
+
+    # Use the temporary folder structure to generate the output tree
+    tree -dn --noreport $tmp_folder | tail -n +2 > "$(git rev-parse --show-toplevel)/INDEX"
+
+    # Only show proceed if there are changes to the INDEX file, otherwise skip.
+    if ! git diff --exit-code INDEX; then
+        # Intereactive hook. Allows to read user input by assigning stdin to keyboard
+        exec < /dev/tty
+
+        echo
+        read "_continue?INDEX Automatically updated. Would you add it to the current commit? [Y/n] "
+
+        if [[ "$_continue" =~ ^[Yy]$ || "$_continue" =~ ^$ ]]; then
+            # Stage the new updated index to push it within the same commit
+            git add INDEX
+        else
+            # The user doesn't want this automated change to apply. Revert it.
+            git restore INDEX
+        fi
+    else
+        echo "Nothing to do here: INDEX did not change."
+    fi
+
+    # Delete the no longer needed temporary folder structure
+    rm -rf $tmp_folder
+}
+
+main
