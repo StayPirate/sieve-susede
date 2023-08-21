@@ -257,10 +257,6 @@ if allof ( header :contains "List-Id" "<debian-security-tracker.lists.debian.org
 # https://lists.debian.org/debian-security-tracker/
 if header :contains "List-Id" "<debian-security-tracker.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/Security Tracker"; stop; }
 
-# rule:[Debian - security announce]
-# https://lists.debian.org/debian-security-announce/
-if header :contains "List-Id" "<debian-security-announce.lists.debian.org>" { fileinto :create "INBOX/Feed/SA/Distro/Debian"; stop; }
-
 # rule:[Debian - security]
 # https://lists.debian.org/debian-security/
 if header :contains "List-Id" "<debian-security.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/Security"; stop; }
