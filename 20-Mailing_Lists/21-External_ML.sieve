@@ -23,6 +23,7 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # │   ├── linux-distros
 # │   ├── distros
 # │   ├── kernel hardening
+# │   ├── Linux Security Module
 # │   ├── vince
 # │   ├── Info Security News
 # │   ├── WebKit
@@ -170,6 +171,10 @@ if header :is "X-List" "vs.openwall.org" {
 # rule:[Seclist - kernel-hardening]
 # https://www.openwall.com/lists/kernel-hardening/
 if header :is "List-Id" "<kernel-hardening.lists.openwall.com>"  { fileinto :create "INBOX/ML/SecList/kernel hardening"; stop; }
+
+# rule:[Seclist - linux-security-module]
+# https://www.spinics.net/lists/linux-security-module/maillist.html
+if header :contains "List-Id" "linux-security-module.vger.kernel.org"  { fileinto :create "INBOX/ML/SecList/Linux Security Module"; stop; }
 
 # rule:[Seclist - VINCE]
 # https://kb.cert.org/vince/comm/auth/login/
