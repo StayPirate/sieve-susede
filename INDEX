@@ -1,0 +1,199 @@
+└── INBOX
+    ├── Feed
+    │   ├── Blog
+    │   │   ├── Activism
+    │   │   ├── Avast
+    │   │   ├── Chrome
+    │   │   ├── Chromium
+    │   │   ├── Cloudflare
+    │   │   ├── Darknet Diaries
+    │   │   ├── Github
+    │   │   ├── Good Reads
+    │   │   ├── Google
+    │   │   ├── Guerredirete
+    │   │   ├── Intezer
+    │   │   ├── Microsoft
+    │   │   ├── Mozilla
+    │   │   ├── Project Zero
+    │   │   ├── Security Nation
+    │   │   ├── Sentinelone
+    │   │   ├── Stackoverflow
+    │   │   ├── Thunderbird
+    │   │   └── TOR
+    │   ├── Ezine
+    │   │   ├── AppSec
+    │   │   ├── POCorGTFO
+    │   │   └── Uninformed
+    │   ├── News
+    │   │   └── Archlinux
+    │   ├── News Letter
+    │   │   ├── CyberSaiyan
+    │   │   └── Linux Foundation
+    │   ├── Release
+    │   │   ├── Apple
+    │   │   ├── Chrome
+    │   │   ├── ClamAV
+    │   │   ├── KeePassXC
+    │   │   ├── Nmap
+    │   │   ├── Podman
+    │   │   ├── SUSE
+    │   │   │   ├── Secbox
+    │   │   │   └── Userscripts
+    │   │   ├── ucode
+    │   │   │   └── Intel
+    │   │   └── Unifi Controller
+    │   ├── SA
+    │   │   ├── Distro
+    │   │   │   ├── Archlinux
+    │   │   │   ├── Debian
+    │   │   │   ├── Fedora
+    │   │   │   ├── Gentoo
+    │   │   │   ├── openSUSE
+    │   │   │   ├── Oracle
+    │   │   │   ├── RedHat
+    │   │   │   ├── Slackware
+    │   │   │   ├── SUSE
+    │   │   │   │   ├── container
+    │   │   │   │   └── image
+    │   │   │   └── Ubuntu
+    │   │   ├── Drupal
+    │   │   ├── GCP
+    │   │   ├── Github
+    │   │   ├── Jenkins
+    │   │   ├── OpenJDK
+    │   │   ├── PowerDNS
+    │   │   ├── Rust
+    │   │   ├── Tomcat
+    │   │   ├── TOR
+    │   │   ├── VLC
+    │   │   ├── Weechat
+    │   │   └── Xen
+    │   ├── Trash
+    │   └── Weekly update
+    │       ├── AT&T
+    │       ├── Dayzerosec
+    │       ├── LWN
+    │       ├── SSD
+    │       └── Ubuntu sec podcast
+    ├── ML
+    │   ├── Archlinux
+    │   │   ├── arch-announce
+    │   │   ├── arch-events
+    │   │   └── arch-general
+    │   ├── Debian
+    │   │   ├── IBM Virt Security
+    │   │   ├── Security
+    │   │   ├── Security Tools
+    │   │   └── Security Tracker
+    │   ├── Fedora
+    │   │   ├── security
+    │   │   ├── selinux
+    │   │   └── users
+    │   ├── Italian
+    │   │   └── GNU Translation
+    │   ├── OpenSSF
+    │   │   ├── Alpha-Omega Announcements
+    │   │   ├── Announcements
+    │   │   ├── Code Best Practices
+    │   │   ├── OSS-SIRT
+    │   │   ├── Securing Critical Projects
+    │   │   ├── Security Threats
+    │   │   ├── Security Tooling
+    │   │   ├── Supply Chain Integrity
+    │   │   └── Vul Disclosures
+    │   ├── OpenSUSE
+    │   │   ├── factory
+    │   │   └── users
+    │   ├── SecList
+    │   │   ├── Breach Exchange
+    │   │   ├── CERT Advisories
+    │   │   │   └── Week Summary
+    │   │   ├── distros
+    │   │   ├── Full Disclosure
+    │   │   │   ├── apple
+    │   │   │   ├── asterisk
+    │   │   │   ├── atlassian
+    │   │   │   ├── korelogic
+    │   │   │   ├── malvuln
+    │   │   │   ├── mikrotik
+    │   │   │   └── onapsis
+    │   │   ├── Info Security News
+    │   │   ├── kernel hardening
+    │   │   ├── linux-distros
+    │   │   ├── Linux Security Module
+    │   │   ├── osss
+    │   │   ├── vince
+    │   │   └── WebKit
+    │   │       ├── Security Advisory
+    │   │       └── Upstream Private
+    │   ├── SUSE
+    │   │   ├── devel
+    │   │   ├── high-impact-vul
+    │   │   ├── high-impact-vul-info
+    │   │   ├── kernel
+    │   │   ├── kernel-security
+    │   │   ├── linux
+    │   │   ├── maint-coord
+    │   │   │   └── QA Failed
+    │   │   ├── maintsec-reports
+    │   │   │   └── channels changes
+    │   │   ├── maintsecteam
+    │   │   │   ├── maintenance wr
+    │   │   │   └── smash-smelt
+    │   │   ├── research
+    │   │   ├── results
+    │   │   ├── secure-boot
+    │   │   ├── secure-devel
+    │   │   ├── security
+    │   │   │   ├── Ceph
+    │   │   │   ├── Cloud Foundry
+    │   │   │   ├── Django
+    │   │   │   ├── Kubernetes
+    │   │   │   ├── MariaDB
+    │   │   │   ├── Mitre
+    │   │   │   │   └── SUSE CNA
+    │   │   │   ├── Qemu
+    │   │   │   ├── strongSwan
+    │   │   │   ├── Subversion
+    │   │   │   └── Xen
+    │   │   │       └── XSA Embargo
+    │   │   ├── security-intern
+    │   │   ├── security-reports
+    │   │   │   ├── Chromium
+    │   │   │   ├── Embargo Alerts
+    │   │   │   └── Missing KPI
+    │   │   ├── security-review
+    │   │   ├── security-team
+    │   │   │   ├── Samba
+    │   │   │   ├── workreport
+    │   │   │   └── Xorg
+    │   │   └── users
+    │   └── Ubuntu
+    │       ├── Hardened
+    │       └── Security Patch
+    ├── Spam
+    ├── Tools
+    │   ├── Bugzilla
+    │   │   ├── openSUSE
+    │   │   ├── Other
+    │   │   └── Proactive
+    │   │       └── Reports
+    │   ├── Confluence
+    │   ├── Gitlab
+    │   │   ├── Checkers
+    │   │   ├── Mtk
+    │   │   ├── Smash
+    │   │   │   ├── Issue
+    │   │   │   ├── Merge request
+    │   │   │   │   └── Merged
+    │   │   │   └── smash-devel
+    │   │   └── Smelt
+    │   ├── IBS
+    │   │   ├── build
+    │   │   └── requests
+    │   ├── Jira SD
+    │   ├── Jira SUSE
+    │   └── OBS
+    │       ├── build
+    │       └── Security tools
+    └── Trash
