@@ -51,10 +51,9 @@
     │   │   │   ├── Oracle
     │   │   │   ├── RedHat
     │   │   │   ├── Slackware
-    │   │   │   ├── SUSE
-    │   │   │   │   ├── container
-    │   │   │   │   └── image
-    │   │   │   └── Ubuntu
+    │   │   │   └── SUSE
+    │   │   │       ├── container
+    │   │   │       └── image
     │   │   ├── Drupal
     │   │   ├── GCP
     │   │   ├── Github

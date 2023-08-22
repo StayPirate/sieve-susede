@@ -273,10 +273,6 @@ if header :contains "List-Id" "<rhsa-announce.redhat.com>" { fileinto :create "I
 # https://listman.redhat.com/mailman/listinfo/ibm-virt-security
 if header :contains "List-Id" "<ibm-virt-security.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/IBM Virt Security"; stop; }
 
-# rule:[Ubuntu - security announce]
-# https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-announce
-if header :contains "List-Id" "<ubuntu-security-announce.lists.ubuntu.com>" { fileinto :create "INBOX/Feed/SA/Distro/Ubuntu"; stop; }
-
 # rule:[Ubuntu - security patch]
 # https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-patch
 if header :contains "List-Id" "<ubuntu-security-patch.lists.ubuntu.com>" { fileinto :create "INBOX/ML/Ubuntu/Security Patch"; stop; }
