@@ -312,10 +312,6 @@ if header :contains "List-Id" "<announce.tomcat.apache.org>" {
     stop;
 }
 
-# rule:[OpenJDK SA - XSA]
-# https://mail.openjdk.org/mailman/listinfo/vuln-announce
-if header :contains "List-Id" "<vuln-announce.openjdk.org>" { fileinto :create "INBOX/Feed/SA/OpenJDK"; stop; }
-
 # rule:[WebKit Security Private ML]
 # https://webkit.org/security-policy/
 if header :contains "List-Id" "<webkit-security.lists.webkit.org>" { fileinto :create "INBOX/ML/SecList/WebKit/Upstream Private"; stop; }
