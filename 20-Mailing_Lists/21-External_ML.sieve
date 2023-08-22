@@ -301,17 +301,6 @@ if header :contains "List-Id" "<security.lists.fedoraproject.org>" { fileinto :c
 # https://lists.fedoraproject.org/archives/list/selinux@lists.fedoraproject.org/
 if header :contains "List-Id" "<selinux.lists.fedoraproject.org>" { fileinto :create "INBOX/ML/Fedora/selinux"; stop; }
 
-# rule:[Tomcat SA]
-# https://lists.apache.org/list?announce@tomcat.apache.org
-if header :contains "List-Id" "<announce.tomcat.apache.org>" {
-    if header :contains "Subject" "[SECURITY]" { 
-        fileinto :create "INBOX/Feed/SA/Tomcat";
-    } else {
-        discard;
-    }
-    stop;
-}
-
 # rule:[WebKit Security Private ML]
 # https://webkit.org/security-policy/
 if header :contains "List-Id" "<webkit-security.lists.webkit.org>" { fileinto :create "INBOX/ML/SecList/WebKit/Upstream Private"; stop; }
