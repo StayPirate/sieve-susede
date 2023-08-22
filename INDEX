@@ -45,8 +45,7 @@
     │   ├── SA
     │   │   ├── Distro
     │   │   │   ├── Fedora
-    │   │   │   ├── Oracle
-    │   │   │   └── Slackware
+    │   │   │   └── Oracle
     │   │   ├── Drupal
     │   │   ├── GCP
     │   │   ├── Github
