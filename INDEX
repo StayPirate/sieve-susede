@@ -44,7 +44,6 @@
     │   │   └── Unifi Controller
     │   ├── SA
     │   │   ├── Distro
-    │   │   │   ├── Archlinux
     │   │   │   ├── Fedora
     │   │   │   ├── Gentoo
     │   │   │   ├── Oracle
