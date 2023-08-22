@@ -44,8 +44,7 @@
     │   │   └── Unifi Controller
     │   ├── SA
     │   │   ├── Distro
-    │   │   │   ├── Fedora
-    │   │   │   └── Oracle
+    │   │   │   └── Fedora
     │   │   ├── Drupal
     │   │   ├── GCP
     │   │   ├── Github

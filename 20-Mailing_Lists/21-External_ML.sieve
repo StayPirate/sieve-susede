@@ -305,10 +305,6 @@ if header :contains "List-Id" "<security.lists.fedoraproject.org>" { fileinto :c
 # https://lists.fedoraproject.org/archives/list/selinux@lists.fedoraproject.org/
 if header :contains "List-Id" "<selinux.lists.fedoraproject.org>" { fileinto :create "INBOX/ML/Fedora/selinux"; stop; }
 
-# rule:[Oracle Linux SA - ELSA]
-# https://oss.oracle.com/mailman/listinfo/el-errata
-if header :contains "List-Id" "<el-errata.oss.oracle.com>" { fileinto :create "INBOX/Feed/SA/Distro/Oracle"; stop; }
-
 # rule:[Tomcat SA]
 # https://lists.apache.org/list?announce@tomcat.apache.org
 if header :contains "List-Id" "<announce.tomcat.apache.org>" {
