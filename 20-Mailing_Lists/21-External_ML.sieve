@@ -277,10 +277,6 @@ if header :contains "List-Id" "<ubuntu-hardened.lists.ubuntu.com>" { fileinto :c
 # https://lists.gnu.org/mailman/listinfo/www-it-traduzioni
 if header :contains "List-Id" "<www-it-traduzioni.gnu.org>" { fileinto :create "INBOX/ML/Italian/GNU Translation"; stop; }
 
-# rule:[SA - weechat]
-# https://lists.nongnu.org/mailman/listinfo/weechat-security
-if header :contains "List-Id" "<weechat-security.nongnu.org>" { fileinto :create "INBOX/Feed/SA/Weechat"; stop; }
-
 # rule:[Archlinux - arch-announce]
 # https://lists.archlinux.org/listinfo/arch-announce
 if header :contains "List-Id" "<arch-announce.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-announce"; stop; }
