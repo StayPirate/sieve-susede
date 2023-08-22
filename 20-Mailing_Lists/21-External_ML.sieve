@@ -72,10 +72,6 @@ if header :contains "List-Id" "<factory.lists.opensuse.org>" { fileinto :create 
 # https://lists.opensuse.org/archives/list/users@lists.opensuse.org/
 if header :contains "List-Id" "<users.lists.opensuse.org>" { fileinto :create "INBOX/ML/OpenSUSE/users"; stop; }
 
-# rule:[OpenSUSE - security-announce]
-# https://lists.opensuse.org/archives/list/security-announce@lists.opensuse.org/
-if header :contains "List-Id" "<security-announce.lists.opensuse.org>" { fileinto :create "INBOX/Feed/SA/Distro/openSUSE"; stop; }
-
 # rule:[Seclist - nmap announce]
 # https://nmap.org/mailman/listinfo/announce
 if header :contains "List-Id" "<announce.nmap.org>" { fileinto :create "INBOX/Feed/Release/Nmap"; stop; }

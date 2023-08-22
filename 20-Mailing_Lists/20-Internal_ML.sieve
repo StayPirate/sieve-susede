@@ -385,22 +385,6 @@ if header :contains "List-Id" "<users.suse.de>" { fileinto :create "INBOX/ML/SUS
 # http://lists.suse.com/mailman/listinfo/linux
 if header :contains "List-Id" "<linux.lists.suse.com>" { fileinto :create "INBOX/ML/SUSE/linux"; stop; }
 
-# rule:[sle-security-updates - containers]
-if allof ( header :contains "List-Id" "<sle-security-updates.lists.suse.com>",
-           body   :contains           "SUSE Container Update Advisory" ) {
-    fileinto :create "INBOX/Feed/SA/Distro/SUSE/container"; 
-    stop;
-}
-# rule:[sle-security-updates - images]
-if allof ( header :contains "List-Id" "<sle-security-updates.lists.suse.com>",
-           body   :contains           "SUSE Image Update Advisory" ) {
-    fileinto :create "INBOX/Feed/SA/Distro/SUSE/image"; 
-    stop;
-}
-# rule:[sle-security-updates]
-# https://lists.suse.com/mailman/listinfo/sle-security-updates
-if header :contains "List-Id" "<sle-security-updates.lists.suse.com>" { fileinto :create "INBOX/Feed/SA/Distro/SUSE"; stop; }
-
 # rule:[kernel-security-sentinel]
 # https://lists.suse.com/mailman/listinfo/kernel-security-sentinel
 if header :contains "List-Id" "<kernel-security-sentinel.lists.suse.com>" { fileinto :create "INBOX/ML/SUSE/kernel-security"; stop; }

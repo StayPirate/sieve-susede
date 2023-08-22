@@ -47,12 +47,8 @@
     │   │   │   ├── Archlinux
     │   │   │   ├── Fedora
     │   │   │   ├── Gentoo
-    │   │   │   ├── openSUSE
     │   │   │   ├── Oracle
-    │   │   │   ├── Slackware
-    │   │   │   └── SUSE
-    │   │   │       ├── container
-    │   │   │       └── image
+    │   │   │   └── Slackware
     │   │   ├── Drupal
     │   │   ├── GCP
     │   │   ├── Github
