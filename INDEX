@@ -45,7 +45,6 @@
     │   ├── SA
     │   │   ├── Distro
     │   │   │   ├── Fedora
-    │   │   │   ├── Gentoo
     │   │   │   ├── Oracle
     │   │   │   └── Slackware
     │   │   ├── Drupal
