@@ -1,64 +1,14 @@
 └── INBOX
     ├── Feed
     │   ├── Blog
-    │   │   ├── Activism
-    │   │   ├── Avast
-    │   │   ├── Chrome
-    │   │   ├── Chromium
-    │   │   ├── Cloudflare
-    │   │   ├── Darknet Diaries
-    │   │   ├── Github
-    │   │   ├── Good Reads
-    │   │   ├── Google
-    │   │   ├── Guerredirete
-    │   │   ├── Intezer
-    │   │   ├── Microsoft
-    │   │   ├── Mozilla
-    │   │   ├── Project Zero
-    │   │   ├── Security Nation
-    │   │   ├── Sentinelone
-    │   │   ├── Stackoverflow
-    │   │   ├── Thunderbird
-    │   │   └── TOR
-    │   ├── Ezine
-    │   │   ├── AppSec
-    │   │   ├── POCorGTFO
-    │   │   └── Uninformed
-    │   ├── News
-    │   │   └── Archlinux
+    │   │   └── Good Reads
     │   ├── News Letter
     │   │   ├── CyberSaiyan
     │   │   └── Linux Foundation
-    │   ├── Release
-    │   │   ├── Apple
-    │   │   ├── Chrome
-    │   │   ├── ClamAV
-    │   │   ├── KeePassXC
-    │   │   ├── Podman
-    │   │   ├── SUSE
-    │   │   │   ├── Secbox
-    │   │   │   └── Userscripts
-    │   │   ├── ucode
-    │   │   │   └── Intel
-    │   │   └── Unifi Controller
     │   ├── SA
-    │   │   ├── Distro
-    │   │   │   └── Fedora
-    │   │   ├── Drupal
-    │   │   ├── GCP
-    │   │   ├── Github
-    │   │   ├── Jenkins
-    │   │   ├── PowerDNS
-    │   │   ├── Rust
-    │   │   ├── TOR
-    │   │   └── VLC
-    │   ├── Trash
+    │   │   └── Jenkins
     │   └── Weekly update
-    │       ├── AT&T
-    │       ├── Dayzerosec
-    │       ├── LWN
-    │       ├── SSD
-    │       └── Ubuntu sec podcast
+    │       └── LWN
     ├── ML
     │   ├── Archlinux
     │   │   ├── arch-announce
