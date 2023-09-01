@@ -257,10 +257,6 @@ if header :contains "List-Id" "<debian-security.lists.debian.org>" { fileinto :c
 # https://lists.debian.org/debian-security-tools/
 if header :contains "List-Id" "<debian-security-tools.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/Security Tools"; stop; }
 
-# rule:[RedHat - security announce]
-# https://listman.redhat.com/mailman/listinfo/ibm-virt-security
-if header :contains "List-Id" "<ibm-virt-security.lists.debian.org>" { fileinto :create "INBOX/ML/Debian/IBM Virt Security"; stop; }
-
 # rule:[Ubuntu - security patch]
 # https://lists.ubuntu.com/mailman/listinfo/ubuntu-security-patch
 if header :contains "List-Id" "<ubuntu-security-patch.lists.ubuntu.com>" { fileinto :create "INBOX/ML/Ubuntu/Security Patch"; stop; }

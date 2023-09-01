@@ -14,7 +14,6 @@
     │   │   ├── arch-events
     │   │   └── arch-general
     │   ├── Debian
-    │   │   ├── IBM Virt Security
     │   │   ├── Security
     │   │   ├── Security Tools
     │   │   └── Security Tracker
