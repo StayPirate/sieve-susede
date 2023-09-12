@@ -307,7 +307,7 @@ if allof ( header :contains "List-Id" "<security-reports.suse.de>",
 # rule:[security-reports - Chromium Releases]
 if allof ( header :contains "List-Id" "<security-reports.suse.de>",
            header :contains "Subject" "Chromium Stable" ) {
-    fileinto :create "INBOX/ML/SUSE/security-reports/Chromium";
+    fileinto :create "INBOX/Trash";
     stop;
 }
 # rule:[security-reports]

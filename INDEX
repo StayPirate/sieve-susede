@@ -91,7 +91,6 @@
     │   │   │       └── XSA Embargo
     │   │   ├── security-intern
     │   │   ├── security-reports
-    │   │   │   ├── Chromium
     │   │   │   ├── Embargo Alerts
     │   │   │   └── Missing KPI
     │   │   ├── security-review
