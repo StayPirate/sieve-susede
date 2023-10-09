@@ -10,6 +10,9 @@ if allof ( header :contains "X-Spam-Flag" "YES",
            not anyof ( 
                        # Always deliver distros and linux-distros messages
                        header  :is "X-List" "vs.openwall.org",
+                       # osss usually gets very few SPAM emails. Most of the flagged ones are false positives.
+                       # Hence whitelist all of them.
+                       header  :is "List-ID" "<oss-security.lists.openwall.com>",
 
                        # Always deliver CISA notifications
                        address :is "From" [ "cert+donotreply@cert.org", "US-CERT@messages.cisa.gov" ],
