@@ -23,7 +23,10 @@ if allof ( header :contains "X-Spam-Flag" "YES",
                        allof ( header :contains "List-ID" "<oss-security.lists.openwall.com>",
                                header :contains "Subject" "Jenkins",
                                header :contains "Subject" "vulnerabilit"
-                       )
+                       ),
+
+                       # Always allow SUSE BZ notifications
+                       address :is "From" "bugzilla_noreply@suse.com"
             )
 ) {
     fileinto :create "INBOX/Spam";
