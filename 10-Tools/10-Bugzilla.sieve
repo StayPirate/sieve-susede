@@ -41,7 +41,8 @@ if address :is "From" [ "bugzilla-noreply@suse.com", "bugzilla_noreply@suse.com"
     # put them into the generic Bugzilla folder instead.
     if anyof ( header :is "X-Bugzilla-Who" "swamp@suse.de",
                header :is "X-Bugzilla-Who" "bwiedemann+obsbugzillabot@suse.com",
-               header :is "X-Bugzilla-Who" "smash_bz@suse.de",
+               allof ( header :is "X-Bugzilla-Who" "smash_bz@suse.de",
+                       not header :is "X-Bugzilla-Type" "new" ),
                header :is "x-bugzilla-who" "maint-coord+maintenance_robot@suse.de",
                header :is "x-bugzilla-who" "maint-coord+maintenance-robot@suse.de",
                header :is "x-bugzilla-who" "openqa-review@suse.de" ) {
