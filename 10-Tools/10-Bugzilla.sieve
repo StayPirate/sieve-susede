@@ -45,7 +45,9 @@ if address :is "From" [ "bugzilla-noreply@suse.com", "bugzilla_noreply@suse.com"
                        not header :is "X-Bugzilla-Type" "new" ),
                header :is "x-bugzilla-who" "maint-coord+maintenance_robot@suse.de",
                header :is "x-bugzilla-who" "maint-coord+maintenance-robot@suse.de",
-               header :is "x-bugzilla-who" "openqa-review@suse.de" ) {
+               header :is "x-bugzilla-who" "openqa-review@suse.de",
+               allof ( header :is "X-Bugzilla-Who" "meissner@suse.com",
+                       body :regex "openSUSE-[SR]U-.*: An update" )) {
     	discard;
         stop;
     }
