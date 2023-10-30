@@ -160,7 +160,13 @@ if header :is "X-List" "vs.openwall.org" {
    elsif address :is [ "Cc", "To" ] "distros@vs.openwall.org" { fileinto :create "INBOX/ML/SecList/distros"; stop; }
 }
 
+# rule:[Seclist - linux-kernel-hardening]
+# The upstream Linux kernel hardening mailing list, where development, maintenance, and administrivia happen.
+# https://kernsec.org/wiki/index.php/Kernel_Self_Protection_Project/Get_Involved
+if header :is "List-Id" "<linux-hardening.vger.kernel.org>"  { fileinto :create "INBOX/ML/SecList/kernel dev hardening"; stop; }
+
 # rule:[Seclist - kernel-hardening]
+# The general Linux kernel hardening mailing list, where new hardening topics and summaries of completed work are discussed.
 # https://www.openwall.com/lists/kernel-hardening/
 if header :is "List-Id" "<kernel-hardening.lists.openwall.com>"  { fileinto :create "INBOX/ML/SecList/kernel hardening"; stop; }
 
