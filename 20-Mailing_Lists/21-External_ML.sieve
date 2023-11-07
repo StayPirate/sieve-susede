@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "variables", "include", "imap4flags" ];
+require [ "fileinto", "mailbox", "envelope", "variables", "include", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 
 #######################
@@ -207,7 +207,11 @@ if allof ( address :is "To" "${SUSEDE_ADDR}",
 
 # rule:[openSSF - Events]
 # https://email.linuxfoundation.org/hs/manage-preferences/unsubscribe
-if address :contains "From" [ "operations@openssf.org", "Open Source Security Foundation" ] { fileinto :create "INBOX/ML/OpenSSF"; stop; }
+if anyof ( address :contains "From" "operations@openssf.org",
+           envelope :contains "From" "Open Source Security Foundation" ) {
+                fileinto :create "INBOX/ML/OpenSSF";
+                stop;
+}
 
 # rule:[openSSF - Announcements]
 # https://lists.openssf.org/g/openssf-announcements
