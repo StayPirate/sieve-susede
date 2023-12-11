@@ -11,8 +11,7 @@
     ├── ML
     │   ├── Archlinux
     │   │   ├── arch-announce
-    │   │   ├── arch-events
-    │   │   └── arch-general
+    │   │   └── arch-events
     │   ├── Debian
     │   │   ├── Security
     │   │   ├── Security Tools

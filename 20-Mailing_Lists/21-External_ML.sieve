@@ -276,10 +276,6 @@ if header :contains "List-Id" "<arch-announce.lists.archlinux.org>" { fileinto :
 # https://lists.archlinux.org/listinfo/arch-events
 if header :contains "List-Id" "<arch-events.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-events"; stop; }
 
-# rule:[Archlinux - arch-general]
-# https://lists.archlinux.org/listinfo/arch-general
-if header :contains "List-Id" "<arch-general.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-general"; stop; }
-
 # rule:[Gentoo Linux Security Advisories - gentoo-announce]
 # https://www.gentoo.org/support/security/
 #
