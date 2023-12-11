@@ -30,9 +30,6 @@
     │   │   ├── Security Tooling
     │   │   ├── Supply Chain Integrity
     │   │   └── Vul Disclosures
-    │   ├── OpenSUSE
-    │   │   ├── factory
-    │   │   └── users
     │   ├── SecList
     │   │   ├── Breach Exchange
     │   │   ├── CERT Advisories

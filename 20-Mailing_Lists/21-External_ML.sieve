@@ -64,14 +64,6 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 # └── Italian
 #     └── GNU Translation
 
-# rule:[OpenSUSE - factory]
-# https://lists.opensuse.org/archives/list/factory@lists.opensuse.org/
-if header :contains "List-Id" "<factory.lists.opensuse.org>" { fileinto :create "INBOX/ML/OpenSUSE/factory"; stop; }
-
-# rule:[OpenSUSE - users]
-# https://lists.opensuse.org/archives/list/users@lists.opensuse.org/
-if header :contains "List-Id" "<users.lists.opensuse.org>" { fileinto :create "INBOX/ML/OpenSUSE/users"; stop; }
-
 # rule:[Seclist - breachexchang]
 # https://www.riskbasedsecurity.com/mailing-list/
 if header :contains "List-Id" "<breachexchange.lists.riskbasedsecurity.com>" { fileinto :create "INBOX/ML/SecList/Breach Exchange"; stop; }
