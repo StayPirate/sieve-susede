@@ -276,10 +276,6 @@ if header :contains "List-Id" "<ubuntu-security-patch.lists.ubuntu.com>" { filei
 # https://lists.ubuntu.com/mailman/listinfo/ubuntu-hardened
 if header :contains "List-Id" "<ubuntu-hardened.lists.ubuntu.com>" { fileinto :create "INBOX/ML/Ubuntu/Hardened"; stop; }
 
-# rule:[Italian - GNU Translation]
-# https://lists.gnu.org/mailman/listinfo/www-it-traduzioni
-if header :contains "List-Id" "<www-it-traduzioni.gnu.org>" { fileinto :create "INBOX/ML/Italian/GNU Translation"; stop; }
-
 # rule:[Archlinux - arch-announce]
 # https://lists.archlinux.org/listinfo/arch-announce
 if header :contains "List-Id" "<arch-announce.lists.archlinux.org>" { fileinto :create "INBOX/ML/Archlinux/arch-announce"; stop; }
