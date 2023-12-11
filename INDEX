@@ -19,8 +19,7 @@
     │   │   └── Security Tracker
     │   ├── Fedora
     │   │   ├── security
-    │   │   ├── selinux
-    │   │   └── users
+    │   │   └── selinux
     │   ├── OpenSSF
     │   │   ├── Alpha-Omega Announcements
     │   │   ├── Announcements
