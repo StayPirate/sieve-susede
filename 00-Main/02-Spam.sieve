@@ -26,7 +26,10 @@ if allof ( header :contains "X-Spam-Flag" "YES",
                        ),
 
                        # Always allow SUSE BZ notifications
-                       address :is "From" "bugzilla_noreply@suse.com"
+                       address :is "From" "bugzilla_noreply@suse.com",
+
+                       # Always deliver internal gitlab instance notifications
+                       address :contains "From" "<gitlab@suse.de>"
             )
 ) {
     fileinto :create "INBOX/Spam";
