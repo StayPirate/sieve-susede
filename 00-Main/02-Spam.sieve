@@ -29,7 +29,7 @@ if allof ( header :contains "X-Spam-Flag" "YES",
                        address :is "From" "bugzilla_noreply@suse.com",
 
                        # Always deliver internal gitlab instance notifications
-                       envelope :is "From" "gitlab@suse.de"
+                       envelope :contains "From" "gitlab@suse.de"
             )
 ) {
     fileinto :create "INBOX/Spam";
