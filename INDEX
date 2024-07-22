@@ -53,6 +53,7 @@
     │   │       ├── Security Advisory
     │   │       └── Upstream Private
     │   ├── SUSE
+    │   │   ├── Cybersec Champ
     │   │   ├── devel
     │   │   ├── high-impact-vul
     │   │   ├── high-impact-vul-info
