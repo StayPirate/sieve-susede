@@ -244,6 +244,10 @@ if header :contains "List-Id" "<openssf-wg-securing-crit-prjs.lists.openssf.org>
 # https://lists.openssf.org/g/openssf-sig-osssirt
 if header :contains "List-Id" "<openssf-sig-osssirt.lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/OSS-SIRT"; stop; }
 
+# rule:[openSSF - Siren]
+# https://lists.openssf-vuln.org/g/siren
+if header :contains "List-Id" "<siren.lists.openssf-vuln.org>" { fileinto :create "INBOX/ML/OpenSSF/Siren"; stop; }
+
 # rule:[Debian - security tracker mute bot]
 if allof ( header :contains "List-Id" "<debian-security-tracker.lists.debian.org>",
            address :contains "From" "sectracker@soriano.debian.org") {
