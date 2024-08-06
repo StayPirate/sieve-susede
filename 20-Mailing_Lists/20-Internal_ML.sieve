@@ -355,10 +355,7 @@ if header  :contains "List-Id" "<security-team.suse.de>" {
     }
 
     # Team's workreports
-    # The subject contains ( workreport || (work && report) )
-    if anyof ( header :contains "Subject" "workreport",
-               allof ( header :contains "Subject" "work",
-                       header :contains "Subject" "report" )) {
+    if header :contains "Subject" [ "workreport", "work report" ] {
         fileinto :create "INBOX/ML/SUSE/security-team/workreport";
         stop;
     }
