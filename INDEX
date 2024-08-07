@@ -27,9 +27,10 @@
     │   │   ├── Securing Critical Projects
     │   │   ├── Security Threats
     │   │   ├── Security Tooling
-    │   │   ├── Siren
     │   │   ├── Supply Chain Integrity
-    │   │   └── Vul Disclosures
+    │   │   ├── Vul Disclosures
+    │   │   └── Vuln
+    │   │       └── Siren
     │   ├── SecList
     │   │   ├── Breach Exchange
     │   │   ├── CERT Advisories

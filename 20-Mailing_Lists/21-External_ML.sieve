@@ -199,7 +199,8 @@ if allof ( address :is "To" "${SUSEDE_ADDR}",
 
 # rule:[openSSF - Events]
 # https://email.linuxfoundation.org/hs/manage-preferences/unsubscribe
-if anyof ( address :contains "From" "operations@openssf.org",
+if anyof ( header :contains "List-Id" "<main.lists.openssf.org>",
+           address :contains "From" "operations@openssf.org",
            envelope :contains "From" "Open Source Security Foundation (OpenSSF) - Meetings",
            address :contains "From" "Open Source Security Foundation (OpenSSF) - Meetings",
            allof ( address :contains "From" "Open Source Security Foundation",
@@ -244,9 +245,13 @@ if header :contains "List-Id" "<openssf-wg-securing-crit-prjs.lists.openssf.org>
 # https://lists.openssf.org/g/openssf-sig-osssirt
 if header :contains "List-Id" "<openssf-sig-osssirt.lists.openssf.org>" { fileinto :create "INBOX/ML/OpenSSF/OSS-SIRT"; stop; }
 
-# rule:[openSSF - Siren]
+# rule:[openSSF - Vuln main]
+# https://lists.openssf-vuln.org/g/main
+if header :contains "List-Id" "<main@lists.openssf-vuln.org>" { fileinto :create "INBOX/ML/OpenSSF/Vuln"; stop; }
+
+# rule:[openSSF - Vuln Siren]
 # https://lists.openssf-vuln.org/g/siren
-if header :contains "List-Id" "<siren.lists.openssf-vuln.org>" { fileinto :create "INBOX/ML/OpenSSF/Siren"; stop; }
+if header :contains "List-Id" "<siren.lists.openssf-vuln.org>" { fileinto :create "INBOX/ML/OpenSSF/Vuln/Siren"; stop; }
 
 # rule:[Debian - security tracker mute bot]
 if allof ( header :contains "List-Id" "<debian-security-tracker.lists.debian.org>",
