@@ -324,3 +324,8 @@ if header :contains "List-Id" "<kernel-security-sentinel.lists.suse.com>" { file
 # rule:[smash-devel]
 # https://mailman.suse.de/mailman/listinfo/smash-devel
 if header :contains "List-Id" "<smash-devel.suse.de>" { fileinto :create "INBOX/Tools/Gitlab/Smash/smash-devel"; stop; }
+
+# rule:[linux]
+# http://lists.suse.com/mailman/listinfo/linux
+# The mailing list server doesn't allow to unsubscribe, so I need to discard emails from here.
+if header :contains "List-Id" "<linux.lists.suse.com>" { discard; stop; }
