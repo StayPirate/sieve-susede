@@ -154,6 +154,12 @@ if allof ( header  :contains "List-Id" "<security.suse.de>",
 # https://mailman.suse.de/mailman/listinfo/security
 if header  :contains "List-Id" "<security.suse.de>" {
 
+    # The Document Foundation
+    if header :contains "X-BeenThere" "lists.documentfoundation.org" {
+        fileinto :create "INBOX/ML/SUSE/security/TDF";
+        stop;
+    }
+
     # XSA
     if address :is "From" "security@xen.org" {
         fileinto :create "INBOX/ML/SUSE/security/Xen/XSA Embargo";
