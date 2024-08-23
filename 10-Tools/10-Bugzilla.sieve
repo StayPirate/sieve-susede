@@ -285,9 +285,12 @@ if address :is "From" [ "bugzilla-noreply@suse.com", "bugzilla_noreply@suse.com"
     }
 
     # rule:[flags - unfocus non-direct notifications]
-    # Mark all non-direct notifications as read. This rule is intented to help to only focus on bugs
-    # where I was involved.
-    if not hasflag :contains "${FLAG_DIRECT}" {
+    # Mark all less important notifications as read. I only want to get focus on comments where
+    #  * A needinfo flag is assigned to me or to my team
+    #  * Comments that reassign the bug to the security team
+    #  * Comments that close bugs without having reassigned
+    #    it to the security team first
+    if not hasflag :contains [ "${FLAG_BZ_BAD_HANDLED}", "${FLAG_NEEDINFO}", "${FLAG_BZ_REASSIGNED}" ] {
          addflag "\\Seen";
     }
 
