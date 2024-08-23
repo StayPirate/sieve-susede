@@ -17,7 +17,6 @@
     │   │   ├── Security Tools
     │   │   └── Security Tracker
     │   ├── Fedora
-    │   │   ├── security
     │   │   └── selinux
     │   ├── OpenSSF
     │   │   ├── Alpha-Omega Announcements
@@ -32,7 +31,6 @@
     │   │   └── Vuln
     │   │       └── Siren
     │   ├── SecList
-    │   │   ├── Breach Exchange
     │   │   ├── CERT Advisories
     │   │   │   └── Week Summary
     │   │   ├── distros
@@ -44,11 +42,9 @@
     │   │   │   ├── malvuln
     │   │   │   ├── mikrotik
     │   │   │   └── onapsis
-    │   │   ├── Info Security News
     │   │   ├── kernel dev hardening
     │   │   ├── kernel hardening
     │   │   ├── linux-distros
-    │   │   ├── Linux Security Module
     │   │   ├── osss
     │   │   ├── vince
     │   │   └── WebKit
@@ -59,20 +55,12 @@
     │   │   ├── devel
     │   │   ├── high-impact-vul
     │   │   ├── high-impact-vul-info
-    │   │   ├── kernel
     │   │   ├── kernel-security
-    │   │   ├── linux
     │   │   ├── maint-coord
     │   │   │   └── QA Failed
     │   │   ├── maintsec-reports
-    │   │   │   └── channels changes
     │   │   ├── maintsecteam
-    │   │   │   ├── maintenance wr
-    │   │   │   └── smash-smelt
-    │   │   ├── research
-    │   │   ├── results
     │   │   ├── secure-boot
-    │   │   ├── secure-devel
     │   │   ├── security
     │   │   │   ├── Ceph
     │   │   │   ├── Cloud Foundry
@@ -87,11 +75,9 @@
     │   │   │   ├── TDF
     │   │   │   └── Xen
     │   │   │       └── XSA Embargo
-    │   │   ├── security-intern
     │   │   ├── security-reports
     │   │   │   ├── Embargo Alerts
     │   │   │   └── Missing KPI
-    │   │   ├── security-review
     │   │   ├── security-team
     │   │   │   ├── Samba
     │   │   │   ├── workreport

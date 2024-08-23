@@ -1,6 +1,5 @@
 require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress", "imap4flags" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME", "SECURITY_TEAM_ADDR" ];
-# Flags
 global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 
 #######################
@@ -8,51 +7,6 @@ global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 #######################
 ### SUSEDE: https://mailman.suse.de/mailman/listinfo
 ### SUSECOM: http://lists.suse.com/mailman/listinfo
-
-# INBOX
-# └── ML
-#     └── SUSE
-#         ├── security-team
-#         │   ├── workreport
-#         │   ├── Xorg
-#         │   └── Samba
-#         ├── security
-#         │   ├── Xen
-#         │   │   └── XSA Embargo
-#         │   ├── MariaDB
-#         │   ├── Django
-#         │   ├── Ceph
-#         │   ├── Kubernetes
-#         │   ├── Qemu
-#         │   ├── Cloud Foundry
-#         │   ├── strongSwan
-#         │   ├── Subversion
-#         │   └── Mitre
-#         │       └── SUSE CNA
-#         ├── kernel-security
-#         ├── maintsecteam
-#         │   ├── maintenance wr
-#         │   └── smash-smelt
-#         ├── security-reports
-#         │   ├── Embargo Alerts
-#         │   ├── Missing KPI
-#         │   └── Chromium
-#         ├── devel
-#         ├── high-impact-vul
-#         ├── high-impact-vul-info
-#         ├── kernel
-#         ├── linux
-#         ├── maint-coord
-#         │   └── QA Failed
-#         ├── maintsec-reports
-#         │   └── channels changes
-#         ├── research
-#         ├── results
-#         ├── secure-boot
-#         ├── secure-devel
-#         ├── security-intern
-#         ├── security-review
-#         └── users
 
 # rule:[devel]
 # https://mailman.suse.de/mailman/listinfo/devel
@@ -66,93 +20,69 @@ if header :contains "List-Id" "<high-impact-vul.suse.de>" { fileinto :create "IN
 # https://mailman.suse.de/mailman/listinfo/high-impact-vul-info
 if header :contains "List-Id" "<high-impact-vul-info.suse.de>" { fileinto :create "INBOX/ML/SUSE/high-impact-vul-info"; stop; }
 
-# rule:[kernel]
-# https://mailman.suse.de/mailman/listinfo/kernel
-if header :contains "List-Id" "<kernel.suse.de>" { fileinto :create "INBOX/ML/SUSE/kernel"; stop; }
-
-# rule:[maintsecteam - Maintenance_Weekly-Report]
-if allof ( header  :contains "List-Id" "<maintsecteam.suse.de>",
-           address :is       "From"    "maint-coord@suse.de",
-           # The subject contains ( Maintenance && Weekly Report )
-           header :contains "Subject" "Maintenance",
-           header :contains "Subject" "Weekly Report" ) {
-    fileinto :create "INBOX/ML/SUSE/maintsecteam/maintenance wr";
-    stop;
-}
-# rule:[maintsecteam - SMESH-SMELT_Releases]
-if allof ( header :contains "List-Id" "<maintsecteam.suse.de>",
-           # The subject contains ( release && (smash || smelt) )
-           allof ( header :contains "Subject" "release",
-                   anyof ( header :contains "Subject" "smash",
-                           header :contains "Subject" "smelt" ))) {
-    fileinto :create "INBOX/ML/SUSE/maintsecteam/smash-smelt";
-    stop;
-}
 # rule:[maintsecteam]
 # https://mailman.suse.de/mailman/listinfo/maintsecteam
 if header :contains "List-Id" "<maintsecteam.suse.de>" { fileinto :create "INBOX/ML/SUSE/maintsecteam"; stop; }
 
-# rule:[maintsec-reports - channel file changed]
-# Note: it seems that only SLE12 changes are sent over this ML.
-if allof ( header :contains "List-Id" "<maintsec-reports.suse.de>",
-           header :contains "Subject" "Channel changes for" ) {
-    fileinto :create "INBOX/ML/SUSE/maintsec-reports/channels changes";
-    stop;
-}
 # rule:[maintsec-reports]
 # https://mailman.suse.de/mailman/listinfo/maintsec-reports
-if header :contains "List-Id" "<maintsec-reports.suse.de>" { fileinto :create "INBOX/ML/SUSE/maintsec-reports"; stop; }
+if header :contains "List-Id" "<maintsec-reports.suse.de>" {
 
-# rule:[maint-coord - only failed tests]
-# Discard all the successful QA test notifications and put the failed ones into a dedicated folder
-if allof ( header  :contains "List-Id" "<maint-coord.suse.de>",
-           address :is       "From"    "qa-maintenance@suse.de",
-           header  :contains "Subject" "SUSE:Maintenance:" ) {
-                   if anyof ( body :contains "SUMMARY: FAILED",
-                              body :contains "SUMMARY: PASSED/FAILED" ) {
-                       fileinto :create "INBOX/ML/SUSE/maint-coord/QA Failed"; }
-                   elsif body :contains "SUMMARY: PASSED" { discard; }
-                   else { fileinto :create "INBOX/ML/SUSE/maint-coord"; }
-                   stop;
+    # Discard all the scripts reports and the weekly wiki diff
+    if header :contains "Subject" [ "/bin/", "Changes in MaintenanceSecurity Wiki" ] {
+        discard;
+        stop;
+    }
+
+    # If none of the above matched
+    fileinto :create "INBOX/ML/SUSE/maintsec-reports";
+    stop;
 }
-# rule:[maint-coord - ignore BZ report]
-if allof ( header  :contains "List-Id" "<maint-coord.suse.de>",
-           header  :contains "Subject" "[Bugzilla] Bugs for Maintenance Team" ) {
-                addflag "\\Seen";
-}
+
 # rule:[maint-coord]
 # https://mailman.suse.de/mailman/listinfo/maint-coord
-if header :contains "List-Id" "<maint-coord.suse.de>" { fileinto :create "INBOX/ML/SUSE/maint-coord"; stop; }
+if header :contains "List-Id" "<maint-coord.suse.de>" {
 
-# rule:[research]
-# https://mailman.suse.de/mailman/listinfo/research
-if header :contains "List-Id" "<research.suse.de>" { fileinto :create "INBOX/ML/SUSE/research"; stop; }
+    # Hide BZ reports
+    if header :contains "Subject" "[Bugzilla] Bugs for Maintenance Team" {
+        addflag "\\Seen";
+    }
 
-# rule:[results]
-# https://mailman.suse.de/mailman/listinfo/results
-if header :contains "List-Id" "<results.suse.de>" { fileinto :create "INBOX/ML/SUSE/results"; stop; }
+    # Discard all the successful QA test notifications and put the failed ones into a dedicated folder
+    if allof ( address :is "From" "qa-maintenance@suse.de",
+               header :contains "Subject" "SUSE:Maintenance:" ) {
+                    if anyof ( body :contains "SUMMARY: FAILED",
+                               body :contains "SUMMARY: PASSED/FAILED" ) {
+                        fileinto :create "INBOX/ML/SUSE/maint-coord/QA Failed";
+                    }
+                    elsif body :contains "SUMMARY: PASSED" {
+                        discard;
+                    }
+                    else {
+                        fileinto :create "INBOX/ML/SUSE/maint-coord";
+                    }
+               stop;
+    }
+
+    fileinto :create "INBOX/ML/SUSE/maint-coord";
+    stop;
+}
 
 # rule:[secure-boot]
 # https://mailman.suse.de/mailman/listinfo/secure-boot
 if header :contains "List-Id" "<secure-boot.suse.de>" { fileinto :create "INBOX/ML/SUSE/secure-boot"; stop; }
 
-# rule:[secure-devel]
-# https://mailman.suse.de/mailman/listinfo/secure-devel
-if header :contains "List-Id" "<secure-devel.suse.de>" { fileinto :create "INBOX/ML/SUSE/secure-devel"; stop; }
-
-# rule:[security - redhat noise]
-# Remove all the noise made by the RH ServiceNow instance
-if allof ( header  :contains "List-Id" "<security.suse.de>",
-           header  :is       "X-ServiceNow-Generated" "true",
-           anyof ( address :is "From" "secalert@redhat.com",
-                   address :is "From" "infosec@redhat.com" )) {
-    fileinto :create "INBOX/Trash";
-    stop;
-}
-
 # rule:[SUSE - security]
 # https://mailman.suse.de/mailman/listinfo/security
 if header  :contains "List-Id" "<security.suse.de>" {
+
+    # Remove all the noise made by the RH ServiceNow instance
+    if allof ( header  :is "X-ServiceNow-Generated" "true",
+               anyof ( address :is "From" "secalert@redhat.com",
+                       address :is "From" "infosec@redhat.com" )) {
+        fileinto :create "INBOX/Trash";
+        stop;
+    }
 
     # The Document Foundation
     if header :contains "X-BeenThere" "lists.documentfoundation.org" {
@@ -273,16 +203,9 @@ if header  :contains "List-Id" "<security.suse.de>" {
     stop;
 }
 
-
-
-
 # rule:[security - qemu security]
 # https://lists.nongnu.org/mailman/listinfo/qemu-security
 if header :contains "List-Id" "<qemu-security.nongnu.org>" { fileinto :create "INBOX/ML/SUSE/security/Qemu"; stop; }
-
-# rule:[security-intern]
-# https://mailman.suse.de/mailman/listinfo/security-intern
-if header :contains "List-Id" "<security-intern.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-intern"; stop; }
 
 # Dumplicated Embargo Notifications
 #
@@ -303,31 +226,36 @@ if allof ( address :is "To" "${SECURITY_TEAM_ADDR}",
 
 }
 
-# rule:[security-reports - Missing KPI]
-if allof ( header :contains "List-Id" "<security-reports.suse.de>",
-           header :is "Subject" "SUSE Maintenance - Reports - Imminent-Kpis" ) {
-               if allof ( body :contains "[ SUSE:Maintenance:",
-                          body :contains [ "security", "emu" ] ) {
-                   fileinto :create "INBOX/ML/SUSE/security-reports/Missing KPI";
-               }
-               else {
-                   fileinto :create "INBOX/Trash";
-               }
-               stop;
-}
-# rule:[security-reports - Chromium Releases]
-if allof ( header :contains "List-Id" "<security-reports.suse.de>",
-           header :contains "Subject" "Chromium Stable" ) {
-    fileinto :create "INBOX/Trash";
-    stop;
-}
 # rule:[security-reports]
 # https://mailman.suse.de/mailman/listinfo/security-reports
-if header :contains "List-Id" "<security-reports.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-reports"; stop; }
+if header :contains "List-Id" "<security-reports.suse.de>" {
+
+    # Only keeps reports with KPI failure for security or EMU incidents
+    if header :is "Subject" "SUSE Maintenance - Reports - Imminent-Kpis" {
+        if allof ( body :contains "[ SUSE:Maintenance:",
+                   body :contains [ "security", "emu" ] ) {
+            fileinto :create "INBOX/ML/SUSE/security-reports/Missing KPI";
+        }
+        else {
+            fileinto :create "INBOX/Trash";
+        }
+        stop;
+    }
+
+    # Discard Chromium releases notifications
+    if header :contains "Subject" "Chromium Stable" {
+        fileinto :create "INBOX/Trash";
+        stop;
+    }
+
+    # If none of the above matched
+    fileinto :create "INBOX/ML/SUSE/security-reports";
+    stop;
+}
 
 # rule:[security-review]
 # https://mailman.suse.de/mailman/listinfo/security-review
-if header :contains "List-Id" "<security-review.suse.de>" { fileinto :create "INBOX/ML/SUSE/security-review"; stop; }
+if header :contains "List-Id" "<security-review.suse.de>" { discard; stop; }
 
 # rule:[security-team]
 # https://mailman.suse.de/mailman/listinfo/security-team
@@ -388,10 +316,6 @@ if header  :contains "List-Id" "<security-team.suse.de>" {
 # rule:[users]
 # https://mailman.suse.de/mailman/listinfo/users
 if header :contains "List-Id" "<users.suse.de>" { fileinto :create "INBOX/ML/SUSE/users"; stop; }
-
-# rule:[linux]
-# http://lists.suse.com/mailman/listinfo/linux
-if header :contains "List-Id" "<linux.lists.suse.com>" { fileinto :create "INBOX/ML/SUSE/linux"; stop; }
 
 # rule:[kernel-security-sentinel]
 # https://lists.suse.com/mailman/listinfo/kernel-security-sentinel

@@ -7,66 +7,6 @@ global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME" ];
 ### OpenSUSE: https://lists.opensuse.org
 ### Seclist: https://seclists.org/
 ### Open Source Security Foundation: https://lists.openssf.org/g/mas
-#
-# ML
-# ├── SecList
-# │   ├── Breach Exchange
-# │   ├── Full Disclosure
-# │   │   ├── malvuln
-# │   │   ├── apple
-# │   │   ├── korelogic
-# │   │   ├── onapsis
-# │   │   ├── asterisk
-# │   │   ├── atlassian
-# │   │   └── mikrotik
-# │   ├── osss
-# │   ├── linux-distros
-# │   ├── distros
-# │   ├── kernel hardening
-# │   ├── Linux Security Module
-# │   ├── vince
-# │   ├── Info Security News
-# │   ├── WebKit
-# │   │   ├── Upstream Private
-# │   │   └── Security Advisory
-# │   └── CERT Advisories
-# │       └── Week Summary
-# ├── OpenSSF
-# │   ├── Announcements
-# │   ├── Security Threats
-# │   ├── Security Tooling
-# │   ├── Vul Disclosure
-# │   ├── Code Best Practices
-# │   ├── Alpha-Omega Announcements
-# │   ├── Supply Chain Integrity
-# │   ├── Securing Critical Projects
-# │   └── OSS-SIRT
-# ├── OpenSUSE
-# │   ├── factory
-# │   └── users
-# ├── Debian
-# │   ├── Security
-# │   ├── Security Tools
-# │   └── Security Tracker
-# ├── RedHat
-# │   └── IBM Virt Security
-# ├── Ubuntu
-# │   ├── Hardened
-# │   └── Security Patch
-# ├── Archlinux
-# │   ├── arch-announce
-# │   ├── arch-events
-# │   └── arch-general
-# ├── Fedora
-# │   ├── security
-# │   ├── selinux
-# │   └── users
-# └── Italian
-#     └── GNU Translation
-
-# rule:[Seclist - breachexchang]
-# https://www.riskbasedsecurity.com/mailing-list/
-if header :contains "List-Id" "<breachexchange.lists.riskbasedsecurity.com>" { fileinto :create "INBOX/ML/SecList/Breach Exchange"; stop; }
 
 # rule:[Seclist - Full-Disclosure - malvuln]
 if allof ( header  :contains "List-Id" "<fulldisclosure.seclists.org>",
@@ -162,10 +102,6 @@ if header :is "List-Id" "<linux-hardening.vger.kernel.org>"  { fileinto :create 
 # https://www.openwall.com/lists/kernel-hardening/
 if header :is "List-Id" "<kernel-hardening.lists.openwall.com>"  { fileinto :create "INBOX/ML/SecList/kernel hardening"; stop; }
 
-# rule:[Seclist - linux-security-module]
-# https://www.spinics.net/lists/linux-security-module/maillist.html
-if header :contains "List-Id" "linux-security-module.vger.kernel.org"  { fileinto :create "INBOX/ML/SecList/Linux Security Module"; stop; }
-
 # rule:[Seclist - VINCE]
 # https://kb.cert.org/vince/comm/auth/login/
 if address :is "From" "cert+donotreply@cert.org" {
@@ -176,10 +112,6 @@ if address :is "From" "cert+donotreply@cert.org" {
            fileinto :create "INBOX/ML/SecList/vince";
            stop;
 }
-
-# rule:[Seclist - infosecnews]
-# http://lists.infosecnews.org/mailman/listinfo/isn_lists.infosecnews.org
-if header :contains "List-Id" "<isn.lists.infosecnews.org>" { fileinto :create "INBOX/ML/SecList/Info Security News"; stop; }
 
 # rule:[Seclist - CERT]
 # https://public.govdelivery.com/accounts/USDHSCISA/subscriber/edit?preferences=true#tab1
@@ -293,10 +225,6 @@ if header :contains "List-Id" "<arch-events.lists.archlinux.org>" { fileinto :cr
 # Even though I unsubscribed myself from this ML, I still get emails from it.
 # The following rule is meant to discard any email coming from gentoo-announce.
 if header :contains "List-Id" "<gentoo-announce.gentoo.org>" { discard; stop; }
-
-# rule:[Fedora - security]
-# https://lists.fedoraproject.org/admin/lists/users.lists.fedoraproject.org/
-if header :contains "List-Id" "<security.lists.fedoraproject.org>" { fileinto :create "INBOX/ML/Fedora/security"; stop; }
 
 # rule:[Fedora - selinux]
 # https://lists.fedoraproject.org/archives/list/selinux@lists.fedoraproject.org/
