@@ -149,121 +149,126 @@ if allof ( header  :contains "List-Id" "<security.suse.de>",
     fileinto :create "INBOX/Trash";
     stop;
 }
-# rule:[security - XSA]
-if allof ( header  :contains "List-Id" "<security.suse.de>",
-           address :is       "From"    "security@xen.org" ) {
-    fileinto :create "INBOX/ML/SUSE/security/Xen/XSA Embargo";
-    stop;
-}
-# rule:[security - xen]
-if allof ( header :contains "List-Id"     "<security.suse.de>",
-           header :is       "X-BeenThere" "xen-security-issues-discuss@lists.xenproject.org" ) {
-    fileinto :create "INBOX/ML/SUSE/security/Xen";
-    stop;
-}
-# rule:[security - ceph]
-if allof ( header :contains "List-Id" "<security.suse.de>",
-           anyof ( address :is "Cc" "security@ceph.io",
-                   address :is "To" "security@ceph.io" )) {
-    fileinto :create "INBOX/ML/SUSE/security/Ceph";
-    stop;
-}
-# rule:[security - MariaDB]
-if allof ( header  :contains "List-Id" "<security.suse.de>",
-           address :is       "From"    "announce@mariadb.org") {
-    fileinto :create "INBOX/ML/SUSE/security/MariaDB";
-    stop;
-}
-# rule:[security - Django]
-if allof ( header :contains "List-Id" "<security.suse.de>",
-           header :contains "Subject" "Django security releases") {
-    fileinto :create "INBOX/ML/SUSE/security/Django";
-    stop;
-}
-# rule:[security - Kubernetes]
-if allof ( header  :contains "List-Id"     "<security.suse.de>",
-           anyof ( address :is "From" "distributors-announce@kubernetes.io",
-                   address :is "From" "kubernetes-security-announce@googlegroups.com",
-                   header  :is "X-BeenThere" "distributors-announce@kubernetes.io" )) {
-    fileinto :create "INBOX/ML/SUSE/security/Kubernetes";
-    stop;
-}
-# rule:[security - Cloud Foundry]
-if allof ( header   :contains "List-Id" "<security.suse.de>",
-           envelope :domain   "From"    "cloudfoundry.org") {
-    fileinto :create "INBOX/ML/SUSE/security/Cloud Foundry";
-    stop;
-}
-# rule:[security - Mitre SUSE CNA report]
-if allof ( header   :contains "List-Id" "<security.suse.de>",
-           anyof ( allof ( header   :is       "From"    "cna-coordinator@mitre.org",
-                           header   :contains "Subject" "suse CNA Report" ),
-                   allof ( header   :is       "From"    "nvd@nist.gov",
-                           header   :contains "Subject" "audit has been completed SUSE" ))) {
-    if not body :contains [ "Failed", "failure" ] {
-        addflag "\\Seen";
-    }
-    fileinto :create "INBOX/ML/SUSE/security/Mitre/SUSE CNA";
-    stop;
-}
-# rule:[security - Mitre]
-if allof ( header  :contains "List-Id" "<security.suse.de>",
-           anyof ( address :domain "From"             "mitre.org",
-                   header  :is     "X-MITRE-External" "True" )) {
-    # The document foundation is echoing everything coming from this ML, so I need to kill it
-    if header :is "X-BeenThere" "tdf-security@lists.documentfoundation.org" {
-        fileinto :create "INBOX/Trash";
-    } else {
-        addflag "\\Seen";
-        fileinto :create "INBOX/ML/SUSE/security/Mitre";
-    }
-    stop;
-}
-# rule:[security - strongSwan]
-if allof ( header   :contains "List-Id" "<security.suse.de>",
-           envelope :domain   "From"    "strongswan.org",
-           header   :contains "Subject" "security advisory" ) {
-    fileinto :create "INBOX/ML/SUSE/security/strongSwan";
-    stop;
-}
-# Discard Adobe SA, from the open source pov we don't care
-# rule:[security - Adobe]
-if allof ( header   :contains "List-Id" "<security.suse.de>",
-           address  :domain   "From"    "mail.adobe.com",
-           header   :contains "Subject" "Adobe Security Bulletin") {
-    addflag "\\Seen";
-    fileinto :create "INBOX/Trash";
-    stop;
-}
-# rule:[security - no VINCE]
-# discard VINCE notification from this ML since I already got them directly
-if allof ( header   :contains "List-Id" "<security.suse.de>",
-           address  :is       "From"    "cert+donotreply@cert.org" ) {
-    discard;
-    stop;
-}
-# rule:[security - no security@suse.com duplicates]
-# security@suse.com redirects everything to security@suse.de, then if an email is sent
-# to both security@suse.de and security@suse.com I get it twice in my inbox
-if allof ( header  :contains "List-Id" "<security.suse.de>",
-           address :contains [ "To", "Cc" ] "security@suse.com",
-           address :contains [ "To", "Cc" ] "security@suse.de",
-           header  :contains "Resent-From" "security@suse.com" ) {
-    addflag "${FLAG_DUPLICATED}";
-    fileinto :create "INBOX/Trash";
-    stop;
-}
-# rule:[security - subversion]
-# Subversion pre-disclosure notifications
-if allof ( header   :contains "List-Id" "<security.suse.de>",
-           header   :contains "Subject" "Subversion",
-           envelope :domain   "From"    "apache.org" ) {
-    fileinto :create "INBOX/ML/SUSE/security/Subversion";
-    stop;
-}
-# rule:[security]
+
+# rule:[SUSE - security]
 # https://mailman.suse.de/mailman/listinfo/security
-if header :contains "List-Id" "<security.suse.de>" { fileinto :create "INBOX/ML/SUSE/security"; stop; }
+if header  :contains "List-Id" "<security.suse.de>" {
+
+    # XSA
+    if address :is "From" "security@xen.org" {
+        fileinto :create "INBOX/ML/SUSE/security/Xen/XSA Embargo";
+        stop;
+    }
+
+    # XEN
+    if header :is "X-BeenThere" "xen-security-issues-discuss@lists.xenproject.org" {
+        fileinto :create "INBOX/ML/SUSE/security/Xen";
+        stop;
+    }
+
+    # CEPH
+    if anyof ( address :is "Cc" "security@ceph.io",
+               address :is "To" "security@ceph.io" ) {
+        fileinto :create "INBOX/ML/SUSE/security/Ceph";
+        stop;
+    }
+
+    # MariaDB
+    if address :is "From" "announce@mariadb.org" {
+        fileinto :create "INBOX/ML/SUSE/security/MariaDB";
+        stop;
+    }
+
+    # Django
+    if header :contains "Subject" "Django security releases" {
+        fileinto :create "INBOX/ML/SUSE/security/Django";
+        stop;
+    }
+
+    # Kubernetes
+    if anyof ( address :is "From" "distributors-announce@kubernetes.io",
+               address :is "From" "kubernetes-security-announce@googlegroups.com",
+               header  :is "X-BeenThere" "distributors-announce@kubernetes.io" ) {
+        fileinto :create "INBOX/ML/SUSE/security/Kubernetes";
+        stop;
+    }
+
+    # Cloud Foundry
+    if envelope :domain "From" "cloudfoundry.org" {
+        fileinto :create "INBOX/ML/SUSE/security/Cloud Foundry";
+        stop;
+    }
+
+    # Mitre SUSE CNA report
+    if anyof ( allof ( header   :is       "From"    "cna-coordinator@mitre.org",
+                       header   :contains "Subject" "suse CNA Report" ),
+               allof ( header   :is       "From"    "nvd@nist.gov",
+                       header   :contains "Subject" "audit has been completed SUSE" )) {
+        if not body :contains [ "Failed", "failure" ] {
+            addflag "\\Seen";
+        }
+        fileinto :create "INBOX/ML/SUSE/security/Mitre/SUSE CNA";
+        stop;
+    }
+
+    # Mitre
+    if anyof ( address :domain "From" "mitre.org",
+               header :is "X-MITRE-External" "True" ) {
+        # The document foundation is echoing everything coming from this ML, so I need to kill it
+        if header :is "X-BeenThere" "tdf-security@lists.documentfoundation.org" {
+            fileinto :create "INBOX/Trash";
+        } else {
+            addflag "\\Seen";
+            fileinto :create "INBOX/ML/SUSE/security/Mitre";
+        }
+        stop;
+    }
+
+    # StrongSwan
+    if allof ( envelope :domain "From" "strongswan.org",
+               header :contains "Subject" "security advisory" ) {
+        fileinto :create "INBOX/ML/SUSE/security/strongSwan";
+        stop;
+    }
+
+    # Discard Adobe SA, from the open source pov we don't care
+    if allof ( address :domain "From" "mail.adobe.com",
+               header :contains "Subject" "Adobe Security Bulletin") {
+        addflag "\\Seen";
+        fileinto :create "INBOX/Trash";
+        stop;
+    }
+
+    # discard VINCE notification from this ML since I already got them directly
+    if address :is "From" "cert+donotreply@cert.org" {
+        discard;
+        stop;
+    }
+
+    # security@suse.COM redirects everything to security@suse.DE, then if an email is sent
+    # to both security@suse.de and security@suse.com I get it twice in my inbox
+    if allof ( address :contains [ "To", "Cc" ] "security@suse.com",
+               address :contains [ "To", "Cc" ] "security@suse.de",
+               header  :contains "Resent-From" "security@suse.com" ) {
+        addflag "${FLAG_DUPLICATED}";
+        fileinto :create "INBOX/Trash";
+        stop;
+    }
+
+    # Subversion pre-disclosure notifications
+    if allof ( header :contains "Subject" "Subversion",
+               envelope :domain "From" "apache.org" ) {
+        fileinto :create "INBOX/ML/SUSE/security/Subversion";
+        stop;
+    }
+
+    # If none of the above matched, then move the rest to the security folder
+    fileinto :create "INBOX/ML/SUSE/security";
+    stop;
+}
+
+
+
 
 # rule:[security - qemu security]
 # https://lists.nongnu.org/mailman/listinfo/qemu-security
