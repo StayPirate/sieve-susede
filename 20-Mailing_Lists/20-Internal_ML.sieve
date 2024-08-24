@@ -294,7 +294,7 @@ if header  :contains "List-Id" "<security-team.suse.de>" {
     }
 
     # Team's workreports
-    if header :contains "Subject" [ "workreport", "work report" ] {
+    if header :contains "Subject" [ "workreport", "work report", "work-report" ] {
         fileinto :create "INBOX/ML/SUSE/security-team/workreport";
         stop;
     }
