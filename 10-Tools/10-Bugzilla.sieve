@@ -290,8 +290,13 @@ if address :is "From" [ "bugzilla-noreply@suse.com", "bugzilla_noreply@suse.com"
     #  * Comments that reassign the bug to the security team
     #  * Comments that close bugs without having reassigned
     #    it to the security team first
-    if not hasflag :contains [ "${FLAG_BZ_BAD_HANDLED}", "${FLAG_NEEDINFO}", "${FLAG_BZ_REASSIGNED}" ] {
-         addflag "\\Seen";
+    if not hasflag :contains [ "${FLAG_NEEDINFO}", "${FLAG_BZ_REASSIGNED}", "${FLAG_BZ_BAD_HANDLED}" ] {
+        addflag "\\Seen";
+    }
+    # if the reassigned bug is a kernel issue, then mark it as read. Only keeps the ones with needinfo
+    if allof ( not hasflag :contains "${FLAG_NEEDINFO}",
+               header :contains "Subject" ": kernel: " ) {
+        addflag "\\Seen";
     }
 
     #    /$$$$$$$$        /$$       /$$
