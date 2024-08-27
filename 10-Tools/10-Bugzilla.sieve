@@ -295,7 +295,7 @@ if address :is "From" [ "bugzilla-noreply@suse.com", "bugzilla_noreply@suse.com"
     }
     # if the reassigned bug is a kernel issue, then mark it as read. Only keeps the ones with needinfo
     if allof ( not hasflag :contains "${FLAG_NEEDINFO}",
-               header :contains "Subject" ": kernel: " ) {
+               header :contains "Subject" [ ": kernel:", ": kernel live patch:" ] ) {
         addflag "\\Seen";
     }
 
