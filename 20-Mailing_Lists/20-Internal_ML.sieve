@@ -86,6 +86,10 @@ if header  :contains "List-Id" "<security.suse.de>" {
 
     # The Document Foundation
     if header :contains "X-BeenThere" "lists.documentfoundation.org" {
+        if address :contains [ "to", "from" ] "mitre.org" {
+            fileinto :create "INBOX/Trash";
+            stop;
+        }
         fileinto :create "INBOX/ML/SUSE/security/TDF";
         stop;
     }
