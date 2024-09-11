@@ -1,4 +1,4 @@
-require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress", "imap4flags" ];
+require [ "fileinto", "mailbox", "body", "variables", "include", "envelope", "subaddress", "imap4flags", "relational", "comparator-i;ascii-numeric" ];
 global [ "SUSEDE_ADDR", "SUSECOM_ADDR", "USERNAME", "SECURITY_TEAM_ADDR" ];
 global [ "FLAG_DUPLICATED", "FLAG_MUTED", "FLAG_BETA" ];
 
@@ -109,7 +109,18 @@ if header  :contains "List-Id" "<security.suse.de>" {
     # CEPH
     if anyof ( address :is "Cc" "security@ceph.io",
                address :is "To" "security@ceph.io" ) {
-        fileinto :create "INBOX/ML/SUSE/security/Ceph";
+        #### To my future self:
+        # :comparator expect an unsigned integer, while X-Spam-Score is a float.
+        # Hence, I'm not sure if that rule will work.
+        # If not, I might use :regex to split the integer part of X-Spam-Score,
+        # put it into a dedicated variable, and then test it with :comparator
+        ####
+        if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" {
+            fileinto :create "INBOX/Trash";
+        }
+        else {
+            fileinto :create "INBOX/ML/SUSE/security/Ceph";
+        }
         stop;
     }
 
