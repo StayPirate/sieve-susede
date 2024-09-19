@@ -90,6 +90,11 @@ if header  :contains "List-Id" "<security.suse.de>" {
             fileinto :create "INBOX/Trash";
             stop;
         }
+        # Trash everything with a spam score >= 1
+        if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" {
+            fileinto :create "INBOX/Trash";
+            stop;
+        }
         fileinto :create "INBOX/ML/SUSE/security/TDF";
         stop;
     }
@@ -114,6 +119,8 @@ if header  :contains "List-Id" "<security.suse.de>" {
         # Hence, I'm not sure if that rule will work.
         # If not, I might use :regex to split the integer part of X-Spam-Score,
         # put it into a dedicated variable, and then test it with :comparator
+        #
+        # Update: It works :)! No need to use the :regex trick.
         ####
         if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" {
             fileinto :create "INBOX/Trash";
