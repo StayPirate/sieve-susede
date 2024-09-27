@@ -189,6 +189,12 @@ if header  :contains "List-Id" "<security.suse.de>" {
         stop;
     }
 
+    # OSSA - Pre-announced OpenStack Security Advisory
+    if address :contains "To" "embargo-notice@lists.openstack.org" {
+        fileinto :create "INBOX/ML/SUSE/security/OSSA";
+        stop;
+    }
+
     # Discard Adobe SA, from the open source pov we don't care
     if allof ( address :domain "From" "mail.adobe.com",
                header :contains "Subject" "Adobe Security Bulletin") {
