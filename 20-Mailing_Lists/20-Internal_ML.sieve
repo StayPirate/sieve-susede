@@ -146,7 +146,8 @@ if header  :contains "List-Id" "<security.suse.de>" {
     # Kubernetes
     if anyof ( address :is "From" "distributors-announce@kubernetes.io",
                address :is "From" "kubernetes-security-announce@googlegroups.com",
-               header  :is "X-BeenThere" "distributors-announce@kubernetes.io" ) {
+               header  :is "X-BeenThere" "distributors-announce@kubernetes.io",
+               header  :is "X-BeenThere" "kubernetes-security-announce@googlegroups.com" ) {
         fileinto :create "INBOX/ML/SUSE/security/Kubernetes";
         stop;
     }
