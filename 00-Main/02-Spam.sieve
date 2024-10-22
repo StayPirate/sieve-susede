@@ -32,7 +32,7 @@ if allof ( header :contains "X-Spam-Flag" "YES",
 # rule:[Unwanted emails]
 # Trash non-SPAM recurring unwanted emails
 if allof ( address :is "To" "${SUSECOM_ADDR}",
-           anyof ( address :domain "From" [ "checkmarx.com", "veeam.com", "apiiro.com", "magnetforensics.com" ],
+           anyof ( address :domain "From" [ "checkmarx.com", "veeam.com", "apiiro.com", "magnetforensics.com", "tryendorlabs.ai" ],
                    address :is "From" "messages-noreply@linkedin.com" )
     ) {
     fileinto :create "INBOX/Spam";
