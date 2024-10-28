@@ -96,6 +96,7 @@
     │   │   └── Proactive
     │   │       └── Reports
     │   ├── Confluence
+    │   ├── Gitea
     │   ├── Gitlab
     │   │   ├── Checkers
     │   │   ├── Mtk

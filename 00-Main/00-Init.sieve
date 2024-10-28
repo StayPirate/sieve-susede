@@ -48,6 +48,7 @@ include :personal "10-OBS.sieve";
 include :personal "10-Confluence.sieve";
 include :personal "10-Gitlab.sieve";
 include :personal "10-Jira.sieve";
+include :personal "10-Gitea.sieve";
 
 # Mailing Lists
 include :personal "20-Internal_ML.sieve";
