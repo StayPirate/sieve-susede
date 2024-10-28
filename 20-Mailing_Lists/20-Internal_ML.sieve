@@ -144,11 +144,19 @@ if header  :contains "List-Id" "<security.suse.de>" {
     }
 
     # Kubernetes
-    if anyof ( address :is "From" "distributors-announce@kubernetes.io",
-               address :is "From" "kubernetes-security-announce@googlegroups.com",
-               header  :is "X-BeenThere" "distributors-announce@kubernetes.io",
-               header  :is "X-BeenThere" "kubernetes-security-announce@googlegroups.com" ) {
+    # The distributors-announce ML gets both public and embargoed notifications.
+    # `security@suse.de` is subscribed to `k8s-security@suse.de` which in turn is subscribed to `distributors-announce`.
+    if anyof ( header  :is "X-BeenThere" "k8s-security@suse.de",
+               address :is "From" "distributors-announce@kubernetes.io",
+               header  :is "X-BeenThere" "distributors-announce@kubernetes.io" ) {
         fileinto :create "INBOX/ML/SUSE/security/Kubernetes";
+        stop;
+    }
+    # The kubernetes-security-announce ML gets the same notifications of the distributors-announce ML (above), without the embargoed ones.
+    if anyof ( address :is "From" "kubernetes-security-announce@googlegroups.com",
+               header  :is "X-BeenThere" "kubernetes-security-announce@googlegroups.com" ) {
+        addflag "${FLAG_DUPLICATED}";
+        fileinto :create "INBOX/Trash";
         stop;
     }
 
