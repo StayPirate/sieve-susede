@@ -84,13 +84,19 @@ if header  :contains "List-Id" "<security.suse.de>" {
         stop;
     }
 
+    # For inominc emails in security.suse.de trash everything with a spam-score >= 5
+    if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "5" {
+        fileinto :create "INBOX/Trash";
+        stop;
+    }
+
     # The Document Foundation
     if header :contains "X-BeenThere" "lists.documentfoundation.org" {
         if address :contains [ "to", "from" ] "mitre.org" {
             fileinto :create "INBOX/Trash";
             stop;
         }
-        # Trash everything with a spam score >= 1
+        # For this specific ML subscription decrease the accepted spam-score threshold to >= 1
         if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" {
             fileinto :create "INBOX/Trash";
             stop;
@@ -114,14 +120,7 @@ if header  :contains "List-Id" "<security.suse.de>" {
     # CEPH
     if anyof ( address :is "Cc" "security@ceph.io",
                address :is "To" "security@ceph.io" ) {
-        #### To my future self:
-        # :comparator expect an unsigned integer, while X-Spam-Score is a float.
-        # Hence, I'm not sure if that rule will work.
-        # If not, I might use :regex to split the integer part of X-Spam-Score,
-        # put it into a dedicated variable, and then test it with :comparator
-        #
-        # Update: It works :)! No need to use the :regex trick.
-        ####
+        # For this specific ML subscription decrease the accepted spam-score threshold to >= 1
         if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" {
             fileinto :create "INBOX/Trash";
         }
