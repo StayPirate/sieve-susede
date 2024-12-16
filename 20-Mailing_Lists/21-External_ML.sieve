@@ -132,13 +132,10 @@ if allof ( address :is "To" "${SUSEDE_ADDR}",
 # rule:[openSSF - Events]
 # https://email.linuxfoundation.org/hs/manage-preferences/unsubscribe
 if anyof ( header :contains "List-Id" "<main.lists.openssf.org>",
-           address :contains "From" "operations@openssf.org",
-           allof ( address :contains "From" "Open Source Security Foundation",
-                   address :contains "From" "meetings@lfx.linuxfoundation.org" ),
-           allof ( envelope :contains "From" "Open Source Security Foundation",
-                   envelope :contains "From" "meetings@lfx.linuxfoundation.org" )) {
-                fileinto :create "INBOX/ML/OpenSSF";
-                stop;
+           address :contains "From" [ "operations@openssf.org", "meetings@lfx.linuxfoundation.org" ],
+           envelope :contains "From" [ "operations@openssf.org", "meetings@lfx.linuxfoundation.org" ]) {
+    fileinto :create "INBOX/ML/OpenSSF";
+    stop;
 }
 
 # rule:[openSSF - Announcements]
