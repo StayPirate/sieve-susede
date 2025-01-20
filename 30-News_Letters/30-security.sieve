@@ -9,7 +9,7 @@ if envelope :detail "To" "graplnl" {
 }
 
 # rule:[SUSE Cybersecurity Champions]
-if header :regex "subject" "^Cybersecurity, Privacy and Risk Champions [a-zA-Z]+ newsletter$" {
+if header :regex "subject" "^Cybersecurity, Privacy and Risk Champions[a-zA-Z ]+newsletter$" {
     redirect :copy "stoyan.manolov@suse.com";
     fileinto :create "INBOX/ML/SUSE/Cybersec Champ";
     stop;
