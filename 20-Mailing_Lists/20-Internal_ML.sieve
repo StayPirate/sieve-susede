@@ -85,7 +85,8 @@ if header  :contains "List-Id" "<security.suse.de>" {
     }
 
     # For inominc emails in security.suse.de trash everything with a spam-score >= 5
-    if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "5" {
+    if allof ( not header :matches "X-Spam-Score" "-*",
+               header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "5" ) {
         fileinto :create "INBOX/Trash";
         stop;
     }
@@ -97,7 +98,8 @@ if header  :contains "List-Id" "<security.suse.de>" {
             stop;
         }
         # For this specific ML subscription decrease the accepted spam-score threshold to >= 1
-        if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" {
+        if allof ( not header :matches "X-Spam-Score" "-*",
+                   header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" ) {
             fileinto :create "INBOX/Trash";
             stop;
         }
@@ -121,7 +123,8 @@ if header  :contains "List-Id" "<security.suse.de>" {
     if anyof ( address :is "Cc" "security@ceph.io",
                address :is "To" "security@ceph.io" ) {
         # For this specific ML subscription decrease the accepted spam-score threshold to >= 1
-        if header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" {
+        if allof ( not header :matches "X-Spam-Score" "-*",
+                   header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "1" ) {
             fileinto :create "INBOX/Trash";
         }
         else {
