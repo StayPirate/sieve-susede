@@ -338,6 +338,13 @@ if address :is "From" [ "bugzilla-noreply@suse.com", "bugzilla_noreply@suse.com"
                   stop;
     }
 
+    # rule:[needinfo to INBOX]
+    # To avoid to miss needinfo, put them in the INBOX
+    if hasflag :contains "${FLAG_NEEDINFO}" {
+        fileinto :create "INBOX";
+        stop;
+    }
+
     # All the other notification goes in the main Bugzilla folder
     fileinto :create "INBOX/Tools/Bugzilla";
     stop;
