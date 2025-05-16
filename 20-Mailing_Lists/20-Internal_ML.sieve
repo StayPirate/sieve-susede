@@ -84,9 +84,9 @@ if header  :contains "List-Id" "<security.suse.de>" {
         stop;
     }
 
-    # For inominc emails in security.suse.de trash everything with a spam-score >= 5
+    # For incoming emails in security.suse.de trash everything with a spam-score >= 4
     if allof ( not header :matches "X-Spam-Score" "-*",
-               header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "5" ) {
+               header :value "ge" :comparator "i;ascii-numeric" "X-Spam-Score" "4" ) {
         fileinto :create "INBOX/Trash";
         stop;
     }
@@ -352,7 +352,7 @@ if header  :contains "List-Id" "<security-team.suse.de>" {
     }
 
     # If none of the above rules matched, then put to the main security-team folder
-    if header :contains "List-Id" "<security-team.suse.de>" { 
+    if header :contains "List-Id" "<security-team.suse.de>" {
         fileinto :create "INBOX/ML/SUSE/security-team";
         stop;
     }
