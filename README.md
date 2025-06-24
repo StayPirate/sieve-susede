@@ -3,14 +3,14 @@
 This repository is intended to store and organize my personal sieve scripts. Since their complexity grows every day I decided to organize them in a better way: split them into multiple files while versioning via git. Using the below-described [git-hook](#The-git-way), at each git commit the scripts are automatically uploaded to the mail-server.
 
 ## Requirement
-You need `sieveshell` installed. Good news for [secbox](https://github.com/StayPirate/secbox) users, in case you are running `secbox >= 1.10` and `secbox-image >= 2.7`, then you already have `sieveshell` available. You can double-check with the following commands:
+You need `sieveshell` installed. Good news for [secbox](https://github.com/StayPirate/secbox) users, in case you are running `secbox >= 1.25` and `secbox-image >= 3.6`, then you already have `sieveshell` available. You can double-check with the following commands:
 ```bash
 > secbox -v
-script     :  secbox                                                       v.1.9
-image      :  non_public/maintenance/security/container/containers/secbox  v.2.7
+script     :  secbox                                                       v.1.25
+image      :  non_public/maintenance/security/container/containers/secbox  v.3.6
 container  :  secbox                                                       running
 > which sieveshell
-sieveshell: aliased to secbox --no-tty sieveshell
+sieveshell: aliased to secbox --no-tty --interactive sieveshell
 ```
 
 ## How to use
@@ -62,18 +62,6 @@ sieveshell: aliased to secbox --no-tty sieveshell
     [includeIf "gitdir:~/Workspace/sieve-susede/.git"]
             path = ~/Workspace/sieve-susede/.githooks/sieveshell.gitconfig
     ```
-    <sup>\* Do not forget to adjust the paths in the above snippet.</sup> 
+    <sup>\* Do not forget to adjust the paths in the above snippet. Do not forget to adjust the `account` variable [here](https://github.com/StayPirate/sieve-susede/blob/8975fa2ae51569b1faa76fc02062b2f6c65927a4/.githooks/pre-commit#L3).</sup> 
     
     You can now jump into your local repository copy, make your changes and commit.
-
----
-After the first run, ensure that `00-Init.sieve` is activated. Or you can activate it after your first upload running:
-
-```bash
-echo "activate 00-Init.sieve \n list" | \
-sieveshell --user $(get_user) \
-        --passwd $(get_pass) \
-        --use-tls \
-        --port 4190 imap-int.suse.de
-```
-And check for: `00-Init.sieve   <<-- active`.
