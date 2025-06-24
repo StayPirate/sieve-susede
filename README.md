@@ -64,4 +64,4 @@ sieveshell: aliased to secbox --no-tty --interactive sieveshell
     ```
     <sup>\* Do not forget to adjust the paths in the above snippet. Do not forget to adjust the `account` variable [here](https://github.com/StayPirate/sieve-susede/blob/8975fa2ae51569b1faa76fc02062b2f6c65927a4/.githooks/pre-commit#L3).</sup> 
     
-    You can now jump into your local repository copy, make your changes and commit.
+    You can now jump into your local repository copy, make your changes and commit. There are some [environment variables](https://github.com/StayPirate/sieve-susede/blob/40ab9c4f6853c0de7786983eb6172030a1d42b30/00-Main/00-Init.sieve#L8) that need to be adjusted first.
