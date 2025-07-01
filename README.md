@@ -50,7 +50,7 @@ sieveshell: aliased to secbox --no-tty --interactive sieveshell
             --passwd $(get_pass) \
             --use-tls \
             --port 4190 \
-            imap-int.suse.de
+            imap.suse.de
     ```
 
 2. ### **The git way**
