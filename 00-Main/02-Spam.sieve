@@ -35,7 +35,7 @@ if allof ( address :is "To" "${SUSECOM_ADDR}",
            anyof ( address :domain "From" [ "checkmarx.com", "veeam.com", "apiiro.com", "magnetforensics.com",
                                             "tryendorlabs.ai", "info.microstrategy.com", "microstrategy.com",
                                             "fortinet.com", "global.fortinet.com", "netscout.com", "tp2.terrapinn.com",
-                                            "crowdstrike.com" ],
+                                            "crowdstrike.com", "info.strategy.com", "fmbs.it", "practicaldevsecopsgroup.com" ],
                    address :is "From" "messages-noreply@linkedin.com" )
     ) {
     fileinto :create "INBOX/Spam";
