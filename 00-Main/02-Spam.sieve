@@ -41,3 +41,12 @@ if allof ( address :is "To" "${SUSECOM_ADDR}",
     fileinto :create "INBOX/Spam";
     stop;
 }
+
+# rule:[Annoing emails]
+if allof ( address :is "To" "${SUSECOM_ADDR}",
+           address :is "From" "donotreply@oktopost.com",
+           header :contains "Subject" "A new story is available for you to share"
+    ) {
+    fileinto :create "INBOX/Spam";
+    stop;
+}
